@@ -16,15 +16,15 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_NAME: ${{ secrets.DB_NAME }}
-          POSTGRES_USERNAME: ${{ secrets.DB_USERNAME }}
+          POSTGRES_USERNAME: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         options: >-
-          --health-cmd pg_isReady
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
+          - 5432:5432
 
     steps:
       - name: Checkout code
@@ -54,4 +54,4 @@ jobs:
         working-directory: ./client
         run: |
           npm install
-          npm run build:dev
+          npm run build
