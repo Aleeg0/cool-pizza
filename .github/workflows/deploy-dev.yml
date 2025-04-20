@@ -1,0 +1,57 @@
+name: Deploy to Development
+
+on:
+  # Trigger on push into or pull request to development branch
+  push:
+    branches: [ "development" ]
+  pull_request:
+    branches: [ "development" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_NAME: ${{ secrets.DB_NAME }}
+          POSTGRES_USERNAME: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        options: >-
+          --health-cmd pg_isReady
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ===== [Backend: ASP.NET Core] =====
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Build Backend (Debug)
+        working-directory: ./server
+        env:
+          CONNECTION_STRING: "Host=${{ secrets.DB_HOST }};Port=${{ secrets.DB_PORT }};Database=postgres;Username=${{ secrets.DB_USER }};Password=${{ secrets.DB_PASSWORD }};"
+        run: |
+          dotnet restore
+          dotnet publish -c Debug -o ./publish
+
+      # ===== [Frontend: Next.js] =====
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22.x"
+
+      - name: Build Frontend (Dev)
+        working-directory: ./client
+        run: |
+          npm install
+          npm run build:dev
