@@ -1,0 +1,19 @@
+.Header {
+  &_root {
+    position: relative;
+  }
+
+  &_container{
+    padding: 43px 66px;
+    border-bottom: #EDEDED solid 1px;
+  }
+
+  &_content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_leftPart {
+
+  }
+}
