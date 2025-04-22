@@ -1,13 +1,22 @@
 :root {
   --color-primary: #FE5F00;
-  --color-secondary: #FF7EE;
+  --color-primary-lighten: #ff7727;
+  --color-secondary: #FFFFFF;
+  --color-secondary-darken: #FFFFFF;
+
   --color-text-primary: #000000;
   --color-text-secondary: #B1B1B1;
+
   --color-checkbox-background: #F1F1F1;
-  --color-input-background: #F9F9F9;
+
+  --color-input-background: #F9FAFB;
+  --color-input-shadow: rgba(0, 0, 0, 0.1);
+
   --color-filter-background: #FAFAFA;
+
   --color-background: #FFFFFF;
-  --color-input-shadow: rgba(0, 0, 0, 0.25);
+
+  --color-button-shadow: rgba(0, 0, 0, 0.25);
 
   --font-size-paragraph: 16px;
   --font-size-title2: 24px;
