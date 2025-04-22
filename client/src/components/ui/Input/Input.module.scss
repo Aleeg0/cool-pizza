@@ -1,0 +1,53 @@
+.UiInput {
+  &_root {
+    position: relative;
+  }
+
+  &_container {
+    background-color: var(--color-input-background);
+    padding: 17px 20px;
+    border-radius: var(--border-radius-input);
+    transition: box-shadow .2s ease-in;
+  }
+
+  &_content {
+    display: flex;
+    align-items: center;
+  }
+
+  &_icon {
+    margin-right: 12px;
+    opacity: 1;
+    transition: all .2s ease-in;
+  }
+
+  &_input {
+    transition: transform .2s ease-in;
+
+    input {
+      font-size: var(--font-size-paragraph);
+      color: var(--color-text-primary);
+      letter-spacing: 0;
+
+      &::placeholder {
+        color: var(--color-text-secondary);
+      }
+    }
+  }
+
+  &_root:hover, &_focused {
+    .Searcher_container {
+      box-shadow: 0 0 5px var(--color-input-shadow);
+    }
+
+    .Searcher_icon {
+      opacity: 0;
+      margin-right: 0;
+      transform: translateX(-16px);
+    }
+
+    .Searcher_input {
+      transform: translateX(-16px);
+    }
+  }
+}
