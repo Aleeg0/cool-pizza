@@ -1,14 +1,11 @@
 import React, {FC} from 'react';
+import {IconProps} from "./lib/IconProps";
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {
-
-}
-
-export const SearchIcon: FC<IconProps> = ({...props}) => {
+export const SearchIcon: FC<IconProps> = ({size = 16, ...props}) => {
   return (
     <svg
-      width="16"
-      height="16"
+      width={size}
+      height={size}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
