@@ -14,6 +14,19 @@
   }
 
   &_leftPart {
+    display: flex;
+    flex: 1;
+    align-items: center;
 
+    &__Title {
+      margin-right: 40px;
+      flex-shrink: 0;
+    }
+
+    &__Searcher {
+      height: 52px;
+      min-width: 200px;
+      flex-grow: 1;
+    }
   }
 }
