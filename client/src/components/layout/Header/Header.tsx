@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import {HeaderTitle, Input} from "@/components/ui";
+import UiButton from "@/components/ui/Buttons/UiButton";
+import {ProfileIcon} from "@/components/icons";
 
 const Header = () => {
   return (
@@ -16,7 +18,15 @@ const Header = () => {
             </div>
           </div>
           <div className={styles.Header_rightPart}>
-
+            <UiButton
+              caption="Профиль"
+              icon={<ProfileIcon className="UiKit_icon__transition" />}
+              iconSize="m"
+              type="secondary"
+            />
+            <UiButton
+              caption="Корзина"
+            />
           </div>
         </div>
       </header>
