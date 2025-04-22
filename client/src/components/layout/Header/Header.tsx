@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import {HeaderTitle} from "../../ui";
+import {HeaderTitle, Input} from "@/components/ui";
 
 const Header = () => {
   return (
@@ -8,10 +8,12 @@ const Header = () => {
       <header className={styles.Header_container}>
         <div className={styles.Header_content}>
           <div className={styles.Header_leftPart}>
-            <HeaderTitle/>
-          </div>
-          <div className={styles.Header_Searcher}>
-
+            <div className={styles.Header_leftPart__Title}>
+              <HeaderTitle/>
+            </div>
+            <div className={styles.Header_leftPart__Searcher}>
+              <Input/>
+            </div>
           </div>
           <div className={styles.Header_rightPart}>
 
