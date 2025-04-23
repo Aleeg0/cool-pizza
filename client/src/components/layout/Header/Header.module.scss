@@ -1,11 +1,21 @@
 .Header {
   &_root {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-background);
+    z-index: 10;
   }
 
   &_container{
-    padding: 43px 66px;
-    border-bottom: #EDEDED solid 1px;
+    padding: 30px 66px;
+    transition: all .2s ease-in;
+    border-bottom: var(--color-border) solid 1px;
+  }
+
+  &_flying {
+    box-shadow: 0 8px 20px rgba(117, 115, 111, 0.2);
   }
 
   &_content {

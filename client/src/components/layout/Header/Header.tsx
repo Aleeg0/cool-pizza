@@ -1,13 +1,22 @@
+'use client';
+
 import React from 'react';
 import styles from './Header.module.scss';
 import {HeaderTitle, Input} from "@/components/ui";
-import UiButton from "@/components/ui/Buttons/UiButton";
+import {UiButton} from "@/components/ui";
 import {ProfileIcon} from "@/components/icons";
+import {useScrollTrigger} from "@/hooks";
+import {cn} from "@/utils";
 
 const Header = () => {
+  const isScrolled = useScrollTrigger();
+
   return (
-    <div className={styles.Header_root}>
-      <header className={styles.Header_container}>
+    <header className={styles.Header_root}>
+      <div className={cn(
+        styles.Header_container,
+        isScrolled ? styles.Header_flying : ''
+      )}>
         <div className={styles.Header_content}>
           <div className={styles.Header_leftPart}>
             <div className={styles.Header_leftPart__Title}>
@@ -29,8 +38,8 @@ const Header = () => {
             />
           </div>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 };
 
