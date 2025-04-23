@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {cn} from "@/utils";
+import styles from './Buttons.module.scss'
 
 
 interface ButtonProps {
@@ -25,22 +26,22 @@ export const UiButton : FC<ButtonProps> = ({
     <button
       onClick={onClick}
       className={cn(
-        "UiButton_root",
-        `UiButton_${type}`,
-        `UiButton-${size}`,
-        isFullWidth ? 'UiButton_fullWidth' : ''
+        styles.UiButton_root,
+        styles[`UiButton_${type}`],
+        styles[`UiButton-${size}`],
+        isFullWidth ? styles.UiButton_fullWidth : ''
       )}
     >
       {icon &&
         <span className={cn(
-          "UiButton_icon",
+          styles.UiButton_icon,
           `UiKit_icon-${iconSize}`,
         )}>
           {icon}
         </span>
       }
       {caption &&
-        <span className={"UiButton_caption"}>
+        <span>
           {caption}
         </span>
       }

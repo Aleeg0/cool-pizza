@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {cn} from "@/utils";
+import styles from './Buttons.module.scss'
 
 interface Props {
   onClick: () => void;
@@ -11,8 +12,8 @@ export const InlineButton : FC<Props> = ({onClick, caption, withAnimation = fals
   return (
     <button
       className={cn(
-        "InlineButton_root",
-        withAnimation ? "InlineButton_animated" : '',
+        styles.InlineButton_root,
+        withAnimation ? styles.InlineButton_animated : '',
       )}
       onClick={onClick}
     >
