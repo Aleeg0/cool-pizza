@@ -4,9 +4,9 @@
   }
 
   &_container {
-    background: var(--color-input-background);
+    background: var(--color-component-background);
     padding: 17px 20px;
-    border-radius: var(--border-radius-input);
+    border-radius: var(--border-radius-components);
     transition: box-shadow .2s ease-in;
   }
 
