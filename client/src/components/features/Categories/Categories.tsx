@@ -3,7 +3,7 @@
 import React, {useState} from 'react';
 import styles from './Categories.module.scss'
 import {cn} from "@/utils";
-import {scrollToSection} from "@/components/features/Categories/scrollToSection";
+import {scrollToSection} from "./scrollToSection";
 
 const arr = [
   {name: "meat", value: "Мясные"},
