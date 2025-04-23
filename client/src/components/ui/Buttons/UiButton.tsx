@@ -9,15 +9,17 @@ interface ButtonProps {
   type?: "primary" | "secondary";
   size?: "s" | "m" | "l"
   onClick?: () => void;
+  isFullWidth?: boolean;
 }
 
-const UiButton : FC<ButtonProps> = ({
+export const UiButton : FC<ButtonProps> = ({
   caption,
   icon,
   iconSize = "m",
   type = "primary",
   size = "m",
   onClick,
+  isFullWidth = false
 }) => {
   return (
     <button
@@ -26,6 +28,7 @@ const UiButton : FC<ButtonProps> = ({
         "UiButton_root",
         `UiButton_${type}`,
         `UiButton-${size}`,
+        isFullWidth ? 'UiButton_fullWidth' : ''
       )}
     >
       {icon &&
@@ -44,5 +47,3 @@ const UiButton : FC<ButtonProps> = ({
     </button>
   );
 };
-
-export default UiButton;
