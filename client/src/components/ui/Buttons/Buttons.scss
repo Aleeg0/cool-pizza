@@ -1,9 +1,12 @@
+@use 'src/styles/mixins' as mix;
+
 .UiButton {
   &_root {
     position: relative;
     padding: 14px 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     border: 1px solid var(--color-primary);
     border-radius: 15px;
     font-weight: 600;
@@ -39,6 +42,10 @@
     }
   }
 
+  &_fullWidth {
+    width: 100%;
+  }
+
   &-s {
     height: 42px;
   }
@@ -49,5 +56,21 @@
 
   &-l {
     height: 50px;
+  }
+}
+
+.InlineButton {
+  &_root {
+    color: var(--color-primary);
+    font-size: var(--font-size-paragraph);
+    font-weight: 700;
+  }
+
+  &_animated {
+    @include mix.underline-text-animation(
+            $color: var(--color-primary),
+            $bottom_offset: 4px,
+            $easing: ease-in-out
+    )
   }
 }
