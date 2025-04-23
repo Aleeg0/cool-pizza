@@ -1,0 +1,48 @@
+.Sorter {
+  &_root {
+    display: flex;
+    align-items: center;
+    padding: 20px 22px;
+    border-radius: var(--border-radius-components);
+    font-size: var(--font-size-paragraph);
+    font-weight: 700;
+    background: var(--color-component-background);
+  }
+
+  &_icon {
+    margin-right: 8px;
+  }
+
+  &_title {
+    margin-right: 6px;
+  }
+}
+
+.SorterPopup {
+  &_content {
+      width: 240px;
+  }
+
+  &_title {
+    padding: 20px 30px 10px 20px;
+
+    h2 {
+      font-size: var(--font-size-title2);
+      font-weight: 600;
+      line-height: 1.15;
+    }
+  }
+
+  &_item {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    height: 46px;
+    cursor: pointer;
+  }
+
+  &_button {
+    border-top: 1px solid var(--color);
+    padding: 20px;
+  }
+}
