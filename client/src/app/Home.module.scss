@@ -17,13 +17,24 @@ body {
     margin-bottom: 20px;
   }
 
-  &_filtration {
+  &_categoriesSort {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 36px;
   }
 
   &_content {
+    width: 100%;
+    display: flex;
+  }
 
+  &_filtration {
+    width: 245px;
+  }
+
+  &_productList {
+    flex: 1;
+    margin-left: 48px;
   }
 }
