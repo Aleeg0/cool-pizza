@@ -7,7 +7,7 @@ const LoginButton = () => {
     <UiButton
       caption="Войти"
       icon={<ProfileIcon className="UiKit_icon__transition" />}
-      type="secondary"
+      variation="secondary"
     />
   );
 };

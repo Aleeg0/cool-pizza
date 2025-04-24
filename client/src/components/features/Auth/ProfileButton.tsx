@@ -27,7 +27,7 @@ const ProfileButton = () => {
         caption="Профиль"
         onClick={() => setIsOpen(!isOpen)}
         icon={<ProfileIcon className="UiKit_icon__transition" />}
-        type={isOpen ? "primary" : "secondary"}
+        variation={isOpen ? "primary" : "secondary"}
       />
       {isOpen &&
         <Portal
