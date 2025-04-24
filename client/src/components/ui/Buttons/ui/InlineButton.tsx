@@ -1,14 +1,9 @@
 import React, {FC} from 'react';
 import {cn} from "@/utils";
 import styles from './Buttons.module.scss'
+import {AnimatedButtonProps} from "../lib/props";
 
-interface Props {
-  onClick: () => void;
-  caption?: string;
-  withAnimation?: boolean;
-}
-
-export const InlineButton : FC<Props> = ({onClick, caption, withAnimation = false}) => {
+export const InlineButton : FC<AnimatedButtonProps> = ({onClick, caption, withAnimation = false}) => {
   return (
     <button
       className={cn(
