@@ -1,0 +1,29 @@
+body {
+  min-height: 150vh;
+}
+
+.HomePage {
+  &_root {
+    margin-top: 154px;
+  }
+
+  &_container {
+    padding: 0 64px;
+  }
+
+  &_title {
+    font-size: var(--font-size-title1);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  &_filtration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_content {
+
+  }
+}
