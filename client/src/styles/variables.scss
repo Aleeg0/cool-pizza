@@ -1,6 +1,8 @@
 :root {
   --color-primary: #FE5F00;
   --color-primary-lighten: #ff7727;
+  --color-primary-super-light: #FFFAF6;
+  --color-primary-darken: #b54300;
   --color-secondary: #FFFFFF;
   --color-secondary-darken: #f8f8f8;
   --color-secondary-more-darken: #f4f4f4;
@@ -17,7 +19,8 @@
 
   --color-button-shadow: rgba(0, 0, 0, 0.25);
 
-  --color-border: #EDEDED;
+  --color-border-header: #EDEDED;
+  --color-border-exit-button: #F7F7F7;
 
   --font-size-paragraph: 16px;
   --font-size-title1: 36px;
