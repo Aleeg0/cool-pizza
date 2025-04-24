@@ -11,6 +11,7 @@ interface ButtonProps {
   size?: "s" | "m" | "l"
   onClick?: () => void;
   isFullWidth?: boolean;
+  ref?: React.Ref<HTMLButtonElement | null>;
 }
 
 export const UiButton : FC<ButtonProps> = ({
@@ -20,10 +21,12 @@ export const UiButton : FC<ButtonProps> = ({
   type = "primary",
   size = "m",
   onClick,
-  isFullWidth = false
+  isFullWidth = false,
+  ref
 }) => {
   return (
     <button
+      ref={ref}
       onClick={onClick}
       className={cn(
         styles.UiButton_root,
