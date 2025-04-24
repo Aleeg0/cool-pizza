@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import styles from './Categories.module.scss'
 import {cn} from "@/utils";
-import CategoriesDropdown from "@/components/features/Categories/ui/CategoriesDropdown";
-import {Category} from "@/components/features/Categories/lib/Category";
-import {useCategories} from "@/components/features/Categories/lib/useCategories";
+import {Category} from "../lib/Category";
+import {useCategories} from "../lib/useCategories";
+import CategoriesDropdown from "./CategoriesDropdown";
+import styles from './Categories.module.scss';
 
 const categoryData: Category[] = [
   {id: 1, name: "meat", value: "Мясные"},
