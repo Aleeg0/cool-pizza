@@ -2,8 +2,7 @@
 
 import React from 'react';
 import styles from './Header.module.scss';
-import {HeaderTitle, Input} from "@/components/ui";
-import {UiButton} from "@/components/ui";
+import {HeaderTitle, UiButton, Input} from "@/components/ui";
 import {useScrollTrigger} from "@/hooks";
 import {cn} from "@/utils";
 import {AuthButton} from "@/components/features/Auth";
