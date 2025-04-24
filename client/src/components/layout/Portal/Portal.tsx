@@ -42,8 +42,14 @@ const Portal : FC<PortalProps> = ({
   useEffect(() => {
     if (!portalRef.current) return;
 
-    const handleScrollOrResize = () => {
+    const handleResize = () => {
       onClose();
+    }
+
+    const handleScroll = (e: Event) => {
+      if (portalRef.current && !portalRef.current.contains(e.target as Node)) {
+        onClose();
+      }
     };
 
     const handleClickOutside= (event: MouseEvent) => {
@@ -54,15 +60,15 @@ const Portal : FC<PortalProps> = ({
       }
     }
 
-    window.addEventListener("resize", handleScrollOrResize);
-    window.addEventListener("scroll", handleScrollOrResize, true);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll, true);
     document.addEventListener("mousedown", handleClickOutside);
 
     setIsMounted(true);
 
     return () => {
-      window.removeEventListener("resize", handleScrollOrResize);
-      window.removeEventListener("scroll", handleScrollOrResize, true);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll, true);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose, portalRef, triggerRef]);
