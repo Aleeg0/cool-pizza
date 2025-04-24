@@ -4,9 +4,9 @@ import React from 'react';
 import styles from './Header.module.scss';
 import {HeaderTitle, Input} from "@/components/ui";
 import {UiButton} from "@/components/ui";
-import {ProfileIcon} from "@/components/icons";
 import {useScrollTrigger} from "@/hooks";
 import {cn} from "@/utils";
+import {AuthButton} from "@/components/features/Auth";
 
 const Header = () => {
   const isScrolled = useScrollTrigger();
@@ -27,12 +27,7 @@ const Header = () => {
             </div>
           </div>
           <div className={styles.Header_rightPart}>
-            <UiButton
-              caption="Профиль"
-              icon={<ProfileIcon className="UiKit_icon__transition" />}
-              iconSize="m"
-              type="secondary"
-            />
+            <AuthButton/>
             <UiButton
               caption="Корзина"
             />
