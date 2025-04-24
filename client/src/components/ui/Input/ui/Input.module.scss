@@ -52,3 +52,25 @@
     }
   }
 }
+
+.NumericInput {
+  &_container {
+    border: 1px solid #F0F0F0;
+    border-radius: var(--border-radius-components);
+    padding: 10px 16px;
+  }
+
+  &_content {
+    display: flex;
+    align-items: center;
+  }
+
+  &_input {
+    font-size: var(--font-size-paragraph-s);
+    line-height: 19px;
+  }
+
+  &_icon {
+    width: 10px;
+  }
+}
