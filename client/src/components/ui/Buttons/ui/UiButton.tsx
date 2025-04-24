@@ -1,39 +1,30 @@
-import React, {FC} from 'react';
+import React, {forwardRef} from 'react';
 import {cn} from "@/utils";
 import styles from './Buttons.module.scss'
+import {UiButtonProps} from "../lib/props";
 
-
-interface ButtonProps {
-  caption?: string;
-  icon?: React.ReactNode;
-  iconSize?: "s" | "m" | "l";
-  type?: "primary" | "secondary";
-  size?: "s" | "m" | "l"
-  onClick?: () => void;
-  isFullWidth?: boolean;
-  ref?: React.Ref<HTMLButtonElement | null>;
-}
-
-export const UiButton : FC<ButtonProps> = ({
-  caption,
-  icon,
-  iconSize = "m",
-  type = "primary",
-  size = "m",
-  onClick,
-  isFullWidth = false,
+export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
+  {
+    caption,
+    icon,
+    iconSize = "m",
+    type = "primary",
+    size = "m",
+    isFullWidth = false,
+    ...props
+  },
   ref
-}) => {
+) => {
   return (
     <button
       ref={ref}
-      onClick={onClick}
       className={cn(
         styles.UiButton_root,
         styles[`UiButton_${type}`],
         styles[`UiButton-${size}`],
         isFullWidth ? styles.UiButton_fullWidth : ''
       )}
+      {...props}
     >
       {icon &&
         <span className={cn(
@@ -50,4 +41,6 @@ export const UiButton : FC<ButtonProps> = ({
       }
     </button>
   );
-};
+});
+
+UiButton.displayName = 'UiButton';
