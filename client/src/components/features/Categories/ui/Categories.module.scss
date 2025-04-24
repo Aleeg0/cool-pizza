@@ -1,0 +1,81 @@
+.Categories {
+  &_container {
+    position: relative;
+    border-radius: 15px;
+    background: var(--color-component-background);
+  }
+
+  &_itemList {
+    display: flex;
+    padding: 6px 5px;
+  }
+
+  &_item {
+    font-size: var(--font-size-paragraph);
+    font-weight: 700;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+
+  &_button {
+    padding: 14px 16px;
+    font: inherit;
+    transition: background .2s ease-in;
+
+    &:hover, &__active {
+      border-radius: 15px;
+    }
+
+    &:hover:not(&__active) {
+      background: var(--color-secondary);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+      opacity: 0.8;
+    }
+
+    &__active {
+      background: var(--color-secondary);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &_dropdownButton {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      margin-left: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.CategoriesPopup {
+  &_options {
+    min-width: 160px;
+    max-height: 200px;
+    font-size: var(--font-size-paragraph);
+    font-weight: 700;
+    line-height: 19px;
+    overflow-y: auto;
+  }
+
+  &_option {
+    font: inherit;
+    width: 100%;
+    display: flex;
+    padding: 18px 20px;
+
+    &:hover:not(&__active) {
+      background: var(--color-secondary-darken);
+    }
+
+    &__active {
+      background: var(--color-secondary-more-darken);
+    }
+  }
+}
