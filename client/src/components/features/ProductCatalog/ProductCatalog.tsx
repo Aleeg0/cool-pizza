@@ -12,7 +12,7 @@ const ProductCatalog = () => {
             key={i}
           >
             <ProductCard
-              imageUrl="/images/test.png"
+              imageUrl="/images/test.avif"
               title="Диабло"
               description="Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла"
               price={25.99}
