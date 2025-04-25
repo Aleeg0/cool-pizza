@@ -8,6 +8,12 @@ body {
   }
 
   &_container {
+
+  }
+
+  &_contentWrapper{
+    max-width: 1600px;
+    margin: 0 auto;
     padding: 0 64px;
   }
 
@@ -33,8 +39,8 @@ body {
     width: 245px;
   }
 
-  &_productList {
+  &_productCatalog {
     flex: 1;
-    margin-left: 48px;
+    padding-left: 48px;
   }
 }
