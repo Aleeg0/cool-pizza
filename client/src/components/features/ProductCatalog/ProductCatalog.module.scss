@@ -1,0 +1,18 @@
+.ProductContainer {
+  &_container {
+    padding-top: 30px;
+  }
+
+  &_products {
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+
+  &_product {
+    width: 25%;
+    margin-bottom: 50px;
+    padding-inline: 25px;
+  }
+}
