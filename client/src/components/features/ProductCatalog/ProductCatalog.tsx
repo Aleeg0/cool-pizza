@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ProductCatalog.module.scss'
-import PizzaCard from "@/components/entities/PizzaCard/PizzaCard";
+import {ProductCard} from "@/components/entities";
 
 const ProductCatalog = () => {
   return (
@@ -11,7 +11,7 @@ const ProductCatalog = () => {
             className={styles.ProductContainer_product}
             key={i}
           >
-            <PizzaCard
+            <ProductCard
               imageUrl="/images/test.png"
               title="Диабло"
               description="Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла"
