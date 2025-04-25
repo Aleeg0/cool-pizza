@@ -1,3 +1,5 @@
+'use client';
+
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import styles from './Input.module.scss';
 import {NumericInputProps, IconInputProps} from "../lib/props";
