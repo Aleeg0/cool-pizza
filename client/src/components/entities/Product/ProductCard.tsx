@@ -3,7 +3,7 @@ import styles from './ProductCard.module.scss'
 import {UiButton} from "@/components/ui";
 import {PlusIcon} from "@/components/icons";
 
-interface PrdocutCardProps {
+interface ProductCardProps {
   title: string;
   description: string;
   price: number;
@@ -11,7 +11,7 @@ interface PrdocutCardProps {
   currency?: string;
 }
 
-const ProductCard: FC<PrdocutCardProps> = ({
+const ProductCard: FC<ProductCardProps> = ({
   title,
   description,
   price,
@@ -47,6 +47,7 @@ const ProductCard: FC<PrdocutCardProps> = ({
           </p>
           <div className={styles.ProductCard_button}>
             <UiButton
+              type="primaryLight"
               icon={<PlusIcon/>}
               caption="Добавить"
             />
