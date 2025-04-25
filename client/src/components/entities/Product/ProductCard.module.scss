@@ -6,38 +6,34 @@
 
   &_header {
     margin-bottom: 15px;
-    border-radius: var(--border-radius-components);
-  }
-
-  &_imageCover {
-    aspect-ratio: 1.1;
-    position: relative;
-    border-radius: inherit;
   }
 
   &_cover {
-    border-radius: inherit;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: #FFF7EE;
-    background-size: 200px;
-    --webkit-background-position: center;
-    background-position: center;
-  }
+    position: relative;
+    aspect-ratio: 1.1;
+    border-radius: var(--border-radius-components);
 
-  &_image {
-    padding: 24px 37px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    &__background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: inherit;
+      --webkit-background-position: center;
+      background: #FFF7EE center;
+    }
 
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 24px 37px;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   &_footer {

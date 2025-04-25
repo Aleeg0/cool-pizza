@@ -21,10 +21,10 @@ const ProductCard: FC<PrdocutCardProps> = ({
   return (
     <article className={styles.ProductCard_root}>
       <section className={styles.ProductCard_header}>
-        <div className={styles.ProductCard_imageCover}>
-          <div className={styles.ProductCard_cover}/>
+        <div className={styles.ProductCard_cover}>
+          <div className={styles.ProductCard_cover__background}/>
           <img
-            className={styles.ProductCard_image}
+            className={styles.ProductCard_cover__image}
             src={imageUrl}
             alt=""
             loading="lazy"
