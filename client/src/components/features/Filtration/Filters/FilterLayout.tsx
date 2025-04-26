@@ -13,7 +13,7 @@ const FilterLayout: FC<Props> = ({
   return (
     <div className={styles.FilterLayout_container}>
       <div className={styles.FilterLayout_title}>
-        <h4>{title}</h4>
+        <h5>{title}</h5>
       </div>
       <div className={styles.FilterLayout_content}>
         {children}
