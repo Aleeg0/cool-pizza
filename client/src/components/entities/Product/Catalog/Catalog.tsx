@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './ProductCatalog.module.scss'
-import {ProductCard} from "@/components/entities";
+import {ProductCard} from "@/components/entities/Product";
+import Link from "next/link";
 
-const ProductCatalog = () => {
+const Catalog = () => {
   return (
     <div className={styles.ProductContainer_container}>
       <div className={styles.ProductContainer_products}>
         {Array.from(Array(8).keys()).map((_, i) =>
-          <div
+          <Link
+            href={`/products/${i + 1}`}
             className={styles.ProductContainer_product}
             key={i}
           >
@@ -18,11 +20,11 @@ const ProductCatalog = () => {
               price={25.99}
               currency="₽"
             />
-          </div>
+          </Link>
         )}
       </div>
     </div>
   );
 };
 
-export default ProductCatalog;
+export default Catalog;
