@@ -1,0 +1,43 @@
+.container {
+  display: inline-block;
+  position: relative;
+  width: 500px;
+}
+
+.image {
+  position: relative;
+  transition: margin 0.3s ease-in-out;
+
+  img {
+    width: 100%;
+  }
+
+  &[data-size="0"] {
+    margin: 166px 128px 0;
+  }
+
+  &[data-size="1"] {
+    margin: 128px 90px 0;
+  }
+
+  &[data-size="2"] {
+    margin: 92px 52px 0;
+  }
+}
+
+.circle {
+  position: absolute;
+  z-index: 2;
+
+  &M {
+    top: 132px;
+    left: 95px;
+  }
+
+
+  &L {
+    top: 90px;
+    left: 50px;
+  }
+}
+
