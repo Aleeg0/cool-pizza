@@ -1,0 +1,1 @@
+export {default as IngredientCard} from "./Card/Card";
