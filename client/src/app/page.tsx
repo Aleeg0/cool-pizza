@@ -1,5 +1,6 @@
 import {Header} from "@/components/layout";
-import {Categories, Sorter, Filtration, ProductCatalog} from "@/components/features";
+import {Categories, Sorter, Filtration} from "@/components/features";
+import {ProductCatalog} from "@/components/entities/Product";
 import styles from './Home.module.scss'
 
 export default function HomePage() {
