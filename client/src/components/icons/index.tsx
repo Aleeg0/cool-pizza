@@ -4,3 +4,4 @@ export {ProfileIcon} from './ProfileIcon';
 export {SortIcon} from './SortIcon';
 export {PriceIcon} from './PriceIcon';
 export {PlusIcon} from './PlusIcon';
+export {CircleIcon} from './CircleIcon';
