@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import styles from './ProductCard.module.scss'
+import styles from './styles.module.scss'
 import {UiButton} from "@/components/ui";
 import {PlusIcon} from "@/components/icons";
 
@@ -11,7 +11,7 @@ interface ProductCardProps {
   currency?: string;
 }
 
-const ProductCard: FC<ProductCardProps> = ({
+const Card: FC<ProductCardProps> = ({
   title,
   description,
   price,
@@ -58,4 +58,4 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+export default Card;

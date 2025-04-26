@@ -21,7 +21,7 @@
       right: 0;
       border-radius: inherit;
       --webkit-background-position: center;
-      background: #FFF7EE center;
+      background: var(--color-primary-light) center;
     }
 
     &__image {
