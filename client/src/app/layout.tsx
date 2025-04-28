@@ -2,6 +2,7 @@ import React from "react";
 import {Nunito} from "next/font/google";
 import type { Metadata } from "next";
 import '@/styles/index.scss';
+import {ReduxProvider} from "@/store/ReduxProvider";
 
 const nunitoFont = Nunito({subsets: ["cyrillic"]})
 
@@ -20,8 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={nunitoFont.className}>
-        {children}
-        {modal}
+        <ReduxProvider>
+          {children}
+          {modal}
+        </ReduxProvider>
       </body>
     </html>
   );
