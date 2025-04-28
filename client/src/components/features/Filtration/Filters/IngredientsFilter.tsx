@@ -2,14 +2,14 @@
 
 import React, {FC, useState} from 'react';
 import styles from "@/components/features/Filtration/Filtration.module.scss";
-import {Ingredient} from "../types";
 import {UiCheckbox} from "@/components/ui";
 import {InlineButton} from "@/components/ui/Buttons";
+import {Ingredient} from "@/store/types/Ingredient";
 
 interface Props {
   ingredients: Ingredient[];
-  selectedIds: number[];
-  onSelectionChange: (ids: number[]) => void;
+  selectedIds: string[];
+  onSelectionChange: (ids: string[]) => void;
 }
 
 const VISIBLE_STEP = 6;
@@ -21,9 +21,9 @@ const IngredientsFilter: FC<Props> = ({
 }) => {
   const [visibleCount, setVisibleCount] = useState<number>(VISIBLE_STEP);
 
-  const onCategoryClick = (id: number) => {
+  const onCategoryClick = (id: string) => {
     const newSelectedIds = selectedIds.includes(id)
-      ? selectedIds.filter(i => i !== id)
+      ? [...selectedIds].filter(i => i !== id)
       : [...selectedIds, id];
 
     onSelectionChange(newSelectedIds);

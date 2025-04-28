@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import styles from '../Filtration.module.scss';
 import {NumericInput} from "@/components/ui/Input";
 import {PriceIcon} from "@/components/icons";
-import {PriceRange} from "../types";
+import {PriceRange} from "@/store/model/Products";
 
 interface Props {
   currentPrice: PriceRange;
@@ -16,7 +16,7 @@ const PriceFilter: FC<Props> = ({
 
   const handleMinChange = (value: number) => {
     const newPrice = { ...currentPrice, min: value };
-    onPriceChange(newPrice); // Отправляем обновление сразу
+    onPriceChange(newPrice);
   };
 
   const handleMaxChange = (value: number) => {
