@@ -5,6 +5,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:has(input:disabled) {
+      opacity: 0.5;
+    }
   }
 
   &_input {
@@ -19,7 +23,7 @@
     z-index: 1;
 
     &:disabled {
-      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 
