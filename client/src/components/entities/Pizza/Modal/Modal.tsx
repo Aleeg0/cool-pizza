@@ -1,83 +1,97 @@
 'use client';
 
-import React from 'react';
-import {PizzaFilterState} from "./type";
-import {RadioSlideSelector} from "@/components/features";
-import styles from './styles.module.scss'
-import {IngredientCatalog} from "@/components/entities/Ingredient";
-import {ProductModal} from "@/components/entities/Product";
-import {SmartDisplayer} from "@/components/ui";
+import React, {useState, useEffect} from 'react';
+import { RadioSlideSelector } from "@/components/features";
+import styles from './styles.module.scss';
+import { IngredientCatalog } from "@/components/entities/Ingredient";
+import { ProductModal } from "@/components/entities/Product";
+import { SmartDisplayer } from "@/components/ui";
+import {useProductVariations} from "./lib/useProductVariations";
+import {createDoughOptions, createSizeOptions} from "@/components/entities/Pizza/Modal/lib/productOptions";
+import {PizzaProduct, Product} from "@/store/types/Product";
 
-const sizes = [
-  {id: 0, value: "Маленькая", imgUrl: "/images/test.avif", isExist: true},
-  {id: 1, value: "Средняя", imgUrl: "/images/testM.avif", isExist: true},
-  {id: 2, value: "Большая", imgUrl: "/images/testM.avif", isExist: true},
-];
-
-const doughs = [
-  {id: 0, value: "Традиционное", isExist: true},
-  {id: 1, value: "Тонкое", isExist: true},
-];
-
-const initFilterState: PizzaFilterState = {
-  size_id: 1,
-  dough_id: 0,
-  ingredients: []
+interface PizzaModalProps {
+  product: Product;
 }
 
-const Modal = () => {
-  const [pizzaFilter, setPizzaFilter] = React.useState<PizzaFilterState>(initFilterState);
+const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [selectedDoughIndex, setSelectedDoughIndex] = useState(0);
+  const [selectedIngredientIds, setSelectedIngredientIds] = useState<string[]>([]);
 
-  const setPizzaDough = (id: number) => {
-    setPizzaFilter({
-      ...pizzaFilter,
-      dough_id: id
-    });
-  }
+  const toggleIngredient = (ingredientId: string) => {
+    setSelectedIngredientIds(prev =>
+      prev.includes(ingredientId)
+        ? prev.filter(id => id !== ingredientId)
+        : [...prev, ingredientId]
+    );
+  };
 
-  const setPizzaSize = (id: number) => {
-    setPizzaFilter({
-      ...pizzaFilter,
-      size_id: id
-    });
-  }
+  const variations = product.variations as PizzaProduct[];
+  const {sizes, doughs, getAvailableDoughs, findProduct} = useProductVariations(variations);
 
-  const onCartButtonClick = () => {
+  const availableDoughs = getAvailableDoughs(sizes[selectedSizeIndex]);
+  const sizeOptions = createSizeOptions(sizes);
+  const doughOptions = createDoughOptions(doughs, availableDoughs);
 
-  }
+  // корректируем выбранное тесто при изменении размера
+  useEffect(() => {
+    // если текущее тесто недоступно для нового размера
+    if (doughOptions[selectedDoughIndex]?.disabled) {
+      // находим первое доступное тесто
+      const firstAvailableIndex = doughOptions.findIndex(option => !option.disabled);
+      if (firstAvailableIndex >= 0) {
+        setSelectedDoughIndex(firstAvailableIndex);
+      }
+    }
+  }, [selectedSizeIndex, doughOptions, selectedDoughIndex]);
+
+  const selectedProduct = findProduct(doughs[selectedDoughIndex], Number(sizeOptions[selectedSizeIndex]?.value)) ?? variations[0];
+
+  const totalPrice = selectedProduct.price + selectedProduct.ingredients
+    .filter(ingredient => selectedIngredientIds.includes(ingredient.id))
+    .reduce((sum, ingredient) => sum + ingredient.price, 0);
+
+  const productDetails = `${selectedProduct.size} см, ${selectedProduct.dough} тесто, ${selectedProduct.weight} г`;
 
   return (
     <ProductModal
-      title="Пепперони фреш"
-      productProperty="25 см, традиционное тесто 25, 380 г"
-      description="Соус ранч, моцарелла, ветчина , бекон , красный лук , маринованные огурчики , итальянские травы , соус горчичный"
-      cartButtonCaption="Добавить в корзину за 799₽"
-      onCartButtonClick={onCartButtonClick}
+      title={product.name}
+      description={product.description}
+      productDetails={productDetails}
+      cartButtonCaption={`Добавить в корзину за ${totalPrice} ₽`}
+      onCartButtonClick={() => {}}
       imageVisualizer={
         <SmartDisplayer
-          sizeId={pizzaFilter.size_id}
-          imgUrl={sizes[pizzaFilter.size_id].imgUrl}
+          sizeId={selectedSizeIndex}
+          imgUrl={selectedProduct.imgUrl}
         />
       }
       content={
         <>
           <div className={styles.sliders}>
             <RadioSlideSelector
-              items={sizes}
-              selectedId={pizzaFilter.size_id}
-              onSelect={setPizzaSize}
+              items={sizeOptions}
+              selectedId={selectedSizeIndex}
+              onSelect={setSelectedSizeIndex}
             />
             <RadioSlideSelector
-              items={doughs}
-              selectedId={pizzaFilter.dough_id}
-              onSelect={setPizzaDough}
+              items={doughOptions}
+              selectedId={selectedDoughIndex}
+              onSelect={setSelectedDoughIndex}
             />
           </div>
-          <IngredientCatalog/>
+          {selectedProduct.ingredients.length > 0 && (
+            <IngredientCatalog
+              ingredients={selectedProduct.ingredients}
+              selectedIds={selectedIngredientIds}
+              onSelect={toggleIngredient}
+            />
+          )}
         </>
       }
     />
   );
 };
 
-export default Modal;
+export default PizzaModal;
