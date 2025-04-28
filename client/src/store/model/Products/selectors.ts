@@ -1,6 +1,7 @@
 import {RootState} from "@/store/rootReducer";
 import {createSelector} from "reselect";
 import {Product} from "@/store/types/Product";
+import {UUID} from "@/store/types/shared";
 
 
 const selectAllProducts = (state: RootState) => state.products.items;
@@ -31,7 +32,7 @@ export const selectGroupedProducts = createSelector(
 );
 
 export const selectProductById = createSelector(
-  [selectAllProducts, (state, id: string) => id],
+  [selectAllProducts, (state, id: UUID) => id],
   (products, id) => products.find((product) => product.id === id)!
 );
 

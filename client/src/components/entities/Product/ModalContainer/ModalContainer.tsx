@@ -5,8 +5,9 @@ import {useAppSelector} from "@/store/lib/hooks";
 import {PizzaModal} from "@/components/entities/Pizza";
 import {SimpleProductModule} from "@/components/entities/Product";
 import {selectProductById} from "@/store/model/Products/selectors";
+import {UUID} from "@/store/types/shared";
 
-export const ModalContainer = ({ id }: { id: string }) => {
+export const ModalContainer = ({ id }: { id: UUID }) => {
   const product = useAppSelector((state) => selectProductById(state, id));
 
   useEffect(() => {
