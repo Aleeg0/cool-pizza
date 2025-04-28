@@ -1,10 +1,11 @@
-import {Category} from "@/components/features/Categories/lib/Category";
 import {useEffect, useState} from "react";
 import {scrollToSection} from "./scrollToSection";
+import {Category} from "@/store/types/category";
+import {UUID} from "@/store/types/shared";
 
 export const useCategories = (initialCategories: Category[]) => {
   const [categories] = useState<Category[]>(initialCategories);
-  const [currentCategoryId, setCurrentCategoryId] = useState<number>(0);
+  const [currentCategoryId, setCurrentCategoryId] = useState<UUID>(initialCategories[0]?.id ?? "");
   const [visibleCount, setVisibleCount] = useState(5);
 
   // resize effect

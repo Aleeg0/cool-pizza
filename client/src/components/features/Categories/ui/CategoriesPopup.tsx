@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
 import {cn} from "@/utils";
-import {Category} from "../lib/Category";
 import styles from './Categories.module.scss';
+import {Category} from "@/store/types/category";
+import {UUID} from "@/store/types/shared";
 
 interface Props {
   categories: Category[];
-  selectedId: number;
+  selectedId: UUID;
   onSelect: (item: Category) => void;
 }
 

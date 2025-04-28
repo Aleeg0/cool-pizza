@@ -1,24 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, {FC} from 'react';
 import {cn} from "@/utils";
-import {Category} from "../lib/Category";
 import {useCategories} from "../lib/useCategories";
 import CategoriesDropdown from "./CategoriesDropdown";
 import styles from './Categories.module.scss';
+import {Category} from "@/store/types/category";
 
-const categoryData: Category[] = [
-  {id: 1, name: "meat", value: "Мясные"},
-  {id: 2, name: "spicy", value: "Острые"},
-  {id: 3, name: "sweet", value: "Сладкие"},
-  {id: 4, name: "vegetarian", value: "Вегетарианские"},
-  {id: 5, name: "with_chicken", value: "С курицей"},
-  {id: 6, name: "belarusian", value: "Белорусские"},
-  {id: 7, name: "foreign", value: "Зарубежные"},
-]
+interface Props {
+  categoriesData: Category[];
+}
 
-const Categories = () => {
-  const {categories, currentCategoryId, visibleCount, selectCategory} = useCategories(categoryData);
+const Categories: FC<Props> = ({categoriesData}) => {
+  const {categories, currentCategoryId, visibleCount, selectCategory} = useCategories(categoriesData);
 
   const visibleCategories = categories.slice(0, visibleCount);
   const dropdownCategories = categories.slice(visibleCount);
