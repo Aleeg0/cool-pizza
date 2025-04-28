@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 interface RadioItem {
   id: number;
   value: string;
-  isExist: boolean;
+  disabled: boolean;
 }
 
 interface Props<T extends RadioItem> {
@@ -36,7 +36,7 @@ const RadioSlideSelector = <T extends RadioItem>({
           key={item.id}
           caption={item.value}
           onSelect={() => onSelect(item.id)}
-          disabled={!item.isExist}
+          disabled={item.disabled}
         />
       ))}
     </div>
