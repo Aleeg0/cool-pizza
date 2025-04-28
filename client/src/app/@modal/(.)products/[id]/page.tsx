@@ -1,18 +1,14 @@
 import React from 'react';
 import {Modal} from "@/components/layout";
-import {PizzaModal} from "@/components/entities/Pizza";
-import {SimpleProductModule} from "@/components/entities/Product";
+import {ProductModalContainer} from "@/components/entities/Product";
+import {UUID} from "@/store/types/shared";
 
-const ProductModalPage = async ({ params }: { params: { id: string } }) => {
+const ProductModalPage = async ({ params }: { params: { id: UUID } }) => {
   const {id} = await params;
 
   return (
     <Modal>
-      {Number(id) > 4 ?
-        <PizzaModal/>
-        :
-        <SimpleProductModule/>
-      }
+      <ProductModalContainer id={id} />
     </Modal>
   );
 };
