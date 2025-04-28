@@ -1,33 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, {FC} from 'react';
 import {ProductModal} from "@/components/entities/Product";
 import {RadioSelector} from "@/components/ui";
 import {SmartDisplayer} from "@/components/ui";
 import styles from '../Modal/styles.module.scss'
+import {Product, RegularProduct} from "@/store/types/Product";
 
-const SimpleModal = () => {
+interface Props {
+  product: Product;
+}
 
-  const onCartButtonClick = () => {
-    console.log("Hello")
-  }
+const SimpleModal: FC<Props> = ({product}) => {
+  const {details, weight, price, imgUrl} = product.variations![0] as RegularProduct;
+  const productDetails = `${details} ${weight} г.`;
 
   return (
     <ProductModal
-      title="Молочный коктейль Фисташка"
-      productProperty="0,3 л, 320 г"
-      description="Сочетание нежности, сливочной текстуры и тонкого вкуса фисташки"
-      cartButtonCaption="Добавить в корзину за 799₽"
-      onCartButtonClick={onCartButtonClick}
+      title={product.name}
+      description={product.description}
+      productDetails={productDetails}
+      cartButtonCaption={`Добавить в корзину за ${price} ₽`}
+      onCartButtonClick={() => {}}
       imageVisualizer={
         <SmartDisplayer
           sizeId={2}
-          imgUrl={"/images/testProduct.avif"}
+          imgUrl={imgUrl}
         />
       }
       content={
         <div className={styles.simpleContent}>
-          <RadioSelector caption="1 шт."/>
+          <RadioSelector caption={details}/>
         </div>
       }
     />
