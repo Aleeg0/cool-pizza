@@ -6,7 +6,7 @@ interface Props {
   imageVisualizer: ReactNode;
   content: ReactNode;
   title: string;
-  productProperty: string;
+  productDetails: string;
   description: string;
   onCartButtonClick: () => void;
   cartButtonCaption: string;
@@ -16,7 +16,7 @@ const Modal: FC<Props> = ({
   imageVisualizer,
   content,
   title,
-  productProperty,
+  productDetails,
   description,
   onCartButtonClick,
   cartButtonCaption,
@@ -32,7 +32,7 @@ const Modal: FC<Props> = ({
         <div className={styles.scrollableContent}>
           <div className={styles.description}>
             <h2>{title}</h2>
-            <p>{productProperty}</p>
+            <p>{productDetails}</p>
             <p>{description}</p>
           </div>
           {content}
