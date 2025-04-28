@@ -1,4 +1,13 @@
 .ProductContainer {
+  &_title {
+    margin: 0 0 20px 25px;
+
+    h2 {
+      font-size: var(--font-size-title2);
+      font-weight: 700;
+    }
+  }
+
   &_container {
     padding-top: 30px;
   }
