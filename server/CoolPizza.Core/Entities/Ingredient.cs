@@ -9,7 +9,7 @@ public class Ingredient: Entity
     
     public string Name {get; private set;}
     public string ImgUrl {get; private set;}
-    public string Price {get; private set;}
+    public decimal Price {get; private set;}
     
     public ICollection<Pizza> Pizzas {get; private set;}
     public ICollection<OrderedPizza> OrderedPizzas {get; private set;}
