@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaService.API", "PizzaService.API\PizzaService.API.csproj", "{73933661-D624-4C24-BFD5-8354BC7247C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.API", "CoolPizza.API\CoolPizza.API.csproj", "{73933661-D624-4C24-BFD5-8354BC7247C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.Core", "CoolPizza.Core\CoolPizza.Core.csproj", "{DE92DCD2-1F61-418D-ADB7-919D6C223138}"
 EndProject
