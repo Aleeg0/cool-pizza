@@ -2,6 +2,6 @@
 
 public enum ProductType
 {
-    Regular,
+    Goods,
     Pizza
 }
