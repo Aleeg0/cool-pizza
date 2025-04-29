@@ -12,37 +12,32 @@ public class OrderedGoodsConfig : IEntityTypeConfiguration<OrderedGoods>
         builder.ToTable("ordered_goods");
         
         builder.HasKey(og => og.Id);
-        builder
-            .Property(og => og.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
 
         builder
             .Property(og => og.Quantity)
-            .HasColumnType("quantity");
+            .HasColumnName("quantity");
         
         builder
             .Property(og => og.GoodsId)
-            .HasColumnType("goods_id");
+            .HasColumnName("goods_id");
 
         builder
             .Property(og => og.OrderId)
-            .HasColumnType("order_id");
+            .HasColumnName("order_id");
         
         // relations
         
         // relation with Goods 1:N 
         builder
             .HasOne<Goods>()
-            .WithMany()
-            .HasForeignKey(og => og.GoodsId)
+            .WithOne()
+            .HasForeignKey<OrderedGoods>(og => og.GoodsId)
             .OnDelete(DeleteBehavior.Cascade);
         
         // relation with Order 1:N 
         builder
             .HasOne<Order>()
-            .WithMany()
+            .WithMany(o => o.GoodsLine)
             .HasForeignKey(og => og.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }
