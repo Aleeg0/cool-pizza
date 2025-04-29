@@ -12,12 +12,6 @@ public class OrderedPizzaConfig : IEntityTypeConfiguration<OrderedPizza>
         builder.ToTable("ordered_pizzas");
         
         builder.HasKey(op => op.Id);
-        
-        builder
-            .Property(op => op.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
 
         builder
             .Property(op => op.Quantity)
@@ -39,7 +33,7 @@ public class OrderedPizzaConfig : IEntityTypeConfiguration<OrderedPizza>
         // relation with Order 1:N
         builder
             .HasOne<Order>()
-            .WithMany()
+            .WithMany(o => o.PizzasLine)
             .HasForeignKey(op => op.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }

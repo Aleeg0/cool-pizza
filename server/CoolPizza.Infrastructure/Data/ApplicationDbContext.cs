@@ -15,6 +15,21 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        ApplyBaseEntityConfiguration(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    }
+    
+    private static void ApplyBaseEntityConfiguration(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(Entity).IsAssignableFrom(entityType.ClrType))
+            {
+                modelBuilder.Entity(entityType.ClrType).Property("Id")
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("gen_random_uuid()")
+                    .ValueGeneratedOnAdd();
+            }
+        }
     }
 }

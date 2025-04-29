@@ -11,11 +11,6 @@ public class PizzaConfig: IEntityTypeConfiguration<Pizza>
         builder.ToTable("pizzas");
         
         builder.HasKey(p => p.Id);
-        builder
-            .Property(p => p.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
         
         builder
             .Property(p => p.ImgUrl)

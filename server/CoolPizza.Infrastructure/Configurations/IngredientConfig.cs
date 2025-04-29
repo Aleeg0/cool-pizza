@@ -14,11 +14,6 @@ public class IngredientConfig: IEntityTypeConfiguration<Ingredient>
         builder.ToTable("ingredients");
         
         builder.HasKey(c => c.Id);
-        builder
-            .Property(c => c.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
         
         builder
             .Property(g => g.Name)

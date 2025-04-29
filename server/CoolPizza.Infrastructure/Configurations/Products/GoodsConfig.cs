@@ -13,12 +13,6 @@ public class GoodsConfig: IEntityTypeConfiguration<Goods>
         builder.HasKey(g => g.Id);
         
         builder
-            .Property(g => g.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
-        
-        builder
             .Property(g => g.ImgUrl)
             .HasColumnName("img_url");
 

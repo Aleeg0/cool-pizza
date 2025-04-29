@@ -12,11 +12,6 @@ public class ProductConfig: IEntityTypeConfiguration<Product>
         builder.ToTable("products");
         
         builder.HasKey(p => p.Id);
-        builder
-            .Property(p => p.Id)
-            .HasColumnName("id")
-            .HasDefaultValueSql("gen_random_uuid()")
-            .ValueGeneratedOnAdd();
 
         builder
             .Property(p => p.Name)
