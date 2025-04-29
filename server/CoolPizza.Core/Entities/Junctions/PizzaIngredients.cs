@@ -1,7 +1,7 @@
 ﻿namespace CoolPizza.Core.Entities.Junctions;
 
-public class PizzaIngredients
+public class PizzaIngredients: Entity
 {
-    public Guid PizzaId { get; set; }
-    public Guid IngredientId { get; set; }
+    public Guid PizzaId { get; private set; }
+    public Guid IngredientId { get; private set; }
 }
