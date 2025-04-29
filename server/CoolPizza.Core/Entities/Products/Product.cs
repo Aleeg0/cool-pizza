@@ -9,7 +9,7 @@ public class Product: Entity
     public string Name { get; private set; }
     public string Description { get; private set; }
     public string BaseImg { get; private set; }
-    public string BasePrice { get; private set; }
+    public decimal BasePrice { get; private set; }
     public ProductType Type { get; private set; }
     public Guid CategoryId { get; private set;}
     public ICollection<Goods> Goods { get; private set; }
