@@ -1,0 +1,68 @@
+.Filtration {
+  &_root {
+
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_title {
+    margin-bottom: 30px;
+
+    h3 {
+      font-size: var(--font-size-title3);
+      font-weight: 700;
+    }
+  }
+}
+
+.FilterLayout {
+  &_container {
+    margin-bottom: 30px;
+
+    &:not(:last-child){
+      border-bottom: 2px solid #F6F6F6;
+      padding-bottom: 30px;
+    }
+  }
+
+  &_title {
+    margin-bottom: 15px;
+
+    h5 {
+      font-size: var(--font-size-title5);
+      font-weight: 700;
+      line-height: 22px;
+    }
+  }
+
+}
+
+.PriceFilter {
+  &_content {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    column-gap: 15px;
+  }
+}
+
+.IngredientsFilter {
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_item {
+    margin-bottom: 15px;
+  }
+
+  &_controls {
+    display: flex;
+    justify-content: space-between;
+  }
+}

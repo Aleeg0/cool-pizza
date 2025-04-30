@@ -1,0 +1,29 @@
+.ProfilePopup {
+  &_options {
+    min-width: 130px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &_option {
+    display: flex;
+    padding: 14px 20px;
+    width: 100%;
+    font: inherit;
+    transition-property: color, background;
+
+    &:hover:not(:last-child) {
+      color: var(--color-primary);
+      background: var(--color-primary-super-light);
+    }
+
+    &:last-child {
+      border-top: 2px solid var(--color-border-exit-button);
+
+      &:hover {
+        color: var(--color-primary-super-light);
+        background: var(--color-primary);
+      }
+    }
+  }
+}

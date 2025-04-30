@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 16px;
+
+  h4 {
+    font-weight: 600;
+    font-size: var(--font-size-title4);
+    line-height: 25px;
+  }
+}
+
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ingredient {
+  width: calc(33.3333% - 14px);
+  margin-bottom: 16px;
+  margin-right: 14px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    border-radius: 2px solid var(--color-primary);
+  }
+}

@@ -1,0 +1,1 @@
+export {default as PizzaModal} from './Modal/Modal';

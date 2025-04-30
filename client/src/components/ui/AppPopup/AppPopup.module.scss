@@ -1,0 +1,24 @@
+.AppPopup {
+  &_root {
+    position: relative;
+    width: auto;
+    padding: 5px;
+    opacity: 0.01;
+  }
+
+  &_isVisible {
+    opacity: 1 !important;
+  }
+
+  &_wrapper {
+    position: relative;
+  }
+
+  &_body {
+    overflow: auto;
+    font-size: var(--font-size-paragraph);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+    border-radius: var(--border-radius-popup);
+    background: var(--color-background);
+  }
+}
