@@ -1,6 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaService.API", "PizzaService.API\PizzaService.API.csproj", "{73933661-D624-4C24-BFD5-8354BC7247C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.API", "CoolPizza.API\CoolPizza.API.csproj", "{73933661-D624-4C24-BFD5-8354BC7247C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.Core", "CoolPizza.Core\CoolPizza.Core.csproj", "{DE92DCD2-1F61-418D-ADB7-919D6C223138}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.Infrastructure", "CoolPizza.Infrastructure\CoolPizza.Infrastructure.csproj", "{B7BCDA8F-A64B-42D1-AF02-DF9E25255B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPizza.Application", "CoolPizza.Application\CoolPizza.Application.csproj", "{091EECC4-359E-45CA-82E8-ACC810943C5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +18,17 @@ Global
 		{73933661-D624-4C24-BFD5-8354BC7247C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73933661-D624-4C24-BFD5-8354BC7247C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73933661-D624-4C24-BFD5-8354BC7247C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE92DCD2-1F61-418D-ADB7-919D6C223138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE92DCD2-1F61-418D-ADB7-919D6C223138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE92DCD2-1F61-418D-ADB7-919D6C223138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE92DCD2-1F61-418D-ADB7-919D6C223138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7BCDA8F-A64B-42D1-AF02-DF9E25255B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7BCDA8F-A64B-42D1-AF02-DF9E25255B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7BCDA8F-A64B-42D1-AF02-DF9E25255B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7BCDA8F-A64B-42D1-AF02-DF9E25255B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091EECC4-359E-45CA-82E8-ACC810943C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091EECC4-359E-45CA-82E8-ACC810943C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091EECC4-359E-45CA-82E8-ACC810943C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091EECC4-359E-45CA-82E8-ACC810943C5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
