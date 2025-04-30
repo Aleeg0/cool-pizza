@@ -1,6 +1,6 @@
 ﻿namespace CoolPizza.Core.Entities.Products;
 
-public abstract class Pizza: Variation
+public class Pizza: Variation
 {
     public const int DoughMaxLength = 64;
     public int Size {get; private set;}
