@@ -32,7 +32,7 @@ public class ApplicationDbContext : DbContext
                 
                 // Created_at field
                 modelBuilder.Entity(entityType.ClrType).Property("CreatedAt")
-                    .HasColumnName("create_at")
+                    .HasColumnName("created_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAdd();
             }
