@@ -18,7 +18,6 @@ public class Order: Entity
     public decimal TotalAmount { get; private set; } = 0;
     public OrderStatus Status { get; private set; } = OrderStatus.New;
     public DeliveryType DeliveryType { get; private set; } = DeliveryType.Pickup;
-    public DateTime CreatedAt {get; private set;} = DateTime.UtcNow;
     public DateTime? PaidAt { get; private set; } = null;
     public Guid? UserId { get; private set; } = null;
 

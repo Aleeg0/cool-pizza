@@ -29,6 +29,12 @@ public class ApplicationDbContext : DbContext
                     .HasColumnName("id")
                     .HasDefaultValueSql("gen_random_uuid()")
                     .ValueGeneratedOnAdd();
+                
+                // Created_at field
+                modelBuilder.Entity(entityType.ClrType).Property("CreatedAt")
+                    .HasColumnName("create_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAdd();
             }
         }
     }
