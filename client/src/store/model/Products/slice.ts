@@ -1,6 +1,8 @@
+import {ProductsState} from "./types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {LoadingStatus} from "@/store/lib/enums";
-import {Filters, PriceRange, ProductsState} from "./types";
+import {SortByValues} from "@/store/consts/SortByValues";
+import {Filters, LoadingStatus} from "@/store/types/shared";
+import {fetchProductsGrouped} from "@/store/model/Products/thunk";
 import {Product, ProductTypes} from "@/store/types/Product";
 
 const items: Product[] = [
@@ -9,7 +11,7 @@ const items: Product[] = [
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
     categoryId: "1",
     variations: [
@@ -114,8 +116,8 @@ const items: Product[] = [
     name: "Молочный коктейль Фисташка",
     description: "Сочетание нежности, сливочной текстуры и тонкого вкуса фисташки",
     minPrice: 25.99,
-    baseImgUrl: "/images/testProduct.avif",
-    type: ProductTypes.pizza,
+    baseImg: "/images/testProduct.avif",
+    type: ProductTypes.goods,
     categoryId: "4",
     variations: [
       {
@@ -132,93 +134,114 @@ const items: Product[] = [
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "1"
+    categoryId: "1",
+    variations: []
   },
   {
     id: "4",
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "1"
+    categoryId: "1",
+    variations: []
   },
   {
     id: "5",
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "2"
+    categoryId: "2",
+    variations: []
   },
   {
     id: "6",
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "2"
+    categoryId: "2",
+    variations: []
   },
   {
     id: "7",
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "3"
+    categoryId: "3",
+    variations: []
   },
   {
     id: "8",
     name: "Диабло",
     description: "Острая чоризо, острый перец халапеньо, соус барбекю, митболы, томаты, сладкий перец, красный лук, моцарелла",
     minPrice: 25.99,
-    baseImgUrl: "/images/test.avif",
+    baseImg: "/images/test.avif",
     type: ProductTypes.pizza,
-    categoryId: "2"
+    categoryId: "2",
+    variations: []
   },
 ];
 
+const initSortBy = SortByValues.NEWEST;
+
 const initFilters: Filters = {
   priceRange: {},
-  ingredients: []
+  ingredientsIds: []
 };
 
-const initSortBy = "price";
-
 const initialState: ProductsState = {
-  items,
+  data: [],
   filters: initFilters,
   sortBy: initSortBy,
   status: LoadingStatus.IDLE,
-  error: null
+  error: undefined,
 };
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setFiltersPrice: (state, action: PayloadAction<PriceRange>) => {
-      state.filters.priceRange = action.payload;
-      console.log(action.payload, state.filters.priceRange);
+    setFilters: (state, action: PayloadAction<Filters>) => {
+      state.filters = action.payload;
     },
-    setFilterIngredients: (state, action: PayloadAction<string[]>) => {
-      state.filters.ingredients = action.payload;
-    },
-    resetFilters: (state) => {
-      state.filters = initFilters;
-    },
+    setSortBy: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProductsGrouped.pending, (state) => {
+        if (state.status === LoadingStatus.IDLE) {
+          state.status = LoadingStatus.PENDING;
+        }
+      })
+      .addCase(fetchProductsGrouped.fulfilled, (state, action) => {
+        if (state.status === LoadingStatus.PENDING) {
+          state.status = LoadingStatus.SUCCEEDED;
+          state.data = action.payload;
+        }
+      })
+      .addCase(fetchProductsGrouped.rejected, (state, action) => {
+        if (state.status === LoadingStatus.PENDING) {
+          state.status = LoadingStatus.FAILED;
+          state.error = action.error.message;
+        }
+      });
   }
 });
 
 export const {
-  setFiltersPrice,
-  setFilterIngredients,
-  resetFilters,
+  setFilters,
+  setSortBy
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
