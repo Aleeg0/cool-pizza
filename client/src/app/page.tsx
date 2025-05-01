@@ -23,8 +23,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const urlSortBy = searchParams.get('sortBy');
-    if (urlSortBy && urlSortBy !== sortBy) {
-      dispatch(setSortBy(urlSortBy));
+    if (urlSortBy) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('sortBy');
+      router.push(`?${newParams.toString()}`);
     }
   }, []);
 

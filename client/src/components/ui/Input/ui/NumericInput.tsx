@@ -5,7 +5,7 @@ import styles from './Input.module.scss';
 import {NumericInputProps, IconInputProps} from "../lib/props";
 
 type Props = Omit<NumericInputProps & IconInputProps, 'onChange'> & {
-  onChange: (value: number) => void;
+  onChange: (value: string) => void;
 };
 
 export const NumericInput: FC<Props> = ({
@@ -13,7 +13,7 @@ export const NumericInput: FC<Props> = ({
   maxDigits = 4,
   icon,
   className = '',
-  value = "0",
+  value,
   ...props
 }) => {
   const [inputValue, setInputValue] = useState<string>(value.toString());
@@ -32,7 +32,7 @@ export const NumericInput: FC<Props> = ({
     }
 
     setInputValue(newValue);
-    onChange?.(newValue ? parseInt(newValue, 10) : 0);
+    onChange?.(newValue);
   };
 
   return (

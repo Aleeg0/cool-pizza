@@ -13,7 +13,7 @@ class ProductsApi {
 
   async getGroupedProducts(filters: Filters, sortBy?: string): Promise<AxiosResponse<GroupedProduct[]>> {
     const response = await this._api.post(
-      `${this._baseEndpoint}/menu/filtered?sortBy=${sortBy}`,
+      `${this._baseEndpoint}/menu?sortBy=${sortBy}`,
       {
         priceMin: filters.priceRange.min,
         priceMax: filters.priceRange.max,

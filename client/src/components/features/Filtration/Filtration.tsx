@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './Filtration.module.scss'
 import PriceFilter from "./Filters/PriceFilter";
 import IngredientsFilter from "./Filters/IngredientsFilter";
@@ -17,17 +17,11 @@ const Filtration = () => {
   const dispatch = useAppDispatch();
 
   const onAcceptFilters = () => {
-    console.log("Accept Filters");
     dispatch(setFilters({
       priceRange,
       ingredientsIds
     }));
   }
-
-  /*// when user load page reset filters
-  useEffect(() => {
-    resetFilters();
-  },[resetFilters]);*/
 
   return (
     <div className={styles.Filtration_content}>
@@ -41,7 +35,7 @@ const Filtration = () => {
             onPriceChange={setPrice}
           />
         </FilterLayout>
-        <FilterLayout title="Цена от и до:">
+        <FilterLayout title="Ингредиенты:">
           <IngredientsFilter
             ingredients={ingredients}
             onSelectionChange={setIngredients}

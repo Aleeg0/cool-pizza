@@ -14,28 +14,28 @@ const PriceFilter: FC<Props> = ({
   onPriceChange,
 }) => {
 
-  const handleMinChange = (value: number) => {
-    const newPrice = { ...currentPrice, min: value };
-    onPriceChange(newPrice);
+  const handleMinChange = (value?: string) => {
+    onPriceChange({ ...currentPrice, min: value ? Number(value) : undefined });
   };
 
-  const handleMaxChange = (value: number) => {
-    const newPrice = { ...currentPrice, max: value };
-    onPriceChange(newPrice);
+  const handleMaxChange = (value?: string) => {
+    onPriceChange({ ...currentPrice, max: value ? Number(value) : undefined });
   };
 
 
   return (
     <div className={styles.PriceFilter_content}>
       <NumericInput
-        value={currentPrice.min}
+        value={currentPrice.min ?? ""}
         onChange={handleMinChange}
         icon={<PriceIcon/>}
+        placeholder="0"
       />
       <NumericInput
-        value={currentPrice.max}
+        value={currentPrice.max ?? ""}
         onChange={handleMaxChange}
         icon={<PriceIcon/>}
+        placeholder="0"
       />
     </div>
   );
