@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
-import {ProductReducer} from "./model/Products";
-import {CategoriesReducer} from "@/store/model/Categories";
-import {ingredientsReducer} from "@/store/model/Ingredient";
+import {ingredientsReducer} from "@/store/model/Ingredients";
+import {ProductReducer} from "@/store/model/Products";
+import {CurrentProductReducer} from "@/store/model/CurrentProduct";
 
 const rootReducer = combineReducers({
+  ingredients: ingredientsReducer,
   products: ProductReducer,
-  categories: CategoriesReducer,
-  ingredients: ingredientsReducer
+  currentProduct: CurrentProductReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
