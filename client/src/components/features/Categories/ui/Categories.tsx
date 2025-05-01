@@ -5,7 +5,7 @@ import {cn} from "@/utils";
 import {useCategories} from "../lib/useCategories";
 import CategoriesDropdown from "./CategoriesDropdown";
 import styles from './Categories.module.scss';
-import {Category} from "@/store/types/category";
+import {Category} from "@/store/types/Category";
 
 interface Props {
   categoriesData: Category[];

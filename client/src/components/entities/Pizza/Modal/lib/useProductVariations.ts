@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import {PizzaProduct} from "@/store/types/Product";
+import {Pizza} from "@/store/types/Product";
 
 interface UseProductVariationsResult {
   sizes: number[];
   doughs: string[];
   getAvailableDoughs: (size: number) => string[];
-  findProduct: (dough: string, size: number) => PizzaProduct;
+  findProduct: (dough: string, size: number) => Pizza;
 }
 
-export const useProductVariations = (variations: PizzaProduct[]): UseProductVariationsResult => {
+export const useProductVariations = (variations: Pizza[]): UseProductVariationsResult => {
 
   // получаем уникальные размеры, отсортированные по возростанию
   const sizes = useMemo(() => (

@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import styles from './ProductCatalog.module.scss'
 import {ProductCard} from "@/components/entities/Product";
 import Link from "next/link";
-import {Category} from "@/store/types/category";
+import {Category} from "@/store/types/Category";
 import {Product} from "@/store/types/Product";
 
 interface Props {
@@ -27,7 +27,7 @@ const Section: FC<Props> = ({category, products}) => {
             key={product.id}
           >
             <ProductCard
-              imageUrl={product.baseImgUrl}
+              imageUrl={product.baseImg}
               title={product.name}
               description={product.description}
               price={product.minPrice}

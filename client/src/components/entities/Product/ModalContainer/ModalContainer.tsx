@@ -1,20 +1,29 @@
 'use client';
 
-import React, {useEffect} from 'react';
-import {useAppSelector} from "@/store/lib/hooks";
+import React, {FC, useEffect, useState} from 'react';
 import {PizzaModal} from "@/components/entities/Pizza";
 import {SimpleProductModule} from "@/components/entities/Product";
-import {selectProductById} from "@/store/model/Products/selectors";
 import {UUID} from "@/store/types/shared";
+import {useAppDispatch} from "@/store/lib/hooks";
+import {Product} from "@/store/types/Product";
+import {fetchCurrentProduct} from "@/store/model/CurrentProduct/thunk";
 
-export const ModalContainer = ({ id }: { id: UUID }) => {
-  const product = useAppSelector((state) => selectProductById(state, id));
+type Props = {id: UUID}
+
+export const ModalContainer: FC<Props> = ({id}) => {
+  const dispatch = useAppDispatch();
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    if (!product.variations){
-      // TODO fetch variations
-    }
-  }, [product]);
+    const fetch = async () => {
+      const product = await dispatch(fetchCurrentProduct(id)).unwrap();
+      setProduct(product);
+    };
+
+    fetch();
+  }, [dispatch, id, product]);
+
+  if (!product) return;
 
   return product.type === 'pizza' ?
     <PizzaModal

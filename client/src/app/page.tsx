@@ -4,14 +4,48 @@ import {Header} from "@/components/layout";
 import {Categories, Sorter, Filtration} from "@/components/features";
 import {ProductSection} from "@/components/entities/Product";
 import styles from './Home.module.scss'
-import {useAppSelector} from "@/store/lib/hooks";
-import {selectGroupedProducts} from "@/store/model/Products";
+import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
+import {useEffect} from "react";
+import {fetchProductsGrouped} from "@/store/model/Products/thunk";
+import {fetchIngredients} from "@/store/model/Ingredients/thunk";
+import {setSortBy} from "@/store/model/Products";
+import {useRouter, useSearchParams} from "next/navigation";
+import {SortByValues} from "@/store/consts/SortByValues";
 
 export default function HomePage() {
-  const groupedProducts = useAppSelector(selectGroupedProducts);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const {data: groupedProducts, sortBy, filters} = useAppSelector(state => state.products);
   const existCategories = groupedProducts.length > 0
     ? groupedProducts.map((group) => group.category)
     : [];
+
+  useEffect(() => {
+    const urlSortBy = searchParams.get('sortBy');
+    if (urlSortBy && urlSortBy !== sortBy) {
+      dispatch(setSortBy(urlSortBy));
+    }
+  }, []);
+
+  const handleSortChange = (value: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (value === SortByValues.NEWEST) {
+      newParams.delete('sortBy');
+    } else {
+      newParams.set('sortBy', value);
+    }
+    router.push(`?${newParams.toString()}`);
+    dispatch(setSortBy(value));
+  };
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchProductsGrouped());
+  }, [dispatch, sortBy, filters]);
 
   return (
     <div className={styles.HomePage_root}>
@@ -25,7 +59,10 @@ export default function HomePage() {
             <Categories
               categoriesData={existCategories}
             />
-            <Sorter/>
+            <Sorter
+              onSortChange={handleSortChange}
+              sortBy={sortBy}
+            />
           </div>
           <div className={styles.HomePage_content}>
             <div className={styles.HomePage_filtration}>

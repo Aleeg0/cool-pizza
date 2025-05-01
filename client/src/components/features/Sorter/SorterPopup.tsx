@@ -1,19 +1,20 @@
 import React, {FC, useState} from 'react';
 import styles from './Sorter.module.scss'
 import {UiButton, UiCheckbox} from "@/components/ui";
+import {SortOption} from "./lib";
 
 interface SorterPopupProps {
-  items: string[];
-  selectedId: number;
-  onSelect : (id: number) => void;
+  items: SortOption[];
+  selectedValue: string;
+  onSelect : (value: string) => void;
 }
 
 const SorterPopup: FC<SorterPopupProps> = ({
   items,
-  selectedId,
+  selectedValue,
   onSelect
 }) => {
-  const [checkedId, setCheckedId] = useState(selectedId);
+  const [checkedId, setCheckedId] = useState<string>(selectedValue);
 
   return (
     <div className={styles.SorterPopup_content}>
@@ -21,15 +22,15 @@ const SorterPopup: FC<SorterPopupProps> = ({
         <h2>С чего начнём?</h2>
       </div>
       <ul>
-        {items.map((item, index) =>
+        {items.map((sortOption, index) =>
           <li
             className={styles.SorterPopup_item}
             key={index}
           >
             <UiCheckbox
-              isChecked={checkedId === index}
-              onChecked={() => setCheckedId(index)}
-              caption={item}
+              isChecked={checkedId === sortOption.value}
+              onChecked={() => setCheckedId(sortOption.value)}
+              caption={sortOption.name}
             />
           </li>
         )}

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {cn} from "@/utils";
 import styles from './Categories.module.scss';
-import {Category} from "@/store/types/category";
+import {Category} from "@/store/types/Category";
 import {UUID} from "@/store/types/shared";
 
 interface Props {

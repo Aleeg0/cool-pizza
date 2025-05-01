@@ -1,17 +1,7 @@
-import {ItemsState} from "@/store/lib/types";
-import {Product} from "@/store/types/Product";
+import {GroupedProduct} from "@/store/types/Product";
+import {DefaultState, Filters} from "@/store/types/shared";
 
-export interface PriceRange {
-  min?: number;
-  max?: number;
-}
-
-export interface Filters {
-  priceRange: PriceRange;
-  ingredients: string[];
-}
-
-export interface ProductsState extends ItemsState<Product>{
+export interface ProductsState extends DefaultState<GroupedProduct[]> {
   filters: Filters,
   sortBy: string;
 }

@@ -1,8 +1,8 @@
 import {IngredientsState} from "./types";
-
 import {createSlice} from "@reduxjs/toolkit";
-import {LoadingStatus} from "@/store/lib/enums";
 import {Ingredient} from "@/store/types/Ingredient";
+import {LoadingStatus} from "@/store/types/shared";
+import {fetchIngredients} from "@/store/model/Ingredients/thunk";
 
 const ingredients: Ingredient[] = [
   {id: "1", name: "Ingredient 1", imgUrl: "", price: 0},
@@ -25,16 +25,34 @@ const ingredients: Ingredient[] = [
 
 
 const initialState: IngredientsState = {
-  items: ingredients,
+  data: ingredients,
   status: LoadingStatus.IDLE,
-  error: null
+  error: undefined
 };
 
 const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
-  reducers: {
-
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchIngredients.pending, (state) => {
+        if (state.status === LoadingStatus.IDLE) {
+          state.status = LoadingStatus.PENDING;
+        }
+      })
+      .addCase(fetchIngredients.fulfilled, (state, action) => {
+        if (state.status === LoadingStatus.PENDING) {
+          state.status = LoadingStatus.SUCCEEDED;
+          state.data = action.payload;
+        }
+      })
+      .addCase(fetchIngredients.rejected, (state, action) => {
+        if (state.status === LoadingStatus.PENDING) {
+          state.status = LoadingStatus.FAILED;
+          state.error = action.error.message;
+        }
+      });
   }
 });
 

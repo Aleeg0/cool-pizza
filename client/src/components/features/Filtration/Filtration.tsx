@@ -6,22 +6,28 @@ import PriceFilter from "./Filters/PriceFilter";
 import IngredientsFilter from "./Filters/IngredientsFilter";
 import FilterLayout from "@/components/features/Filtration/Filters/FilterLayout";
 import {UiButton} from "@/components/ui/Buttons";
-import {useAppSelector} from "@/store/lib/hooks";
-import {selectIngredients} from "@/store/model/Ingredient";
-import {useFilters} from "@/store/hooks";
+import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
+import {selectIngredients} from "@/store/model/Ingredients";
+import {setFilters} from "@/store/model/Products";
+import {useFilters} from "./lib/useFilters";
 
 const Filtration = () => {
   const ingredients = useAppSelector(selectIngredients);
-  const {filters, resetFilters, setPrice, setIngredients} = useFilters();
+  const {priceRange, ingredientsIds, setPrice, setIngredients} = useFilters();
+  const dispatch = useAppDispatch();
 
   const onAcceptFilters = () => {
     console.log("Accept Filters");
+    dispatch(setFilters({
+      priceRange,
+      ingredientsIds
+    }));
   }
 
-  // when user load page reset filters
+  /*// when user load page reset filters
   useEffect(() => {
     resetFilters();
-  },[resetFilters]);
+  },[resetFilters]);*/
 
   return (
     <div className={styles.Filtration_content}>
@@ -31,7 +37,7 @@ const Filtration = () => {
       <div>
         <FilterLayout title="Цена от и до:">
           <PriceFilter
-            currentPrice={filters.priceRange}
+            currentPrice={priceRange}
             onPriceChange={setPrice}
           />
         </FilterLayout>
@@ -39,7 +45,7 @@ const Filtration = () => {
           <IngredientsFilter
             ingredients={ingredients}
             onSelectionChange={setIngredients}
-            selectedIds={filters.ingredients}
+            selectedIds={ingredientsIds}
           />
         </FilterLayout>
       </div>
@@ -48,7 +54,7 @@ const Filtration = () => {
           caption="Применить"
           isFullWidth={true}
           onClick={onAcceptFilters}
-          disabled={!!(filters.priceRange.min && filters.priceRange.max && filters.priceRange.min > filters.priceRange.max)}
+          disabled={!!(priceRange.min && priceRange.max && priceRange.min > priceRange.max)}
         />
       </div>
     </div>

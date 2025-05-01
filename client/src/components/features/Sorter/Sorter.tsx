@@ -1,28 +1,28 @@
 'use client';
-
-import React, {useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Portal} from "@/components/layout";
 import {cn} from "@/utils";
 import {SortIcon} from "@/components/icons";
 import {InlineButton} from "@/components/ui";
 import SorterPopup from "./SorterPopup";
 import styles from './Sorter.module.scss'
+import {sortOptions} from "./lib";
 
-const arr = [
-  "рейтинг",
-  "дешевое",
-  "дорогое"
-];
+interface Props {
+  onSortChange: (sortBy: string) => void;
+  sortBy: string;
+}
 
-const Sorter = () => {
+const Sorter: FC<Props> = ({onSortChange, sortBy}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = React.useState(0);
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const onSelect = (id: number) => {
+  const onSelect = (value: string) => {
     setIsOpen(false);
-    setSelectedId(id);
+    onSortChange(value);
   }
+
+  const sortByName = sortOptions.find(sortOption => sortOption.value === sortBy)?.name ?? "";
 
   return (
     <div
@@ -39,7 +39,7 @@ const Sorter = () => {
         Сортировка:
       </span>
       <InlineButton
-        caption={arr[selectedId]}
+        caption={sortByName}
         onClick={() => setIsOpen(!isOpen)}
         withAnimation={true}
       />
@@ -50,8 +50,8 @@ const Sorter = () => {
             triggerRef={anchorRef}
         >
           <SorterPopup
-              items={arr}
-              selectedId={selectedId}
+              items={sortOptions}
+              selectedValue={sortBy}
               onSelect={onSelect}
           />
         </Portal>

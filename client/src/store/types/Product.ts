@@ -1,7 +1,8 @@
 import {UUID} from "./shared";
 import {Ingredient} from "./Ingredient";
+import {Category} from "./Category";
 
-export interface RegularProduct {
+export interface Goods {
   imgUrl: string;
   price: number;
   details: string;
@@ -9,7 +10,7 @@ export interface RegularProduct {
   product_id: string;
 }
 
-export interface PizzaProduct {
+export interface Pizza {
   imgUrl: string;
   price: number;
   size: number;
@@ -21,16 +22,21 @@ export interface PizzaProduct {
 
 export enum ProductTypes {
   pizza = "pizza",
-  simpleProduct = "simpleProduct"
+  goods = "goods"
 }
 
 export interface Product {
   id: UUID;
   name: string;
   description: string;
-  baseImgUrl: string;
+  baseImg: string;
   minPrice: number;
-  type: ProductTypes;
+  type?: ProductTypes;
   categoryId: string;
-  variations?: RegularProduct[] | PizzaProduct[]
+  variations: Goods[] | Pizza[]
+}
+
+export interface GroupedProduct {
+  category: Category;
+  products: Product[];
 }
