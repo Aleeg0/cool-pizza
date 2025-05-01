@@ -1,54 +1,25 @@
 'use client';
-
-import React, {useEffect, useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Portal} from "@/components/layout";
 import {cn} from "@/utils";
 import {SortIcon} from "@/components/icons";
 import {InlineButton} from "@/components/ui";
 import SorterPopup from "./SorterPopup";
 import styles from './Sorter.module.scss'
-import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
-import {selectSortBy} from "@/store/model/Products/selectors";
-import {setSortBy} from "@/store/model/Products";
 import {sortOptions} from "./lib";
-import {useRouter, useSearchParams} from "next/navigation";
-import {SortByValues} from "@/store/consts/SortByValues";
 
-const Sorter = () => {
+interface Props {
+  onSortChange: (sortBy: string) => void;
+  sortBy: string;
+}
+
+const Sorter: FC<Props> = ({onSortChange, sortBy}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const sortBy = useAppSelector(selectSortBy);
-  const dispatch = useAppDispatch();
-
-  // synchronize when mounting
-  useEffect(() => {
-      const urlSortBy = searchParams.get('sortBy');
-      if (urlSortBy && urlSortBy !== sortBy) {
-        dispatch(setSortBy(urlSortBy));
-      }
-    }, []);
-
   const onSelect = (value: string) => {
-    // closing popup and change value
     setIsOpen(false);
-    dispatch(setSortBy(value));
-
-    // update url string
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-
-    // if default value remove from url
-    if (value === SortByValues.NEWEST) {
-      newSearchParams.delete('sortBy');
-    }
-    else {
-      newSearchParams.set("sortBy", value);
-    }
-
-    router.push(`?${newSearchParams.toString()}`, {scroll: false});
+    onSortChange(value);
   }
 
   const sortByName = sortOptions.find(sortOption => sortOption.value === sortBy)?.name ?? "";
