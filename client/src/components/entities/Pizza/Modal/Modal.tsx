@@ -8,7 +8,7 @@ import { ProductModal } from "@/components/entities/Product";
 import { SmartDisplayer } from "@/components/ui";
 import {useProductVariations} from "./lib/useProductVariations";
 import {createDoughOptions, createSizeOptions} from "@/components/entities/Pizza/Modal/lib/productOptions";
-import {PizzaProduct, Product} from "@/store/types/Product";
+import {Pizza, Product} from "@/store/types/Product";
 
 interface PizzaModalProps {
   product: Product;
@@ -27,7 +27,7 @@ const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
     );
   };
 
-  const variations = product.variations as PizzaProduct[];
+  const variations = product.variations as Pizza[];
   const {sizes, doughs, getAvailableDoughs, findProduct} = useProductVariations(variations);
 
   const availableDoughs = getAvailableDoughs(sizes[selectedSizeIndex]);

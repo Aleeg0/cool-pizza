@@ -3,7 +3,7 @@ import {cn} from "@/utils";
 import CategoriesPopup from "./CategoriesPopup";
 import {Portal} from "@/components/layout";
 import styles from "./Categories.module.scss";
-import {Category} from "@/store/types/category";
+import {Category} from "@/store/types/Category";
 import {UUID} from "@/store/types/shared";
 
 interface Props {

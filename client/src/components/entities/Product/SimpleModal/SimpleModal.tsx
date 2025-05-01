@@ -5,14 +5,14 @@ import {ProductModal} from "@/components/entities/Product";
 import {RadioSelector} from "@/components/ui";
 import {SmartDisplayer} from "@/components/ui";
 import styles from '../Modal/styles.module.scss'
-import {Product, RegularProduct} from "@/store/types/Product";
+import {Product, Goods} from "@/store/types/Product";
 
 interface Props {
   product: Product;
 }
 
 const SimpleModal: FC<Props> = ({product}) => {
-  const {details, weight, price, imgUrl} = product.variations![0] as RegularProduct;
+  const {details, weight, price, imgUrl} = product.variations![0] as Goods;
   const productDetails = `${details} ${weight} г.`;
 
   return (

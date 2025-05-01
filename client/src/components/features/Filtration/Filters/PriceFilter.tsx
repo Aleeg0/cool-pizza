@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import styles from '../Filtration.module.scss';
 import {NumericInput} from "@/components/ui/Input";
 import {PriceIcon} from "@/components/icons";
-import {PriceRange} from "@/store/model/Products";
+import {PriceRange} from "@/store/types/shared";
 
 interface Props {
   currentPrice: PriceRange;

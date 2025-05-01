@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {scrollToSection} from "./scrollToSection";
-import {Category} from "@/store/types/category";
+import {Category} from "@/store/types/Category";
 import {UUID} from "@/store/types/shared";
 
 export const useCategories = (initialCategories: Category[]) => {
