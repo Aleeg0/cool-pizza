@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {Nunito} from "next/font/google";
 import type { Metadata } from "next";
 import '@/styles/index.scss';
@@ -22,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunitoFont.className}>
         <ReduxProvider>
-          {children}
+          <Suspense>
+            {children}
+          </Suspense>
           {modal}
         </ReduxProvider>
       </body>
