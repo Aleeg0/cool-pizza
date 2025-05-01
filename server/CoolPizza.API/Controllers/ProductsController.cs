@@ -11,13 +11,6 @@ namespace PizzaService.API.Controllers;
 [Route("api/[controller]")]
 public class ProductsController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("menu")]
-    public async Task<ActionResult<MenuProductsDto>> GetMenuProducts([FromQuery] GetMenuProductsQuery query)
-    {
-        var products = await mediator.Send(query);
-        return Ok(products);
-    }
-
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ProductWithVariationsDto>> GetById([FromRoute] GetProductByIdQuery query)
     {
@@ -32,8 +25,8 @@ public class ProductsController(IMediator mediator) : ControllerBase
         return Ok(products);
     }
     
-    [HttpPost("menu/filtered")]
-    public async Task<ActionResult<MenuProductsDto>> GetFilteredMenuProducts([FromBody] GetFilteredMenuProductsQuery query, [FromQuery] SortOption sortBy)
+    [HttpPost("menu")]
+    public async Task<ActionResult<MenuProductsDto>> GetMenuProducts([FromBody] GetMenuProductsQuery query, [FromQuery] SortOption sortBy)
     {
         query.SortBy = sortBy;
         var products = await mediator.Send(query);

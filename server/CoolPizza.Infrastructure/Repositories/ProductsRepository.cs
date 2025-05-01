@@ -10,26 +10,7 @@ namespace CoolPizza.Infrastructure.Repositories;
 
 public class ProductsRepository(ApplicationDbContext context) : IProductsRepository
 {
-    public async Task<List<MenuProductDto>> GetMenuAllAsync(SortOption sortOption)
-    {
-        IQueryable<Product> query = context.Products.AsQueryable();
-        
-        // sorting
-        query = SortProducts(query, sortOption); 
-        
-        IQueryable<MenuProductDto> result = query.Select(p => new MenuProductDto(
-            p.Id,
-            p.Name,
-            p.Description,
-            p.BaseImg,
-            p.BasePrice,
-            p.CategoryId
-        ));
-        
-        return await result.ToListAsync();
-    }
-
-    public async Task<List<MenuProductDto>> GetFilteredAsync(ProductFiltersDto filtersDto, SortOption sortOption)
+    public async Task<List<MenuProductDto>> GetMenuAllAsync(ProductFiltersDto filtersDto, SortOption sortOption)
     {
         IQueryable<Product> query = context.Products.AsQueryable();
 
