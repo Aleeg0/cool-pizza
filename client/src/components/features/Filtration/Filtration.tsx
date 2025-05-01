@@ -17,17 +17,11 @@ const Filtration = () => {
   const dispatch = useAppDispatch();
 
   const onAcceptFilters = () => {
-    console.log("Accept Filters");
     dispatch(setFilters({
       priceRange,
       ingredientsIds
     }));
   }
-
-  /*// when user load page reset filters
-  useEffect(() => {
-    resetFilters();
-  },[resetFilters]);*/
 
   return (
     <div className={styles.Filtration_content}>
