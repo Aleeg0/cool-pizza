@@ -10,7 +10,7 @@ class IngredientsApi {
   }
 
   async getIngredients() {
-    const response = await this._api.get(`${this._baseEndpoint}`);
+    const response = await this._api.get(`${this._baseEndpoint}/menu`);
     return response;
   }
 }
