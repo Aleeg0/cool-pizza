@@ -22,16 +22,17 @@ const Section: FC<Props> = ({category, products}) => {
       <div className={styles.ProductContainer_products}>
         {products.map((product, i) =>
           <Link
-            href={`/products/${i + 1}`}
+            href={`/products/${product.id}`}
             className={styles.ProductContainer_product}
             key={product.id}
+            scroll={false}
           >
             <ProductCard
               imageUrl={product.baseImg}
               title={product.name}
               description={product.description}
-              price={product.minPrice}
-              currency="₽"
+              price={product.basePrice}
+              currency="руб."
             />
           </Link>
         )}
