@@ -4,7 +4,6 @@ import {Category} from "@/store/types/Category";
 import {UUID} from "@/store/types/shared";
 
 export const useCategories = (initialCategories: Category[]) => {
-  const [categories] = useState<Category[]>(initialCategories);
   const [currentCategoryId, setCurrentCategoryId] = useState<UUID>(initialCategories[0]?.id ?? "");
   const [visibleCount, setVisibleCount] = useState(5);
 
@@ -29,7 +28,7 @@ export const useCategories = (initialCategories: Category[]) => {
   };
 
   return {
-    categories,
+    categories: initialCategories,
     currentCategoryId,
     visibleCount,
     selectCategory,
