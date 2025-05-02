@@ -1,18 +1,13 @@
 'use client';
 
-import React, {FC} from 'react';
+import React from 'react';
 import {cn} from "@/utils";
 import {useCategories} from "../lib/useCategories";
 import CategoriesDropdown from "./CategoriesDropdown";
 import styles from './Categories.module.scss';
-import {Category} from "@/store/types/Category";
 
-interface Props {
-  categoriesData: Category[];
-}
-
-const Categories: FC<Props> = ({categoriesData}) => {
-  const {categories, currentCategoryId, visibleCount, selectCategory} = useCategories(categoriesData);
+const Categories = () => {
+  const {categories, currentCategoryId, visibleCount, selectCategory} = useCategories();
 
   const visibleCategories = categories.slice(0, visibleCount);
   const dropdownCategories = categories.slice(visibleCount);
@@ -20,10 +15,10 @@ const Categories: FC<Props> = ({categoriesData}) => {
   return (
     <nav className={styles.Categories_container}>
       <ul className={styles.Categories_itemList}>
-        {visibleCategories.map((item, i) =>
+        {visibleCategories.map((item) =>
         <li
           className={styles.Categories_item}
-          key={i}
+          key={item.id}
         >
           <button
             className={cn(
@@ -39,7 +34,7 @@ const Categories: FC<Props> = ({categoriesData}) => {
         {dropdownCategories.length > 0 && (
           <CategoriesDropdown
             categories={dropdownCategories}
-            selectedId={currentCategoryId}
+            selectedId={currentCategoryId!}
             onSelect={selectCategory}
           />
         )}

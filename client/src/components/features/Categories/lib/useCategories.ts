@@ -1,17 +1,19 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {scrollToSection} from "./scrollToSection";
 import {Category} from "@/store/types/Category";
 import {UUID} from "@/store/types/shared";
+import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
+import {selectCurrentCategoryId, selectExistCategories, setCurrentCategoryId} from "@/store/model/Products";
 
-export const useCategories = (initialCategories: Category[]) => {
-  const [currentCategoryId, setCurrentCategoryId] = useState<UUID>(initialCategories[0]?.id ?? "");
+export const useCategories = () => {
+  const dispatch = useAppDispatch();
+  const existCategories = useAppSelector(selectExistCategories);
   const [visibleCount, setVisibleCount] = useState(5);
 
   // resize effect
   useEffect(() => {
     const handleResize = () => {
-      const count = updateVisibleCategories();
-      setVisibleCount(count);
+      setVisibleCount(updateVisibleCategories());
     }
 
     window.addEventListener("resize", handleResize);
@@ -19,17 +21,16 @@ export const useCategories = (initialCategories: Category[]) => {
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-
   },[]);
 
-  const selectCategory = (item: Category) => {
-    setCurrentCategoryId(item.id);
+  const selectCategory = useCallback((item: Category) => {
+    dispatch(setCurrentCategoryId(item.id));
     scrollToSection(item.name);
-  };
+  }, [dispatch]);
 
   return {
-    categories: initialCategories,
-    currentCategoryId,
+    categories: existCategories,
+    currentCategoryId: useAppSelector(selectCurrentCategoryId),
     visibleCount,
     selectCategory,
   };
