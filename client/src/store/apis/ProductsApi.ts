@@ -23,7 +23,7 @@ class ProductsApi {
   }
 
   async getProductById(id: UUID): Promise<AxiosResponse<Product>> {
-    const response = await this._api.post(`${this._baseEndpoint}/${id}`);
+    const response = await this._api.get(`${this._baseEndpoint}/${id}`);
     return response;
   }
 
