@@ -1,7 +1,7 @@
 import {ProductsState} from "./types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SortByValues} from "@/store/consts/SortByValues";
-import {Filters, LoadingStatus} from "@/store/types/shared";
+import {Filters, LoadingStatus, UUID} from "@/store/types/shared";
 import {fetchProductsGrouped} from "@/store/model/Products/thunk";
 
 const initSortBy = SortByValues.NEWEST;
@@ -13,6 +13,7 @@ const initFilters: Filters = {
 
 const initialState: ProductsState = {
   data: [],
+  currentCategoryId: undefined,
   filters: initFilters,
   sortBy: initSortBy,
   status: LoadingStatus.IDLE,
@@ -28,6 +29,9 @@ const productsSlice = createSlice({
     },
     setSortBy: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
+    },
+    setCurrentCategoryId: (state, action: PayloadAction<UUID>) => {
+      state.currentCategoryId = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -41,6 +45,7 @@ const productsSlice = createSlice({
         if (state.status === LoadingStatus.PENDING) {
           state.status = LoadingStatus.SUCCEEDED;
           state.data = action.payload;
+          state.currentCategoryId = action.payload.at(0)?.category.id;
         }
       })
       .addCase(fetchProductsGrouped.rejected, (state, action) => {
@@ -54,7 +59,8 @@ const productsSlice = createSlice({
 
 export const {
   setFilters,
-  setSortBy
+  setSortBy,
+  setCurrentCategoryId
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
