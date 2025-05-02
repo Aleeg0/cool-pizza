@@ -19,10 +19,11 @@ const currentProductSlice = createSlice({
       .addCase(fetchCurrentProduct.pending, (state) => {
           if (state.status === LoadingStatus.IDLE) {
             state.status = LoadingStatus.PENDING;
+            state.data = undefined;
           }
         })
       .addCase(fetchCurrentProduct.fulfilled, (state, action) => {
-        if (state.status === LoadingStatus.IDLE) {
+        if (state.status === LoadingStatus.PENDING) {
           state.status = LoadingStatus.SUCCEEDED;
           state.data = action.payload;
         }
