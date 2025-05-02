@@ -8,12 +8,25 @@ import {CrossIcon} from "@/components/icons";
 
 interface Props {
   children: ReactNode;
+  isMounted?: boolean;
 }
 
-const Modal: FC<Props> = ({ children }) => {
-  const [isMounted, setIsMounted] = useState(false);
+const Modal: FC<Props> = ({ children, isMounted = true}) => {
   const router = useRouter();
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // for scroll-bar
+  useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.setProperty('--size-main-scroll-bar', `${scrollbarWidth}px`);
+
+    document.body.classList.add('modalOpen');
+
+    return () => {
+      document.body.style.removeProperty('--size-main-scroll-bar');
+      document.body.classList.remove('modalOpen');
+    }
+  }, []);
 
   // for outside container click
   useEffect(() => {
@@ -26,16 +39,12 @@ const Modal: FC<Props> = ({ children }) => {
     document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [router]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-nextjs-dialog="">
       <div className={cn(
         styles.wrapper,
         isMounted ? styles.show : ''
