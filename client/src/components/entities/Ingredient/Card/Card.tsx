@@ -1,11 +1,13 @@
 import React, {FC} from 'react';
 import styles from './styles.module.scss';
+import {cn} from "@/utils";
 
-interface Props {
+interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'onClick'> {
   name: string;
   imgUrl: string;
   price: number;
   currency: string;
+  onClick: () => void
 }
 
 const Card: FC<Props> = ({
@@ -13,9 +15,17 @@ const Card: FC<Props> = ({
   imgUrl,
   price,
   currency,
+  className,
+  onClick
 }) => {
   return (
-    <button className={styles.root}>
+    <button
+      onClick={onClick}
+      className={cn(
+        styles.root,
+        className ? className : ''
+      )}
+    >
       <span className={styles.imageCover}>
         <div className={styles.imageCover_background}/>
         <img
@@ -28,7 +38,7 @@ const Card: FC<Props> = ({
         {name}
       </span>
       <span className={styles.price}>
-        {`${price} ${currency}`}
+        {`${price.toFixed(2)} ${currency}`}
       </span>
     </button>
   );

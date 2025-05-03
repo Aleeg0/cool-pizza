@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import styles from './Header.module.scss';
-import {HeaderTitle, UiButton, Input} from "@/components/ui";
+import {HeaderTitle, UiButton} from "@/components/ui";
 import {useScrollTrigger} from "@/hooks";
 import {cn} from "@/utils";
 import {AuthButton} from "@/components/features/Auth";
+import {Categories, Sorter} from "@/components/features";
 
 const Header = () => {
   const isScrolled = useScrollTrigger();
@@ -21,8 +22,11 @@ const Header = () => {
             <div className={styles.Header_leftPart__Title}>
               <HeaderTitle/>
             </div>
-            <div className={styles.Header_leftPart__Searcher}>
-              <Input/>
+            <div className={styles.Header_leftPart__filters}>
+              <Categories/>
+              <Suspense>
+                <Sorter/>
+              </Suspense>
             </div>
           </div>
           <div className={styles.Header_rightPart}>

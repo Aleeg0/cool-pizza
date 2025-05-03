@@ -1,4 +1,5 @@
-﻿using CoolPizza.Core.Entities.Orders;
+﻿using System.Text.Json.Serialization;
+using CoolPizza.Core.Entities.Orders;
 using CoolPizza.Core.Entities.Products;
 
 namespace CoolPizza.Core.Entities;
@@ -11,6 +12,9 @@ public class Ingredient: Entity
     public string ImgUrl {get; private set;}
     public decimal Price {get; private set;}
     
+    [JsonIgnore]
     public ICollection<Pizza> Pizzas {get; private set;}
+    
+    [JsonIgnore]
     public ICollection<OrderedPizza> OrderedPizzas {get; private set;}
 }

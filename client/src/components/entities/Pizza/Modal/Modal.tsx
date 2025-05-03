@@ -9,6 +9,7 @@ import { SmartDisplayer } from "@/components/ui";
 import {useProductVariations} from "./lib/useProductVariations";
 import {createDoughOptions, createSizeOptions} from "@/components/entities/Pizza/Modal/lib/productOptions";
 import {Pizza, Product} from "@/store/types/Product";
+import {UUID} from "@/store/types/shared";
 
 interface PizzaModalProps {
   product: Product;
@@ -17,9 +18,9 @@ interface PizzaModalProps {
 const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [selectedDoughIndex, setSelectedDoughIndex] = useState(0);
-  const [selectedIngredientIds, setSelectedIngredientIds] = useState<string[]>([]);
+  const [selectedIngredientIds, setSelectedIngredientIds] = useState<UUID[]>([]);
 
-  const toggleIngredient = (ingredientId: string) => {
+  const toggleIngredient = (ingredientId: UUID) => {
     setSelectedIngredientIds(prev =>
       prev.includes(ingredientId)
         ? prev.filter(id => id !== ingredientId)
@@ -59,7 +60,7 @@ const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
       title={product.name}
       description={product.description}
       productDetails={productDetails}
-      cartButtonCaption={`Добавить в корзину за ${totalPrice} ₽`}
+      cartButtonCaption={`Добавить в корзину за ${totalPrice.toFixed(2)} ₽`}
       onCartButtonClick={() => {}}
       imageVisualizer={
         <SmartDisplayer

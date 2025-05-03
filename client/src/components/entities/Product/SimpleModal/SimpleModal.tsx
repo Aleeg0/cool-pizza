@@ -20,7 +20,7 @@ const SimpleModal: FC<Props> = ({product}) => {
       title={product.name}
       description={product.description}
       productDetails={productDetails}
-      cartButtonCaption={`Добавить в корзину за ${price} ₽`}
+      cartButtonCaption={`Добавить в корзину за ${price.toFixed(2)} ₽`}
       onCartButtonClick={() => {}}
       imageVisualizer={
         <SmartDisplayer

@@ -1,41 +1,29 @@
 'use client';
 
-import React, {FC, ReactNode, useEffect, useRef, useState} from 'react';
+import React, {FC, ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss'
 import {useRouter} from "next/navigation";
 import {cn} from "@/utils";
 import {CrossIcon} from "@/components/icons";
+import {useClickOutside, useLockBodyScroll} from "@/hooks";
 
 interface Props {
   children: ReactNode;
+  isMounted?: boolean;
 }
 
-const Modal: FC<Props> = ({ children }) => {
-  const [isMounted, setIsMounted] = useState(false);
+const Modal: FC<Props> = ({ children, isMounted = true}) => {
   const router = useRouter();
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
 
+  const onClose = useCallback(() => router.back(), [router]);
   // for outside container click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
-        router.back();
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [router]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  useClickOutside(contentRef, onClose);
+  // for scroll-bar
+  useLockBodyScroll(isMounted);
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-nextjs-dialog="">
       <div className={cn(
         styles.wrapper,
         isMounted ? styles.show : ''
@@ -48,7 +36,7 @@ const Modal: FC<Props> = ({ children }) => {
           >
             <button
               className={styles.closeButton}
-              onClick={() => router.back()}
+              onClick={onClose}
             >
               <CrossIcon/>
             </button>

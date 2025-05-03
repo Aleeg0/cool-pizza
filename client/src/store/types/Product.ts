@@ -21,8 +21,8 @@ export interface Pizza {
 }
 
 export enum ProductTypes {
-  pizza = "pizza",
-  goods = "goods"
+  goods = "Goods",
+  pizza = "Pizza"
 }
 
 export interface Product {
@@ -30,7 +30,7 @@ export interface Product {
   name: string;
   description: string;
   baseImg: string;
-  minPrice: number;
+  basePrice: number;
   type?: ProductTypes;
   categoryId: string;
   variations: Goods[] | Pizza[]

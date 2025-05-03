@@ -33,4 +33,24 @@ public class Category : Entity
         
         return new Category(name, value);
     }
+
+    public void Update(string? name, string? value)
+    {
+        if (name is not null)
+        {
+            if (name.Length < NameMinLength || name.Length > NameMaxLength)
+                throw new ArgumentException($"Property name must be between {NameMinLength} and {NameMaxLength} characters long.");
+            Name = name;
+        }
+
+        if (value is not null)
+        {
+            if (value.Length < ValueMinLength || value.Length > ValueMaxLength)
+            {
+                throw new ArgumentException($"Property value must be between {ValueMinLength} and {ValueMaxLength} characters long.");
+            }
+
+            Value = value;
+        }
+    }
 }

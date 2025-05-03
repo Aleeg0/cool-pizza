@@ -2,15 +2,16 @@ import React, {FC} from 'react';
 import {IngredientCard} from "@/components/entities/Ingredient";
 import styles from './styles.module.scss'
 import {Ingredient} from "@/store/types/Ingredient";
+import {UUID} from "@/store/types/shared";
+import {cn} from "@/utils";
 
 interface Props {
   ingredients: Ingredient[];
-  selectedIds: string[];
-  onSelect: (id: string) => void;
+  selectedIds: UUID[];
+  onSelect: (id: UUID) => void;
 }
 
 const Catalog: FC<Props> = ({ingredients, selectedIds, onSelect}) => {
-
 
   return (
     <div className={styles.container}>
@@ -19,15 +20,16 @@ const Catalog: FC<Props> = ({ingredients, selectedIds, onSelect}) => {
       </div>
       <div className={styles.ingredients}>
         {ingredients.map((ingredient) =>
-        <div
-          key={ingredient.id}
-          className={styles.ingredient}
-        >
           <IngredientCard
             {...ingredient}
-            currency="₽"
+            currency="руб."
+            key={ingredient.id}
+            onClick={() => onSelect(ingredient.id)}
+            className={cn(
+              styles.ingredient,
+              selectedIds.includes(ingredient.id) ? styles.ingredient_active : ''
+            )}
           />
-        </div>
         )}
       </div>
     </div>

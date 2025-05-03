@@ -43,7 +43,7 @@ const Card: FC<ProductCardProps> = ({
         </div>
         <div className={styles.ProductCard_secondaryInfo}>
           <p className={styles.ProductCard_price}>
-            от <span className={styles.ProductCard_priceValue}>{price} {currency}</span>
+            от <span className={styles.ProductCard_priceValue}>{price.toFixed(2)} {currency}</span>
           </p>
           <div className={styles.ProductCard_button}>
             <UiButton
