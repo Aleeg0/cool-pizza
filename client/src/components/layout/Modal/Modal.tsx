@@ -1,10 +1,11 @@
 'use client';
 
-import React, {FC, ReactNode, useEffect, useRef, useState} from 'react';
+import React, {FC, ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss'
 import {useRouter} from "next/navigation";
 import {cn} from "@/utils";
 import {CrossIcon} from "@/components/icons";
+import {useClickOutside, useLockBodyScroll} from "@/hooks";
 
 interface Props {
   children: ReactNode;
@@ -13,35 +14,13 @@ interface Props {
 
 const Modal: FC<Props> = ({ children, isMounted = true}) => {
   const router = useRouter();
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null!);
 
-  // for scroll-bar
-  useEffect(() => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.setProperty('--size-main-scroll-bar', `${scrollbarWidth}px`);
-
-    document.body.classList.add('modalOpen');
-
-    return () => {
-      document.body.style.removeProperty('--size-main-scroll-bar');
-      document.body.classList.remove('modalOpen');
-    }
-  }, []);
-
+  const onClose = useCallback(() => router.back(), [router]);
   // for outside container click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
-        router.back();
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [router]);
+  useClickOutside(contentRef, onClose);
+  // for scroll-bar
+  useLockBodyScroll(isMounted);
 
   return (
     <div className={styles.root} data-nextjs-dialog="">
@@ -57,7 +36,7 @@ const Modal: FC<Props> = ({ children, isMounted = true}) => {
           >
             <button
               className={styles.closeButton}
-              onClick={() => router.back()}
+              onClick={onClose}
             >
               <CrossIcon/>
             </button>
