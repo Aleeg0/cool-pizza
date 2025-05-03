@@ -15,8 +15,8 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        ApplyBaseEntityConfiguration(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        ApplyBaseEntityConfiguration(modelBuilder);
     }
     
     private static void ApplyBaseEntityConfiguration(ModelBuilder modelBuilder)
