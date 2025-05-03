@@ -4,12 +4,10 @@ namespace CoolPizza.Core.Entities.Orders;
 
 public class Order: Entity
 {
-    public const int TokenMaxLength = 255;
     public const int UserPropertiesMaxLength = 128;
     public const int AddressMaxLength = 255;
     public const int PhoneMaxLength = 16;
     
-    public string Token { get; private set; }
     public string? Name {get; private set;} 
     public string? Email {get; private set;}
     public string? Phone {get; private set;}
@@ -21,6 +19,6 @@ public class Order: Entity
     public DateTime? PaidAt { get; private set; } = null;
     public Guid? UserId { get; private set; } = null;
 
-    public ICollection<OrderedGoods> GoodsLine { get; private set; }
-    public ICollection<OrderedPizza> PizzasLine { get; private set; }
+    public ICollection<OrderedGoods> GoodsLine { get; private set; } = [];
+    public ICollection<OrderedPizza> PizzasLine { get; private set; } = [];
 }
