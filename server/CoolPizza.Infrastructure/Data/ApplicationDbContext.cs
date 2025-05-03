@@ -1,4 +1,5 @@
 ﻿using CoolPizza.Core.Entities;
+using CoolPizza.Core.Entities.Orders;
 using CoolPizza.Core.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<Pizza> Pizzas { get; set; }
+    public DbSet<Goods> Goods { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderedGoods> OrderedGoods { get; set; }
+    public DbSet<OrderedPizza> OrderedPizzas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
