@@ -34,8 +34,10 @@
       flex-shrink: 0;
     }
 
-    &__Searcher {
-      height: 52px;
+    &__filters {
+      display: flex;
+      justify-content: space-between;
+      height: 55px;
       min-width: 200px;
       flex-grow: 1;
     }
