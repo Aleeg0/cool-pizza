@@ -1,7 +1,4 @@
-﻿using CoolPizza.Core.Entities.Products;
-using CoolPizza.Core.Enums;
-
-namespace CoolPizza.Application.Products.DTOs;
+﻿namespace CoolPizza.Application.Products.DTOs;
 
 public record ProductWithVariationsDto
 (
@@ -10,8 +7,8 @@ public record ProductWithVariationsDto
     string Description,
     string BaseImg,
     decimal BasePrice,
-    ProductType ProductType,
+    string Type,
     DateTime CreatedAt,
     Guid CategoryId,
-    List<Variation> Variations
+    List<object> Variations
 );

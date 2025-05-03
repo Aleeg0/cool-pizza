@@ -6,6 +6,6 @@ namespace CoolPizza.Application.Products.DTOs;
 public record MenuProductsDto
 (
     Category Category,
-    List<MenuProductDto> MenuProducts
+    List<MenuProductDto> Products
 );
 

@@ -34,7 +34,7 @@ public class GetMenuProductsHandler(IProductsRepository productsRepository, ICat
                     .Where(product => product.CategoryId == category.Id)
                     .ToList()
             ))
-            .Where(group => group.MenuProducts.Count > 0)
+            .Where(group => group.Products.Count > 0)
             .ToList();
         
         return result;

@@ -22,10 +22,10 @@ public class GetProductByIdQueryHandler(IProductsRepository productsRepository) 
         if (product == null)
             throw new NotFoundException(nameof(Product), request.Id);
 
-        var variations = product.Type switch
+        List<object> variations = product.Type switch
         {
-            ProductType.Goods => product.Goods.Cast<Variation>().ToList(),
-            ProductType.Pizza => product.Pizzas.Cast<Variation>().ToList(),
+            ProductType.Goods => product.Goods.ToList<object>(),
+            ProductType.Pizza => product.Pizzas.ToList<object>(),
             _ => throw new NotImplementedException(),
         };
 
@@ -36,7 +36,7 @@ public class GetProductByIdQueryHandler(IProductsRepository productsRepository) 
             product.Description,
             product.BaseImg,
             product.BasePrice,
-            product.Type,
+            product.Type.ToString(),
             product.CreatedAt,
             product.CategoryId,
             variations
