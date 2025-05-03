@@ -17,7 +17,7 @@ const currentProductSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentProduct.pending, (state) => {
-          if (state.status === LoadingStatus.IDLE) {
+          if (state.status === LoadingStatus.IDLE || state.status === LoadingStatus.SUCCEEDED) {
             state.status = LoadingStatus.PENDING;
             state.data = undefined;
           }
