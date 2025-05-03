@@ -66,9 +66,30 @@ public class ProductsRepository(ApplicationDbContext context) : IProductsReposit
         return result;
     }
 
-    public Task<Product?> GetByIdAsync(Guid id)
+    public async Task<Product?> GetByIdAsync(Guid id)
     {
-        return context.Products.FirstOrDefaultAsync(product => product.Id == id);
+        var product = await context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (product == null)
+            return null;
+
+        if (product.Type == ProductType.Pizza)
+        {
+            await context.Entry(product)
+                .Collection(p => p.Pizzas)
+                .Query()
+                .Include(pizza => pizza.Ingredients)
+                .LoadAsync();
+        }
+        else if (product.Type == ProductType.Goods)
+        {
+            await context.Entry(product)
+                .Collection(p => p.Goods)
+                .LoadAsync();
+        }
+
+        return product;
     }
 
     private IQueryable<Product> SortProducts(IQueryable<Product> query, SortOption sortOption)
