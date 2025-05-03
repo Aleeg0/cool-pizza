@@ -13,11 +13,6 @@ public class OrderConfig: IEntityTypeConfiguration<Order>
         builder.ToTable("orders");
         
         builder.HasKey(o => o.Id);
-
-        builder
-            .Property(o => o.Token)
-            .HasColumnName("token")
-            .HasMaxLength(Order.TokenMaxLength);
         
         builder
             .Property(o => o.Name)
@@ -59,11 +54,6 @@ public class OrderConfig: IEntityTypeConfiguration<Order>
         builder
             .Property(o => o.UserId)
             .HasColumnName("user_id");
-        
-        // indexes
-        builder
-            .HasIndex(o => o.Token)
-            .IsUnique();
         
         // relation with user 1:N
         builder
