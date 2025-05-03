@@ -6,3 +6,4 @@ export {PriceIcon} from './PriceIcon';
 export {PlusIcon} from './PlusIcon';
 export {CircleIcon} from './CircleIcon';
 export {CrossIcon} from './CrossIcon';
+export {HugeCrossIcon} from './HugeCrossIcon';
