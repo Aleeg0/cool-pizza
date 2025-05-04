@@ -13,16 +13,20 @@ namespace PizzaService.API.Controllers;
 [Route("api/[controller]")]
 public class CartController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("{id:guid}")]
+    [HttpGet]
     public async Task<ActionResult<GetCartDto>> GetCartById(
-        [FromRoute] GetCartByIdQuery query
+        [FromHeader(Name = "X-Cart-Token")] Guid id
     )
     {
+        var query = new GetCartByIdQuery()
+        {
+            Id = id
+        };
         var cartInfo = await mediator.Send(query);
         return Ok(cartInfo);
     }
     
-    [HttpPost("pizza")]
+    [HttpPost("pizzas")]
     public async Task<ActionResult<OrderedPizzaDto>> CreatePizzaCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid? id,
         [FromBody] CreatePizzaItemCommand command
@@ -37,13 +41,19 @@ public class CartController(IMediator mediator) : ControllerBase
         return Ok(cartInfo);
     }
     
-    [HttpPatch("pizza")]
+    [HttpPatch("pizzas/{id:guid}")]
     public async Task<ActionResult<OrderedPizza>> UpdatePizzaCartItemQuantity(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromBody] UpdatePizzaItemQuantityCommand command
+        [FromRoute] Guid pizzaId,
+        [FromBody] int quantity
     )
     {
-        command.Id = id;
+        var command = new UpdatePizzaItemQuantityCommand()
+        {
+            Id = id,
+            CartPizzaId = pizzaId,
+            NewQuantity = quantity,
+        };
         var cartInfo = await mediator.Send(command);
         
         // Добавляем куку в ответ
@@ -52,17 +62,21 @@ public class CartController(IMediator mediator) : ControllerBase
         return Ok(cartInfo);
     }
     
-    [HttpDelete("pizza")]
+    [HttpDelete("pizzas/{id:guid}")]
     public async Task<ActionResult<DeleteItemDto>> DeletePizzaCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromBody] DeletePizzaItemCommand command
+        [FromRoute] Guid pizzaId
     )
     {
-        command.Id = id;
+        var command = new DeletePizzaItemCommand()
+        {
+            Id = id,
+            CartPizzaId = pizzaId
+        };
         var deleteItemDto = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id!.Value.ToString());
+        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
         
         return Ok(deleteItemDto);
     }
@@ -82,32 +96,42 @@ public class CartController(IMediator mediator) : ControllerBase
         return Ok(cartInfo);
     }
     
-    [HttpPatch("goods")]
+    [HttpPatch("goods/{id:guid}")]
     public async Task<ActionResult<OrderedGoods>> UpdateGoodsCartItemQuantity(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromBody] UpdateGoodsItemQuantityCommand command
+        [FromRoute] Guid goodsId,
+        [FromBody] int quantity
     )
     {
-        command.Id = id;
+        var command = new UpdateGoodsItemQuantityCommand()
+        {
+            Id = id,
+            CartGoodsId = goodsId,
+            NewQuantity = quantity,
+        };
         var cartInfo = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id!.Value.ToString());
+        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
         
         return Ok(cartInfo);
     }
     
-    [HttpDelete("goods")]
+    [HttpDelete("goods/{id:guid}")]
     public async Task<ActionResult<DeleteItemDto>> DeleteGoodsCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromBody] DeleteGoodsItemCommand command
+        [FromRoute] Guid goodsId
     )
     {
-        command.Id = id;
+        var command = new DeleteGoodsItemCommand()
+        {
+            Id = id,
+            CartGoodsId = goodsId
+        };
         var deleteItemDto = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id!.Value.ToString());
+        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
         
         return Ok(deleteItemDto);
     }
