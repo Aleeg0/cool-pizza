@@ -16,7 +16,12 @@ public static class DependenciesInjection
         services.AddScoped<IProductsRepository, ProductsRepository>();
         services.AddScoped<ICategoriesRepository, CategoriesRepository>();
         services.AddScoped<IIngredientsRepository, IngredientsRepository>();
-        services.AddScoped<ICartRepository, CartRepository>();
+        services.AddScoped<IGoodsRepository, GoodsRepository>();
+        services.AddScoped<IPizzasRepository, PizzasRepository>();
+        services.AddScoped<IOrdersRepository, OrdersRepository>();
+        services.AddScoped<IOrderedGoodsRepository, OrderedGoodsRepository>();
+        services.AddScoped<IOrderedPizzasRepository, OrderedPizzasRepository>();
+        services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         
         return services;
     }
