@@ -5,20 +5,49 @@ using MediatR;
 
 namespace CoolPizza.Application.Cart.Commands;
 
-public class DeleteGoodsItemCommand : IRequest<DeleteItemDto>
+public class DeleteGoodsItemCommand : IRequest<DeleteCartItemDto>
 {
-    public Guid Id { get; init; }
+    public Guid CartId { get; init; }
     public Guid CartGoodsId { get; init; }
 }
 
-public class DeleteGoodsItemCommandHandler(ICartRepository cartRepository) : IRequestHandler<DeleteGoodsItemCommand, DeleteItemDto>
+public class DeleteGoodsItemCommandHandler(
+    IUnitOfWork unitOfWork,
+    IOrdersRepository ordersRepository,
+    IOrderedGoodsRepository orderedGoodsRepository
+) : IRequestHandler<DeleteGoodsItemCommand, DeleteCartItemDto>
 {
-    public async Task<DeleteItemDto> Handle(DeleteGoodsItemCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteCartItemDto> Handle(DeleteGoodsItemCommand request, CancellationToken cancellationToken)
     {
-        var isDeleted = await cartRepository.DeleteGoodsItem(request.Id, request.CartGoodsId);
-        if (!isDeleted)
-            throw new NotFoundException("Cart or Goods Cart Item not found");
+        await unitOfWork.BeginTransactionAsync();
         
-        return new DeleteItemDto(request.Id);
+        try
+        {
+            // находим продукт корзины 
+            var cartGoodsItem = await orderedGoodsRepository.FindAsync(request.CartId, request.CartGoodsId);
+            
+            if (cartGoodsItem is null)
+                throw new NotFoundException("GoodsItem", request.CartGoodsId);
+                
+            // обновляем количество
+            if (!await orderedGoodsRepository.RemoveAsync(request.CartGoodsId))
+                throw new Exception("Something went wrong while deleting the cart goods.");
+            
+            // пересчитываем общую стоимость
+            var newTotalAmount = await ordersRepository.UpdateTotalAmount(cartGoodsItem.OrderId);
+            
+            // подтверждаем транзакцию
+            await unitOfWork.CommitAsync();
+
+            return new DeleteCartItemDto(
+                cartGoodsItem.Id,
+                newTotalAmount
+            );
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 }

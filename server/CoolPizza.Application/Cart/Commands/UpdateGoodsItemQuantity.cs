@@ -1,21 +1,55 @@
-﻿using CoolPizza.Core.Abstractions;
-using CoolPizza.Core.Entities.Orders;
+﻿using CoolPizza.Application.Cart.DTOs;
+using CoolPizza.Application.Exceptions;
+using CoolPizza.Core.Abstractions;
 using MediatR;
 
 namespace CoolPizza.Application.Cart.Commands;
 
-public class UpdateGoodsItemQuantityCommand : IRequest<OrderedGoods>
+public class UpdateGoodsItemQuantityCommand : IRequest<UpdateCartItemQuantityDto>
 {
-    public Guid Id { get; init; }
+    public Guid CartId { get; init; }
     public Guid CartGoodsId { get; init; }
     public int NewQuantity { get; init; }
 }
 
-public class UpdateGoodsItemQuantityCommandHandler(ICartRepository cartRepository) : IRequestHandler<UpdateGoodsItemQuantityCommand, OrderedGoods>
+public class UpdateGoodsItemQuantityCommandHandler(
+    IUnitOfWork unitOfWork,
+    IOrdersRepository ordersRepository,
+    IOrderedGoodsRepository orderedGoodsRepository
+) : IRequestHandler<UpdateGoodsItemQuantityCommand, UpdateCartItemQuantityDto>
 {
-    public async Task<OrderedGoods> Handle(UpdateGoodsItemQuantityCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateCartItemQuantityDto> Handle(UpdateGoodsItemQuantityCommand request, CancellationToken cancellationToken)
     {
-        var result = await cartRepository.UpdateGoodsItemQuantity(request.Id, request.CartGoodsId, request.NewQuantity);
-        return result;
+        await unitOfWork.BeginTransactionAsync();
+        
+        try
+        {
+            // находим продукт в корзине
+            var cartGoodsItem = await orderedGoodsRepository.FindAsync(request.CartId, request.CartGoodsId);
+            
+            if (cartGoodsItem is null)
+                throw new NotFoundException("CartGoods", request.CartGoodsId);
+            
+            // обновляем количество
+            if (!await orderedGoodsRepository.UpdateAsync(request.CartGoodsId, request.NewQuantity))
+                throw new Exception("Failed to update CartGoods quantity");
+            
+            // пересчитываем общую стоимость
+            var newTotalAmount = await ordersRepository.UpdateTotalAmount(request.CartId);
+            
+            // подтверждаем транзакцию
+            await unitOfWork.CommitAsync();
+
+            return new UpdateCartItemQuantityDto(
+                request.CartGoodsId,
+                request.NewQuantity,
+                newTotalAmount
+            );
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 }

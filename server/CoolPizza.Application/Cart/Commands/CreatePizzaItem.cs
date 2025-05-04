@@ -1,22 +1,96 @@
-﻿using CoolPizza.Core.Abstractions;
-using CoolPizza.Core.DTOs.Orders;
+﻿using CoolPizza.Application.Cart.DTOs;
+using CoolPizza.Application.Exceptions;
+using CoolPizza.Core.Abstractions;
+using CoolPizza.Core.Entities.Orders;
+using CoolPizza.Core.Entities.Products;
 using MediatR;
 
 namespace CoolPizza.Application.Cart.Commands;
 
-public class CreatePizzaItemCommand :IRequest<OrderedPizzaDto>
+public class CreatePizzaItemCommand :IRequest<CreateCartPizzaDto>
 {
     public Guid? Id { get; set; }
     public Guid PizzaId { get; init; }
     public List<Guid> IngredientsIds { get; init; } = [];
 }
 
-public class CreatePizzaItemHandler(ICartRepository cartRepository) : IRequestHandler<CreatePizzaItemCommand, OrderedPizzaDto>
+public class CreatePizzaItemHandler(
+    IUnitOfWork unitOfWork, 
+    IOrdersRepository ordersRepository,
+    IPizzasRepository pizzasRepository,
+    IOrderedPizzasRepository orderedPizzasRepository,
+    IIngredientsRepository ingredientsRepository,
+    IProductsRepository productsRepository
+) : IRequestHandler<CreatePizzaItemCommand, CreateCartPizzaDto>
 {
-    public async Task<OrderedPizzaDto> Handle(CreatePizzaItemCommand request, CancellationToken cancellationToken)
+    public async Task<CreateCartPizzaDto> Handle(CreatePizzaItemCommand request, CancellationToken cancellationToken)
     {
-       // потом работаем с ней
-        var createCartPizza = await cartRepository.AddPizzaItem(request.Id, request.PizzaId, request.IngredientsIds);
-        return createCartPizza;
+        // потом работаем с ней
+        await unitOfWork.BeginTransactionAsync();
+        try
+        {
+            Order? cart;
+        
+            // если корзины не было - создаем, иначе находим
+            if (!request.Id.HasValue)
+                cart =  await ordersRepository.CreateAsync();
+            else
+                cart = await ordersRepository.FindByIdAsync(request.Id.Value);
+
+            if (cart is null)
+                throw new NotFoundException("cart", request.Id!);
+
+            // находим пиццу
+            var pizza = await pizzasRepository.FindByIdAsync(request.PizzaId);
+
+            if (pizza is null)
+                throw new NotFoundException(nameof(Pizza), request.PizzaId);
+            
+            // находим ингредиенты
+            var ingredients = await ingredientsRepository.FindRangeAsync(request.IngredientsIds);
+            
+            if (ingredients.Count != request.IngredientsIds.Count)
+                throw new NotFoundException("Not all ingredients were found");
+
+            // пытаем найти существующий простой продукт в корзине
+            var pizzaCartItem = await orderedPizzasRepository.FindAsync(cart.Id, pizza.Id);
+
+            // если не была найдена, то создаем, иначе увеличиваем количество на 1
+            if (pizzaCartItem is null)
+                pizzaCartItem = await orderedPizzasRepository.CreateAsync(cart.Id, pizza, ingredients);
+            else if (!await orderedPizzasRepository.UpdateAsync(pizzaCartItem.Id, pizzaCartItem.Quantity + 1))
+                throw new Exception("Failed to add one more CartPizza");
+
+            // находим соответсвующий продукт
+            var product = await productsRepository.FindByIdAsync(pizza.ProductId);
+
+            if (product is null)
+                throw new NotFoundException(nameof(Product), pizza.ProductId);
+
+            // обновляем цену корзины
+            var newTotalAmount = await ordersRepository.UpdateTotalAmount(cart.Id);
+
+            // подтверждаем транзакцию
+            await unitOfWork.CommitAsync();
+
+            return new CreateCartPizzaDto(
+                newTotalAmount,
+                new CartPizzaDto(
+                    pizzaCartItem.Id,
+                    product.Name,
+                    product.BaseImg,
+                    pizza.Price,
+                    pizzaCartItem.Quantity,
+                    pizza.Size,
+                    pizza.Dough,
+                    pizzaCartItem.Ingredients.Select(i => i.Name).ToList()
+                )
+            ); 
+        }
+        catch
+        {
+          await unitOfWork.RollbackAsync();
+          throw;
+        }
     }
 }
