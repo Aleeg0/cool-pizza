@@ -32,32 +32,34 @@ public class CartRepository(ApplicationDbContext context) : ICartRepository
             .ToDictionaryAsync(p =>  p.Id);
 
         // Собираем DTO-шки
-        var cartPizzaLines = order.PizzasLine.Select(orderedPizza =>
+        var cartPizzaLines = order.PizzasLine.Select(cartPizza =>
         {
-            var pizza = orderedPizza.Pizza;
+            var pizza = cartPizza.Pizza;
             var product = products[pizza.ProductId];
 
             return new OrderedPizzaDto(
-                orderedPizza.Id,
+                cartPizza.Id,
                 product.Name,
                 product.BaseImg,
                 pizza.Price,
+                cartPizza.Quantity,
                 pizza.Size,
                 pizza.Dough,
-                orderedPizza.Ingredients.Select(i => i.Name).ToList()
+                cartPizza.Ingredients.Select(i => i.Name).ToList()
             );
         }).ToList();
 
-        var cartGoodsLines = order.GoodsLine.Select(orderedGoods =>
+        var cartGoodsLines = order.GoodsLine.Select(cartGoods =>
         {
-            var goods = orderedGoods.Goods;
+            var goods = cartGoods.Goods;
             var product = products[goods.ProductId];
 
             return new OrderedGoodsDto(
-                orderedGoods.Id,
+                cartGoods.Id,
                 product.Name,
                 product.BaseImg,
                 goods.Price,
+                cartGoods.Quantity,
                 goods.Details
             );
         }).ToList();
@@ -122,6 +124,7 @@ public class CartRepository(ApplicationDbContext context) : ICartRepository
                 product.Name,
                 product.BaseImg,
                 pizza.Price,
+                cartPizza.Quantity,
                 pizza.Size,
                 pizza.Dough,
                 cartPizza.Ingredients.Select(i => i.Name).ToList()
@@ -184,6 +187,7 @@ public class CartRepository(ApplicationDbContext context) : ICartRepository
                 product.Name,
                 product.BaseImg,
                 goods.Price,
+                cartGoods.Quantity,
                 goods.Details
             );
         }

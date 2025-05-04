@@ -6,5 +6,6 @@ public record OrderedGoodsDto
     string Name,
     string ImgUrl,
     decimal Price,
+    int Quantity,
     string Details
 );
