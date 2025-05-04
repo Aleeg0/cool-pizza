@@ -1,6 +1,6 @@
-﻿namespace CoolPizza.Core.DTOs.Projections;
+﻿namespace CoolPizza.Core.Projections;
 
-public record MenuProductDto
+public record MenuProductProjection
 (
     Guid Id,
     string Name,
