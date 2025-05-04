@@ -1,9 +1,6 @@
 ﻿using CoolPizza.Application.Cart.Commands;
 using CoolPizza.Application.Cart.DTOs;
 using CoolPizza.Application.Cart.Queries;
-using CoolPizza.Core.DTOs;
-using CoolPizza.Core.DTOs.Orders;
-using CoolPizza.Core.Entities.Orders;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +24,7 @@ public class CartController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost("pizzas")]
-    public async Task<ActionResult<OrderedPizzaDto>> CreatePizzaCartItem(
+    public async Task<ActionResult<CreateCartPizzaDto>> CreatePizzaCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid? id,
         [FromBody] CreatePizzaItemCommand command
     )
@@ -42,47 +39,47 @@ public class CartController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("pizzas/{id:guid}")]
-    public async Task<ActionResult<OrderedPizza>> UpdatePizzaCartItemQuantity(
+    public async Task<ActionResult<UpdateCartItemQuantityDto>> UpdatePizzaCartItemQuantity(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromRoute] Guid pizzaId,
-        [FromBody] int quantity
+        [FromRoute(Name = "id")] Guid pizzaId,
+        [FromBody] UpdateQuantityRequest body
     )
     {
         var command = new UpdatePizzaItemQuantityCommand()
         {
-            Id = id,
+            CartId = id,
             CartPizzaId = pizzaId,
-            NewQuantity = quantity,
+            NewQuantity = body.Quantity,
         };
         var cartInfo = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
+        Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
         return Ok(cartInfo);
     }
     
     [HttpDelete("pizzas/{id:guid}")]
-    public async Task<ActionResult<DeleteItemDto>> DeletePizzaCartItem(
+    public async Task<ActionResult<DeleteCartItemDto>> DeletePizzaCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromRoute] Guid pizzaId
+        [FromRoute(Name = "id")] Guid pizzaId
     )
     {
         var command = new DeletePizzaItemCommand()
         {
-            Id = id,
+            CartId = id,
             CartPizzaId = pizzaId
         };
         var deleteItemDto = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
+        Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
         return Ok(deleteItemDto);
     }
     
     [HttpPost("goods")]
-    public async Task<ActionResult<OrderedGoodsDto>> CreateGoodsCartItem(
+    public async Task<ActionResult<CreateCartGoodsDto>> CreateGoodsCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid? id,
         [FromBody] CreateGoodsItemCommand command
     )
@@ -97,41 +94,41 @@ public class CartController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("goods/{id:guid}")]
-    public async Task<ActionResult<OrderedGoods>> UpdateGoodsCartItemQuantity(
+    public async Task<ActionResult<UpdateCartItemQuantityDto>> UpdateGoodsCartItemQuantity(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromRoute] Guid goodsId,
-        [FromBody] int quantity
+        [FromRoute(Name = "id")] Guid goodsId,
+        [FromBody] UpdateQuantityRequest body
     )
     {
         var command = new UpdateGoodsItemQuantityCommand()
         {
-            Id = id,
+            CartId = id,
             CartGoodsId = goodsId,
-            NewQuantity = quantity,
+            NewQuantity = body.Quantity,
         };
         var cartInfo = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
+        Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
         return Ok(cartInfo);
     }
     
     [HttpDelete("goods/{id:guid}")]
-    public async Task<ActionResult<DeleteItemDto>> DeleteGoodsCartItem(
+    public async Task<ActionResult<DeleteCartItemDto>> DeleteGoodsCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid id,
-        [FromRoute] Guid goodsId
+        [FromRoute(Name = "id")] Guid goodsId
     )
     {
         var command = new DeleteGoodsItemCommand()
         {
-            Id = id,
+            CartId = id,
             CartGoodsId = goodsId
         };
         var deleteItemDto = await mediator.Send(command);
         
         // Добавляем куку в ответ
-        Response.Headers.Append("X-Cart-Token", command.Id.ToString());
+        Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
         return Ok(deleteItemDto);
     }
