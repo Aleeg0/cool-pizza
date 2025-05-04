@@ -1,6 +1,6 @@
-﻿namespace CoolPizza.Core.DTOs.Orders;
+﻿namespace CoolPizza.Application.Cart.DTOs;
 
-public record OrderedPizzaDto
+public record CartPizzaDto
 (
     Guid Id,
     string Name,
