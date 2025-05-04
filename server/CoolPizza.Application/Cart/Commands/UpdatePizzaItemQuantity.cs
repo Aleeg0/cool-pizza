@@ -6,7 +6,7 @@ namespace CoolPizza.Application.Cart.Commands;
 
 public class UpdatePizzaItemQuantityCommand : IRequest<OrderedPizza>
 {
-    public Guid? Id { get; set; }
+    public Guid Id { get; init; }
     public Guid CartPizzaId { get; init; }
     public int NewQuantity { get; init; }
 }
@@ -15,7 +15,7 @@ public class UpdatePizzaItemQuantityCommandHandler(ICartRepository cartRepositor
 {
     public async Task<OrderedPizza> Handle(UpdatePizzaItemQuantityCommand request, CancellationToken cancellationToken)
     {
-        var result = await cartRepository.UpdatePizzaItemQuantity(request.Id!.Value, request.CartPizzaId, request.NewQuantity);
+        var result = await cartRepository.UpdatePizzaItemQuantity(request.Id, request.CartPizzaId, request.NewQuantity);
         return result;
     }
 }

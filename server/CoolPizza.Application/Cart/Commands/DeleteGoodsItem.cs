@@ -7,7 +7,7 @@ namespace CoolPizza.Application.Cart.Commands;
 
 public class DeleteGoodsItemCommand : IRequest<DeleteItemDto>
 {
-    public Guid? Id { get; set; }
+    public Guid Id { get; init; }
     public Guid CartGoodsId { get; init; }
 }
 
@@ -15,10 +15,10 @@ public class DeleteGoodsItemCommandHandler(ICartRepository cartRepository) : IRe
 {
     public async Task<DeleteItemDto> Handle(DeleteGoodsItemCommand request, CancellationToken cancellationToken)
     {
-        var isDeleted = await cartRepository.DeleteGoodsItem(request.Id!.Value, request.CartGoodsId);
+        var isDeleted = await cartRepository.DeleteGoodsItem(request.Id, request.CartGoodsId);
         if (!isDeleted)
             throw new NotFoundException("Cart or Goods Cart Item not found");
         
-        return new DeleteItemDto(request.Id!.Value);
+        return new DeleteItemDto(request.Id);
     }
 }
