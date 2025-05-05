@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CoolPizza.Application.Cart.Commands;
 
-public class CreateGoodsItemCommand : IRequest<CreateCartGoodsDto>
+public class CreateGoodsItemCommand : IRequest<CartItemDto>
 {
     public Guid? Id { get; set; }
     public Guid GoodsId { get; init; }
@@ -19,9 +19,9 @@ public class CreateGoodsItemHandler(
     IGoodsRepository goodsRepository,
     IOrderedGoodsRepository orderedGoodsRepository,
     IProductsRepository productsRepository
-) : IRequestHandler<CreateGoodsItemCommand, CreateCartGoodsDto>
+) : IRequestHandler<CreateGoodsItemCommand, CartItemDto>
 {
-    public async Task<CreateCartGoodsDto> Handle(CreateGoodsItemCommand request, CancellationToken cancellationToken)
+    public async Task<CartItemDto> Handle(CreateGoodsItemCommand request, CancellationToken cancellationToken)
     {
        // потом работаем с ней
        await unitOfWork.BeginTransactionAsync();
@@ -45,7 +45,7 @@ public class CreateGoodsItemHandler(
                throw new NotFoundException(nameof(Goods), request.GoodsId);
 
            // пытаем найти существующий простой продукт в корзине
-           var goodsCartItem = await orderedGoodsRepository.FindAsync(cart.Id, goods.Id);
+           var goodsCartItem = await orderedGoodsRepository.FindByCartAndGoodAsync(cart.Id, goods.Id);
 
            if (goodsCartItem is null)
                goodsCartItem = await orderedGoodsRepository.CreateAsync(cart.Id, goods);
@@ -59,22 +59,19 @@ public class CreateGoodsItemHandler(
                throw new NotFoundException(nameof(Product), goods.ProductId);
 
            // обновляем цену корзины
-           var newTotalAmount = await ordersRepository.UpdateTotalAmount(cart.Id);
+           await ordersRepository.UpdateTotalAmount(cart.Id);
            
            // подтверждаем транзакцию
            await unitOfWork.CommitAsync();
-           
-           return new CreateCartGoodsDto(
-               newTotalAmount,
-               new CartGoodsDto(
-                   goodsCartItem.Id,
-                   product.Name,
-                   product.BaseImg,
-                   goods.Price,
-                   goodsCartItem.Quantity,
-                   goods.Details
-               )
-           ); 
+
+           return new CartItemDto(
+               goodsCartItem.Id,
+               product.Name,
+               goods.Details,
+               product.BaseImg,
+               goods.Price,
+               goodsCartItem.Quantity
+           );
        }
        catch
        {
