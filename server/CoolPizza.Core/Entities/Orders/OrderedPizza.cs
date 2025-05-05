@@ -21,9 +21,4 @@ public class OrderedPizza: Entity
             Ingredients = ingredients
         };
     }
-
-    public void UpdateQuantity(int newQuantity)
-    {
-        Quantity = newQuantity;
-    }
 }

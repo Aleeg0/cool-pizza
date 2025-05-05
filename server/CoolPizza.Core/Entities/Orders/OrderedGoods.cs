@@ -19,9 +19,4 @@ public class OrderedGoods: Entity
             OrderId = orderId
         };
     }
-    
-    public void UpdateQuantity(int newQuantity)
-    {
-        Quantity = newQuantity;
-    }
 }
