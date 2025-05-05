@@ -24,7 +24,12 @@
   }
 
   &_icon {
-    margin-right: 6px;
+    &Left {
+      margin-right: 6px;
+    }
+    &Right {
+      margin-left: 6px;
+    }
   }
 
   &_primary {
