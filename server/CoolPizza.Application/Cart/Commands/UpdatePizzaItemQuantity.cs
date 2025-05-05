@@ -26,24 +26,27 @@ public class UpdatePizzaItemQuantityCommandHandler(
         try
         {
             // находим пиццу корзины 
-            var cartGoodsItem = await orderedPizzasRepository.FindAsync(request.CartId, request.CartPizzaId);
+            var cartGoodsItem = await orderedPizzasRepository.FindByIdAsync(request.CartPizzaId);
             
             if (cartGoodsItem is null)
-                throw new NotFoundException("PizzaItem", request.CartPizzaId);
+                throw new NotFoundException("CartPizza", request.CartPizzaId);
+            
+            // проверяем относится ли пицца к данной корзине
+            if (cartGoodsItem.OrderId != request.CartId)
+                throw new NotFoundException("CartPizza not found in this cart");
                 
             // обновляем количество
             await orderedPizzasRepository.UpdateAsync(request.CartPizzaId, request.NewQuantity);
             
             // пересчитываем общую стоимость
-            var newTotalAmount = await ordersRepository.UpdateTotalAmount(cartGoodsItem.OrderId);
+            await ordersRepository.UpdateTotalAmount(cartGoodsItem.OrderId);
             
             // подтверждаем транзакцию
             await unitOfWork.CommitAsync();
 
             return new UpdateCartItemQuantityDto(
                 cartGoodsItem.Id,
-                cartGoodsItem.Quantity,
-                newTotalAmount
+                request.NewQuantity
             );
         }
         catch

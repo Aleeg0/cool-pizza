@@ -25,25 +25,28 @@ public class UpdateGoodsItemQuantityCommandHandler(
         try
         {
             // находим продукт в корзине
-            var cartGoodsItem = await orderedGoodsRepository.FindAsync(request.CartId, request.CartGoodsId);
+            var cartGoodsItem = await orderedGoodsRepository.FindByIdAsync(request.CartGoodsId);
             
             if (cartGoodsItem is null)
                 throw new NotFoundException("CartGoods", request.CartGoodsId);
+            
+            // проверяем относится ли продукт к данной корзине
+            if (cartGoodsItem.OrderId != request.CartId)
+                throw new NotFoundException("CartGoods not found in this cart");
             
             // обновляем количество
             if (!await orderedGoodsRepository.UpdateAsync(request.CartGoodsId, request.NewQuantity))
                 throw new Exception("Failed to update CartGoods quantity");
             
             // пересчитываем общую стоимость
-            var newTotalAmount = await ordersRepository.UpdateTotalAmount(request.CartId);
+            await ordersRepository.UpdateTotalAmount(request.CartId);
             
             // подтверждаем транзакцию
             await unitOfWork.CommitAsync();
 
             return new UpdateCartItemQuantityDto(
                 request.CartGoodsId,
-                request.NewQuantity,
-                newTotalAmount
+                request.NewQuantity
             );
         }
         catch
