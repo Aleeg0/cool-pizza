@@ -23,8 +23,21 @@ public class CartController(IMediator mediator) : ControllerBase
         return Ok(cartInfo);
     }
     
+    [HttpGet("total-amount")]
+    public async Task<ActionResult<GetTotalAmountDto>> GetTotalAmount(
+        [FromHeader(Name = "X-Cart-Token")] Guid id
+    )
+    {
+        var query = new GetCartTotalAmountByIdQuery()
+        {
+            Id = id
+        };
+        var cartInfo = await mediator.Send(query);
+        return Ok(cartInfo);
+    }
+    
     [HttpPost("pizzas")]
-    public async Task<ActionResult<CreateCartPizzaDto>> CreatePizzaCartItem(
+    public async Task<ActionResult<CartItemDto>> CreatePizzaCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid? id,
         [FromBody] CreatePizzaItemCommand command
     )
@@ -70,16 +83,16 @@ public class CartController(IMediator mediator) : ControllerBase
             CartId = id,
             CartPizzaId = pizzaId
         };
-        var deleteItemDto = await mediator.Send(command);
+        await mediator.Send(command);
         
         // Добавляем куку в ответ
         Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
-        return Ok(deleteItemDto);
+        return Ok();
     }
     
     [HttpPost("goods")]
-    public async Task<ActionResult<CreateCartGoodsDto>> CreateGoodsCartItem(
+    public async Task<ActionResult<CartItemDto>> CreateGoodsCartItem(
         [FromHeader(Name = "X-Cart-Token")] Guid? id,
         [FromBody] CreateGoodsItemCommand command
     )
@@ -125,11 +138,11 @@ public class CartController(IMediator mediator) : ControllerBase
             CartId = id,
             CartGoodsId = goodsId
         };
-        var deleteItemDto = await mediator.Send(command);
+        await mediator.Send(command);
         
         // Добавляем куку в ответ
         Response.Headers.Append("X-Cart-Token", command.CartId.ToString());
         
-        return Ok(deleteItemDto);
+        return Ok();
     }
 }
