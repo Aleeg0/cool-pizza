@@ -2,11 +2,12 @@
 
 import React, {Suspense} from 'react';
 import styles from './Header.module.scss';
-import {HeaderTitle, UiButton} from "@/components/ui";
+import {HeaderTitle} from "@/components/ui";
 import {useScrollTrigger} from "@/hooks";
 import {cn} from "@/utils";
 import {AuthButton} from "@/components/features/Auth";
 import {Categories, Sorter} from "@/components/features";
+import CartButton from "@/components/features/Cart/CartButton/CartButton";
 
 const Header = () => {
   const isScrolled = useScrollTrigger();
@@ -31,9 +32,7 @@ const Header = () => {
           </div>
           <div className={styles.Header_rightPart}>
             <AuthButton/>
-            <UiButton
-              caption="Корзина"
-            />
+            <CartButton/>
           </div>
         </div>
       </div>
