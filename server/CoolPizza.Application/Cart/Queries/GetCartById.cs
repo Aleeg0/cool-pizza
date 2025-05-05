@@ -1,7 +1,7 @@
 ﻿using CoolPizza.Application.Cart.DTOs;
 using CoolPizza.Application.Exceptions;
 using CoolPizza.Core.Abstractions;
-using CoolPizza.Core.Entities.Orders;
+using CoolPizza.Core.Entities;
 using MediatR;
 
 namespace CoolPizza.Application.Cart.Queries;
@@ -39,16 +39,18 @@ public class GetCartByIdQueryHandler(
         {
             var pizza = cartPizza.Pizza;
             var product = productsDict[pizza.ProductId];
+            
+            string details = pizza.GetPizzaDetails();
+            string addedIngredients = Ingredient.JoinIngredientsNames(cartPizza.Ingredients.Select(i => i.Name).ToList());
 
-            return new CartPizzaDto(
+            return new CartItemDto(
                 cartPizza.Id,
                 product.Name,
+                details,
                 product.BaseImg,
                 pizza.Price,
                 cartPizza.Quantity,
-                pizza.Size,
-                pizza.Dough,
-                cartPizza.Ingredients.Select(i => i.Name).ToList()
+                addedIngredients
             );
         }).ToList();
         
@@ -58,13 +60,13 @@ public class GetCartByIdQueryHandler(
             var goods = cartGoods.Goods;
             var product = productsDict[goods.ProductId];
 
-            return new CartGoodsDto(
+            return new CartItemDto(
                 cartGoods.Id,
                 product.Name,
+                goods.Details,
                 product.BaseImg,
                 goods.Price,
-                cartGoods.Quantity,
-                goods.Details
+                cartGoods.Quantity
             );
         }).ToList();
 
