@@ -17,4 +17,7 @@ public class Ingredient: Entity
     
     [JsonIgnore]
     public ICollection<OrderedPizza> OrderedPizzas {get; private set;}
+    
+    public static string JoinIngredientsNames(List<string> ingredientsNames) =>
+        string.Join(", ", ingredientsNames);
 }
