@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CoolPizza.Application.Cart.Commands;
 
-public class DeletePizzaItemCommand : IRequest<DeleteCartItemDto>
+public class DeletePizzaItemCommand : IRequest
 {
     public Guid CartId { get; init; }
     public Guid CartPizzaId { get; init; }
@@ -15,34 +15,33 @@ public class DeletePizzaItemHandler(
     IUnitOfWork unitOfWork,
     IOrdersRepository ordersRepository,
     IOrderedPizzasRepository orderedPizzasRepository
-) : IRequestHandler<DeletePizzaItemCommand, DeleteCartItemDto>
+) : IRequestHandler<DeletePizzaItemCommand>
 {
-    public async Task<DeleteCartItemDto> Handle(DeletePizzaItemCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeletePizzaItemCommand request, CancellationToken cancellationToken)
     {
         await unitOfWork.BeginTransactionAsync();
         
         try
         {
             // находим пиццу корзины 
-            var cartGoodsItem = await orderedPizzasRepository.FindAsync(request.CartId, request.CartPizzaId);
+            var cartGoodsItem = await orderedPizzasRepository.FindByIdAsync(request.CartPizzaId);
             
             if (cartGoodsItem is null)
-                throw new NotFoundException("PizzaItem", request.CartPizzaId);
+                throw new NotFoundException("CartPizza", request.CartPizzaId);
+            
+            // проверяем относится ли пицца к данной корзине
+            if (cartGoodsItem.OrderId != request.CartId)
+                throw new NotFoundException("CartPizza not found in this cart");
                 
             // удаляем пиццу из корзины 
             if (!await orderedPizzasRepository.RemoveAsync(request.CartPizzaId))
                 throw new Exception("Something went wrong while deleting the cart pizza.");
             
             // пересчитываем общую стоимость
-            var newTotalAmount = await ordersRepository.UpdateTotalAmount(cartGoodsItem.OrderId);
+            await ordersRepository.UpdateTotalAmount(cartGoodsItem.OrderId);
             
             // подтверждаем транзакцию
             await unitOfWork.CommitAsync();
-
-            return new DeleteCartItemDto(
-                cartGoodsItem.Id,
-                newTotalAmount
-            );
         }
         catch
         {
