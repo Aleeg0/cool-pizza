@@ -1,0 +1,50 @@
+.root {
+  position: fixed;
+  z-index: 10000;
+}
+
+.wrapper {
+  position: fixed;
+  inset: 0;
+}
+
+.show {
+  & > .fade {
+    opacity: 0.6;
+  }
+
+  & > .content {
+    transform: translateX(0);
+  }
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(0.5, 1, 0.5, 1);
+}
+
+.closeButton {
+  position: absolute;
+  top: calc(50% - 12px);
+  left: -50px;
+  width: 24px;
+  height: 24px;
+  transition: transform .5s;
+
+  &:hover {
+    transform: scale(1.1) rotate(180deg);
+  }
+}
