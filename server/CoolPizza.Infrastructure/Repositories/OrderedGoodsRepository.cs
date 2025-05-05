@@ -16,8 +16,11 @@ public class OrderedGoodsRepository(ApplicationDbContext context) : IOrderedGood
         return orderedGoods;
     }
 
-    public async Task<OrderedGoods?> FindAsync(Guid cartId, Guid goodsId) => 
-        await context.OrderedGoods.FirstOrDefaultAsync(og => og.GoodsId == goodsId && og.OrderId == cartId);
+    public async Task<OrderedGoods?> FindByIdAsync(Guid id) => 
+        await context.OrderedGoods.FindAsync(id);
+    
+    public async Task<OrderedGoods?> FindByCartAndGoodAsync(Guid cartId, Guid goodsId) =>
+        await context.OrderedGoods.FirstOrDefaultAsync(og => og.OrderId == cartId && og.GoodsId == goodsId);
 
     public async Task<bool> UpdateAsync(Guid id, int quantity)
     {

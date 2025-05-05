@@ -17,7 +17,9 @@ public class OrderedPizzasRepository(ApplicationDbContext context) : IOrderedPiz
         return orderedPizza;
     }
     
-    public async Task<OrderedPizza?> FindAsync(Guid cartId, Guid pizzaId) => 
+    public async Task<OrderedPizza?> FindByIdAsync(Guid id) => 
+        await context.OrderedPizzas.FindAsync(id);
+    public async Task<OrderedPizza?> FindByCartAndPizzaAsync(Guid cartId, Guid pizzaId) => 
         await context.OrderedPizzas.FirstOrDefaultAsync(op => op.PizzaId == pizzaId && op.OrderId == cartId);
 
     public async Task<bool> UpdateAsync(Guid id, int quantity)
