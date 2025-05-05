@@ -8,3 +8,4 @@ export {CircleIcon} from './CircleIcon';
 export {CrossIcon} from './CrossIcon';
 export {HugeCrossIcon} from './HugeCrossIcon';
 export {LeftArrowIcon} from './LeftArrowIcon';
+export {MinusIcon} from './MinusIcon';
