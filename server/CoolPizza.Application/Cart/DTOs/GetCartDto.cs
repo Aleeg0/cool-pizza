@@ -3,7 +3,7 @@ namespace CoolPizza.Application.Cart.DTOs;
 
 public record GetCartDto
 (
-    List<CartPizzaDto> PizzaCartLines,
-    List<CartGoodsDto> GoodsCartLines,
+    List<CartItemDto> PizzaCartLines,
+    List<CartItemDto> GoodsCartLines,
     decimal TotalAmount
 );

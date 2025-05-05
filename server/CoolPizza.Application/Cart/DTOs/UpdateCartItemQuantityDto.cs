@@ -3,6 +3,5 @@
 public record UpdateCartItemQuantityDto
 (
     Guid Id,
-    int Quantity,
-    decimal TotalAmount
+    int Quantity
 );
