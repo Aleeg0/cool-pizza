@@ -1,6 +1,7 @@
 import React, {FC, ReactNode} from 'react';
 import styles from "./styles.module.scss";
 import {UiButton} from "@/components/ui";
+import {useRouter} from "next/navigation";
 
 interface Props {
   imageVisualizer: ReactNode;
@@ -22,6 +23,12 @@ const Modal: FC<Props> = ({
   cartButtonCaption,
 }) => {
 
+  const router = useRouter();
+
+  const onClick = () => {
+    router.back();
+    onCartButtonClick();
+  }
 
   return (
     <div className={styles.content}>
@@ -41,7 +48,7 @@ const Modal: FC<Props> = ({
           <UiButton
             caption={cartButtonCaption}
             isFullWidth={true}
-            onClick={onCartButtonClick}
+            onClick={onClick}
           />
         </div>
       </div>

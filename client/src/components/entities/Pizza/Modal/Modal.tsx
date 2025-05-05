@@ -10,6 +10,8 @@ import {useProductVariations} from "./lib/useProductVariations";
 import {createDoughOptions, createSizeOptions} from "@/components/entities/Pizza/Modal/lib/productOptions";
 import {Pizza, Product} from "@/store/types/Product";
 import {UUID} from "@/store/types/shared";
+import {addPizzaToCart} from "@/store/model/Cart";
+import {useAppDispatch} from "@/store/lib/hooks";
 
 interface PizzaModalProps {
   product: Product;
@@ -19,6 +21,7 @@ const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [selectedDoughIndex, setSelectedDoughIndex] = useState(0);
   const [selectedIngredientIds, setSelectedIngredientIds] = useState<UUID[]>([]);
+  const dispatch = useAppDispatch();
 
   const toggleIngredient = (ingredientId: UUID) => {
     setSelectedIngredientIds(prev =>
@@ -53,6 +56,13 @@ const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
     .filter(ingredient => selectedIngredientIds.includes(ingredient.id))
     .reduce((sum, ingredient) => sum + ingredient.price, 0);
 
+  const onCartButtonClick = () => {
+    dispatch(addPizzaToCart({
+      pizzaId: selectedProduct.id,
+      ingredientsIds: selectedIngredientIds,
+    }));
+  }
+
   const productDetails = `${selectedProduct.size} см, ${selectedProduct.dough} тесто, ${selectedProduct.weight} г`;
 
   return (
@@ -61,7 +71,7 @@ const PizzaModal: React.FC<PizzaModalProps> = ({ product }) => {
       description={product.description}
       productDetails={productDetails}
       cartButtonCaption={`Добавить в корзину за ${totalPrice.toFixed(2)} ₽`}
-      onCartButtonClick={() => {}}
+      onCartButtonClick={onCartButtonClick}
       imageVisualizer={
         <SmartDisplayer
           sizeId={selectedSizeIndex}
