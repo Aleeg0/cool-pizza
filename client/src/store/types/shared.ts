@@ -16,9 +16,3 @@ export interface Filters {
   priceRange: PriceRange;
   ingredientsIds: UUID[];
 }
-
-export interface DefaultState<T> {
-  data: T;
-  status: LoadingStatus;
-  error?: string;
-}
