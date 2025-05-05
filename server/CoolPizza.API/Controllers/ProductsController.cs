@@ -1,7 +1,7 @@
 ﻿using CoolPizza.Application.Products.DTOs;
 using CoolPizza.Application.Products.Queries;
-using CoolPizza.Core.DTOs.Projections;
 using CoolPizza.Core.Enums;
+using CoolPizza.Core.Projections;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
     
     [HttpGet("search")]
-    public async Task<ActionResult<List<SearchedProductDto>>> GetSearchedProducts([FromQuery] GetSearchedProductsQuery query)
+    public async Task<ActionResult<List<SearchedProductProjection>>> GetSearchedProducts([FromQuery] GetSearchedProductsQuery query)
     {
         var products = await mediator.Send(query);
         return Ok(products);

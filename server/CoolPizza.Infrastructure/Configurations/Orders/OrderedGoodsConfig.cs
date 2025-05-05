@@ -16,10 +16,6 @@ public class OrderedGoodsConfig : IEntityTypeConfiguration<OrderedGoods>
         builder
             .Property(og => og.Quantity)
             .HasColumnName("quantity");
-        
-        builder
-            .Property(og => og.GoodsId)
-            .HasColumnName("goods_id");
 
         builder
             .Property(og => og.OrderId)
@@ -29,10 +25,10 @@ public class OrderedGoodsConfig : IEntityTypeConfiguration<OrderedGoods>
         
         // relation with Goods 1:N 
         builder
-            .HasOne<Goods>()
-            .WithOne()
-            .HasForeignKey<OrderedGoods>(og => og.GoodsId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(og => og.Goods)
+            .WithMany()
+            .HasForeignKey(og => og.GoodsId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         // relation with Order 1:N 
         builder

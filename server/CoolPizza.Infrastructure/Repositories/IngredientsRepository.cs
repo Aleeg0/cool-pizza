@@ -1,5 +1,6 @@
 ﻿using CoolPizza.Core.Abstractions;
-using CoolPizza.Core.DTOs.Projections;
+using CoolPizza.Core.Entities;
+using CoolPizza.Core.Projections;
 using CoolPizza.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,12 +8,17 @@ namespace CoolPizza.Infrastructure.Repositories;
 
 public class IngredientsRepository(ApplicationDbContext context) : IIngredientsRepository
 {
-    public Task<List<MenuIngredientDto>> GetAllAsync()
+    public async Task<List<ShortIngredientProjection>> GetShortAllAsync()
     {
-         var query = context.Ingredients
-            .Select(ingredient => new MenuIngredientDto(ingredient.Id, ingredient.Name))
+         return await context.Ingredients
+            .Select(ingredient => new ShortIngredientProjection(ingredient.Id, ingredient.Name))
             .ToListAsync();
-         
-         return query;
+    }
+
+    public Task<List<Ingredient>> FindRangeAsync(ICollection<Guid> ids)
+    {
+        return context.Ingredients
+            .Where(ingredient => ids.Contains(ingredient.Id))
+            .ToListAsync();
     }
 }

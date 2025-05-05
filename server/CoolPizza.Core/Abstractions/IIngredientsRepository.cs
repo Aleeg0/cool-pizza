@@ -1,8 +1,10 @@
-﻿using CoolPizza.Core.DTOs.Projections;
+﻿using CoolPizza.Core.Entities;
+using CoolPizza.Core.Projections;
 
 namespace CoolPizza.Core.Abstractions;
 
 public interface IIngredientsRepository
 {
-    Task<List<MenuIngredientDto>> GetAllAsync();
+    Task<List<ShortIngredientProjection>> GetShortAllAsync();
+    Task<List<Ingredient>> FindRangeAsync(ICollection<Guid> ids);
 }

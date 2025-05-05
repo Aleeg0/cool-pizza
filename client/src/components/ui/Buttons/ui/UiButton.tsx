@@ -8,6 +8,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
     caption,
     icon,
     iconSize = "m",
+    iconPosition = "left",
     type = "primary",
     size = "m",
     isFullWidth = false,
@@ -22,13 +23,14 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
         styles.UiButton_root,
         styles[`UiButton_${type}`],
         styles[`UiButton-${size}`],
-        isFullWidth ? styles.UiButton_fullWidth : ''
+        isFullWidth && styles.UiButton_fullWidth,
+        icon && styles.UiButton_withIcon
       )}
       {...props}
     >
-      {icon &&
+      {icon && iconPosition === "left" &&
         <span className={cn(
-          styles.UiButton_icon,
+          styles.UiButton_iconLeft,
           `UiKit_icon-${iconSize}`,
         )}>
           {icon}
@@ -37,6 +39,14 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
       {caption &&
         <span>
           {caption}
+        </span>
+      }
+      {icon && iconPosition === "right" &&
+          <span className={cn(
+            styles.UiButton_iconRight,
+            `UiKit_icon-${iconSize}`,
+          )}>
+          {icon}
         </span>
       }
     </button>

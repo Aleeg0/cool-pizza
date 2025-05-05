@@ -1,7 +1,6 @@
 ﻿using CoolPizza.Application.Products.DTOs;
 using CoolPizza.Core.Abstractions;
 using CoolPizza.Core.DTOs;
-using CoolPizza.Core.DTOs.Projections;
 using CoolPizza.Core.Enums;
 using MediatR;
 

@@ -1,8 +1,8 @@
 ﻿using CoolPizza.Core.Abstractions;
 using CoolPizza.Core.DTOs;
-using CoolPizza.Core.DTOs.Projections;
 using CoolPizza.Core.Entities.Products;
 using CoolPizza.Core.Enums;
+using CoolPizza.Core.Projections;
 using CoolPizza.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +10,7 @@ namespace CoolPizza.Infrastructure.Repositories;
 
 public class ProductsRepository(ApplicationDbContext context) : IProductsRepository
 {
-    public async Task<List<MenuProductDto>> GetMenuAllAsync(ProductFiltersDto filtersDto, SortOption sortOption)
+    public async Task<List<MenuProductProjection>> GetMenuAllAsync(ProductFiltersDto filtersDto, SortOption sortOption)
     {
         IQueryable<Product> query = context.Products.AsQueryable();
 
@@ -44,7 +44,7 @@ public class ProductsRepository(ApplicationDbContext context) : IProductsReposit
         // sorting
         query = SortProducts(query, sortOption); 
 
-        IQueryable<MenuProductDto> result = query.Select(p => new MenuProductDto(
+        IQueryable<MenuProductProjection> result = query.Select(p => new MenuProductProjection(
             p.Id,
             p.Name,
             p.Description,
@@ -56,11 +56,17 @@ public class ProductsRepository(ApplicationDbContext context) : IProductsReposit
         return await result.ToListAsync();
     }
 
-    public async Task<List<SearchedProductDto>> GetSearchedAsync(string searchValue)
+    public async Task<List<CartProductProjection>> GetCartProjectionRangeAsync(ICollection<Guid> productsIds) =>
+        await context.Products
+            .Where(p => productsIds.Contains(p.Id))
+            .Select(p => new CartProductProjection(p.Id, p.Name, p.BaseImg))
+            .ToListAsync();
+
+    public async Task<List<SearchedProductProjection>> GetSearchedAsync(string searchValue)
     {
         var result = await context.Products
             .Where(p => EF.Functions.ILike(p.Name, $"%{searchValue}%"))
-            .Select(p => new SearchedProductDto(p.Id, p.Name, p.BaseImg))
+            .Select(p => new SearchedProductProjection(p.Id, p.Name, p.BaseImg))
             .ToListAsync();
         
         return result;
@@ -90,6 +96,11 @@ public class ProductsRepository(ApplicationDbContext context) : IProductsReposit
         }
 
         return product;
+    }
+
+    public async Task<Product?> FindByIdAsync(Guid id)
+    {
+        return await context.Products.FindAsync(id);
     }
 
     private IQueryable<Product> SortProducts(IQueryable<Product> query, SortOption sortOption)

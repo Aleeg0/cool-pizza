@@ -3,6 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SortByValues} from "@/store/consts/SortByValues";
 import {Filters, LoadingStatus, UUID} from "@/store/types/shared";
 import {fetchProductsGrouped} from "@/store/model/Products/thunk";
+import {handlePending, handleRejected, isPendingAction, isRejectedAction} from "@/store/model/Shared";
 
 const initSortBy = SortByValues.NEWEST;
 
@@ -36,11 +37,6 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProductsGrouped.pending, (state) => {
-        if (state.status === LoadingStatus.IDLE) {
-          state.status = LoadingStatus.PENDING;
-        }
-      })
       .addCase(fetchProductsGrouped.fulfilled, (state, action) => {
         if (state.status === LoadingStatus.PENDING) {
           state.status = LoadingStatus.SUCCEEDED;
@@ -48,12 +44,8 @@ const productsSlice = createSlice({
           state.currentCategoryId = action.payload.at(0)?.category.id;
         }
       })
-      .addCase(fetchProductsGrouped.rejected, (state, action) => {
-        if (state.status === LoadingStatus.PENDING) {
-          state.status = LoadingStatus.FAILED;
-          state.error = action.error.message;
-        }
-      });
+      .addMatcher(isPendingAction, handlePending)
+      .addMatcher(isRejectedAction, handleRejected);
   }
 });
 

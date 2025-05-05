@@ -39,7 +39,7 @@ app.MapControllers();
 app.UseCors(cors =>
 {
     cors.WithHeaders().AllowAnyHeader();
-    cors.WithOrigins("http://localhost:3000");
+    cors.WithOrigins("http://localhost:3000").WithExposedHeaders("X-Cart-Token");
     cors.WithMethods().AllowAnyMethod();
 });
 

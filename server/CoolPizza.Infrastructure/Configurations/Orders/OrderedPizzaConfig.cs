@@ -17,18 +17,14 @@ public class OrderedPizzaConfig : IEntityTypeConfiguration<OrderedPizza>
             .Property(op => op.Quantity)
             .HasColumnName("quantity");
         
-        builder
-            .Property(op => op.OrderId)
-            .HasColumnName("order_id");
-        
         // relations
         
         // relation with Pizza 1:N 
         builder
-            .HasOne<Pizza>()
+            .HasOne(op => op.Pizza)
             .WithMany()
             .HasForeignKey(op => op.PizzaId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         
         // relation with Order 1:N
         builder

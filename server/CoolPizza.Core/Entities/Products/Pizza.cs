@@ -10,4 +10,14 @@ public class Pizza: Entity
     public string Dough { get; private set; }
     public double? Weight { get; private set; }
     public ICollection<Ingredient> Ingredients { get; private set; }
+    
+    public string GetPizzaDetails() => 
+        $"{SizesNames[Size]} {Size} см, {Dough} тесто";
+
+    private static readonly Dictionary<int, string> SizesNames = new ()
+    {
+        [25] = "Маленькая",
+        [30] = "Средняя",
+        [35] = "Большая",
+    };
 }

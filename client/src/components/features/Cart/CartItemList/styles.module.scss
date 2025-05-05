@@ -1,0 +1,10 @@
+.content {
+  position: relative;
+  display: contents;
+}
+
+.list {
+  &Item {
+    margin-bottom: 10px;
+  }
+}
