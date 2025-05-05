@@ -3,6 +3,7 @@ import {Ingredient} from "./Ingredient";
 import {Category} from "./Category";
 
 export interface Goods {
+  id: UUID,
   imgUrl: string;
   price: number;
   details: string;
@@ -11,6 +12,7 @@ export interface Goods {
 }
 
 export interface Pizza {
+  id: UUID,
   imgUrl: string;
   price: number;
   size: number;
