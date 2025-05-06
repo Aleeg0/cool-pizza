@@ -31,7 +31,10 @@ public class CreateGoodsItemHandler(
            
            // если корзины не было - создаем, иначе находим
            if (!request.Id.HasValue)
-               cart =  await ordersRepository.CreateAsync();
+           {
+               cart = await ordersRepository.CreateAsync();
+               request.Id = cart.Id;
+           }
            else
                cart = await ordersRepository.FindByIdAsync(request.Id.Value);
            
