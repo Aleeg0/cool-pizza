@@ -10,9 +10,9 @@ namespace PizzaService.API.Controllers;
 [Route("api/[controller]")]
 public class CartController(IMediator mediator) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetCartDto>> GetCartById(
-        [FromHeader(Name = "X-Cart-Token")] Guid id
+        [FromRoute(Name = "id")] Guid id
     )
     {
         var query = new GetCartByIdQuery()
