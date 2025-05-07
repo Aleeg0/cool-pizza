@@ -33,7 +33,8 @@ const cartSlice = createSlice({
       // get methods
       .addCase(fetchCart.fulfilled, (state, action) =>
         handleFulfilled(state, () => {
-          state.data = action.payload;
+          if (action.payload != null)
+            state.data = action.payload;
         })
       )
       .addCase(getCartTotalAmount.fulfilled, (state, action) => {

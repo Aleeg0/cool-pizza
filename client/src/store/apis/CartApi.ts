@@ -6,6 +6,7 @@ import {
   CartItem,
   UpdateCartItem
 } from "@/store/model/Cart/types";
+import Cookies from "js-cookie";
 
 class CartApi {
   private _api: AxiosInstance;
@@ -15,11 +16,15 @@ class CartApi {
     this._api = api;
   }
 
-  async getCartByToken(): Promise<Cart> {
-    const response = await this._api.get(
-      `${this._baseEndpoint}`
-    );
+  async getCartByToken(): Promise<Cart|null> {
+    const cartToken = Cookies.get("X-Cart-Token");
+    if (!cartToken) {
+      return null;
+    }
 
+    const response = await this._api.get(
+      `${this._baseEndpoint}/${cartToken}`
+    );
     return response.data;
   }
 
