@@ -3,9 +3,7 @@ import {PayloadAction} from "@reduxjs/toolkit";
 import {DefaultState} from "@/store/model/Shared/types";
 
 export const handlePending = (state: DefaultState<unknown>) => {
-  if (state.status === LoadingStatus.IDLE || state.status === LoadingStatus.SUCCEEDED) {
-    state.status = LoadingStatus.PENDING;
-  }
+  state.status = LoadingStatus.PENDING;
 };
 
 export const handleFulfilled = (state: DefaultState<unknown>, callback: () => void) => {
