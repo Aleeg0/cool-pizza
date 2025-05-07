@@ -15,6 +15,14 @@
 
     &:hover:not(:disabled) {
       box-shadow: 0 0 5px var(--color-button-shadow);
+
+      & .UiButton_iconRight.UiButton_iconAnimated {
+        transform: translateX(1em);
+      }
+
+      & .UiButton_iconLeft.UiButton_iconAnimated {
+        transform: translateX(-1em);
+      }
     }
 
     &:disabled {
@@ -25,10 +33,14 @@
 
   &_icon {
     &Left {
-      margin-right: 6px;
+      margin-right: 0.5em;
     }
     &Right {
-      margin-left: 6px;
+      margin-left: 0.5em;
+    }
+
+    &Animated {
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
   }
 
@@ -76,6 +88,10 @@
 
   &-l {
     height: 50px;
+  }
+
+  &-xl {
+    height: 55px;
   }
 }
 
