@@ -1,7 +1,7 @@
 import {ButtonHTMLAttributes, ReactNode} from "react";
 
 export type ButtonType = 'primary' | 'secondary' | 'primaryLight';
-export type ButtonSize = 's' | 'm' | 'l';
+export type ButtonSize = 's' | 'm' | 'l' | "xl";
 export type IconPosition = 'left' | 'right';
 
 export interface TextButtonProps {
@@ -15,6 +15,7 @@ export interface UiButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonEleme
   iconSize?: ButtonSize;
   iconPosition?: IconPosition;
   isFullWidth?: boolean;
+  isIconAnimated?: boolean;
 }
 
 export interface AnimatedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, TextButtonProps {

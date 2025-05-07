@@ -5,7 +5,9 @@ import {UiButton} from "@/components/ui";
 import {Drawer} from "@/components/layout";
 import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
 import {fetchCart, selectCartItemsCount} from "@/store/model/Cart";
-import CartDrawerContainer from "../CartDrawers/CartDrawerContainer/CartDrawerContainer";
+import styles from "./styles.module.scss";
+import CartDrawer from "@/components/features/Cart/CartDrawers/CartDrawer/CartDrawer";
+import EmptyCartDrawer from "@/components/features/Cart/CartDrawers/EmptyCartDrawer/EmptyCartDrawer";
 
 const CartButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +29,15 @@ const CartButton = () => {
         <Drawer
           onClose={() => setIsOpen(false)}
         >
-            <CartDrawerContainer/>
+          <div className={styles.container}>
+            {itemsCount > 0 ?
+              <CartDrawer
+                itemsCount={itemsCount}
+              />
+              :
+              <EmptyCartDrawer/>
+            }
+          </div>
         </Drawer>
       }
     </div>

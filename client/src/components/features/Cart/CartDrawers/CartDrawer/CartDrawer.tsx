@@ -43,11 +43,12 @@ const CartDrawer: FC<Props> = ({itemsCount}) => {
         </div>
         <div className={styles.orderDetails_orderButton}>
           <UiButton
-            size="l"
+            size="xl"
             caption="Оформить заказ"
             iconPosition="right"
             icon={<LeftArrowIcon/>}
             isFullWidth
+            isIconAnimated
           />
         </div>
       </div>

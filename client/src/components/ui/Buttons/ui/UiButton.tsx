@@ -12,6 +12,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
     type = "primary",
     size = "m",
     isFullWidth = false,
+    isIconAnimated = false,
     ...props
   },
   ref
@@ -32,6 +33,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
         <span className={cn(
           styles.UiButton_iconLeft,
           `UiKit_icon-${iconSize}`,
+          isIconAnimated && styles.UiButton_iconAnimated
         )}>
           {icon}
         </span>
@@ -45,6 +47,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
           <span className={cn(
             styles.UiButton_iconRight,
             `UiKit_icon-${iconSize}`,
+            isIconAnimated && styles.UiButton_iconAnimated
           )}>
           {icon}
         </span>
