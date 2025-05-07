@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import {UiButton} from "@/components/ui";
 import {CartIcon} from "@/components/icons";
 
 const EmptyCartDrawer = () => {
@@ -15,9 +14,6 @@ const EmptyCartDrawer = () => {
         </div>
         <div className={styles.information}>
           <p>Добавьте хотя бы одну пиццу, чтобы совершить заказ</p>
-        </div>
-        <div>
-          <UiButton caption="Вернуться назад"/>
         </div>
       </div>
     </div>
