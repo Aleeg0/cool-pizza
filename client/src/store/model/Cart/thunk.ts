@@ -10,7 +10,7 @@ import cartApi from "@/store/apis/CartApi";
 import {UUID} from "@/store/types/shared";
 
 export const fetchCart = createAsyncThunk<
-  Cart,
+  Cart | null,
   void,
   { rejectValue: string }
 >(
@@ -49,10 +49,12 @@ export const addPizzaToCart = createAsyncThunk<
   "/cart/pizzas/add",
   async (addPizzaToCartAction, {rejectWithValue}) => {
     try {
-      return await cartApi.addPizzaToCart(
+      const arr = await cartApi.addPizzaToCart(
         addPizzaToCartAction.pizzaId,
         addPizzaToCartAction.ingredientsIds
       );
+      console.log(arr);
+      return arr;
     }
     catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
