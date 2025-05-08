@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 interface Props {
   name: string;
   details : string;
-  addedIngredientsLine : string;
+  addedIngredientsLine?: string;
   imgUrl : string;
   price : number;
   quantity : number;
