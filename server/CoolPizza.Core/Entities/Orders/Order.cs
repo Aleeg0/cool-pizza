@@ -14,11 +14,34 @@ public class Order: Entity
     public string? Address {get; private set;}
     public string? Comment {get; private set;}
     public decimal TotalAmount { get; private set; } = 0;
-    public OrderStatus Status { get; private set; } = OrderStatus.New;
+    public OrderStatus Status { get; set; } = OrderStatus.New;
     public DeliveryType DeliveryType { get; private set; } = DeliveryType.Pickup;
     public DateTime? PaidAt { get; private set; } = null;
     public Guid? UserId { get; private set; } = null;
 
     public ICollection<OrderedGoods> GoodsLine { get; private set; } = [];
     public ICollection<OrderedPizza> PizzasLine { get; private set; } = [];
+
+    public void AddPersonalInfo(string name, string email, string phone, string address, string? comment)
+    {
+        if (name.Length > UserPropertiesMaxLength)
+            throw new ArgumentException($"Name cannot be more then {UserPropertiesMaxLength}");
+
+        if (email.Length > UserPropertiesMaxLength)
+            throw new ArgumentException($"Name cannot be more then {UserPropertiesMaxLength}");
+            
+        if (phone.Length > PhoneMaxLength)
+            throw new ArgumentException($"Phone cannot be more then {PhoneMaxLength}");
+        
+        if (address.Length > AddressMaxLength)
+            throw new ArgumentException($"Address cannot be more then {AddressMaxLength}");
+        
+        Name = name;
+        Email = email;
+        Phone = phone;
+        Address = address;
+        
+        if (comment is not null)
+            Comment = comment;
+    }
 }
