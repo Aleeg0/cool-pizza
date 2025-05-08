@@ -5,7 +5,7 @@ import {
   addGoodsToCart,
   addPizzaToCart,
   fetchCart, getCartTotalAmount,
-  removeCartGoods, removeCartPizza,
+  removeCartGoods, removeCartPizza, submitOrder,
   updateCartGoods,
   updateCartPizza
 } from "@/store/model/Cart/thunk";
@@ -40,6 +40,12 @@ const cartSlice = createSlice({
       .addCase(getCartTotalAmount.fulfilled, (state, action) => {
         state.data.totalAmount = action.payload;
       })
+      // submit order
+      .addCase(submitOrder.fulfilled, (state) =>
+        handleFulfilled(state, () => {
+          state.data = cartInitState;
+        })
+      )
       // pizza
       .addCase(addPizzaToCart.fulfilled, (state, action) =>
         handleFulfilled(state, () => {

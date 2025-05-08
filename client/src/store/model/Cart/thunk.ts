@@ -4,7 +4,7 @@ import {
   AddPizzaToCartAction,
   Cart,
   UpdateCartItem,
-  CartItem
+  CartItem, OrderFormData
 } from "./types";
 import cartApi from "@/store/apis/CartApi";
 import {UUID} from "@/store/types/shared";
@@ -151,3 +151,27 @@ export const removeCartGoods = createAsyncThunk<
     }
   }
 );
+
+export const submitOrder = createAsyncThunk<
+  void,
+  OrderFormData,
+  {
+    rejectValue: string,
+  }
+>(
+  "orderFrom/updatePersonalInfo",
+  async ({firstName, lastName, email, phone}, {rejectWithValue}) => {
+
+    try {
+      await cartApi.updatePersonalInfo(
+        `${firstName} ${lastName}`,
+        email,
+        phone,
+        ""
+      );
+    }
+    catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+    }
+  }
+)
