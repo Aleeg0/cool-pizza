@@ -1,7 +1,8 @@
 import React, {InputHTMLAttributes} from "react";
 
 export interface BasicInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'> {
-  value: string | number;
+  value: string;
+  error?: string;
 }
 
 export interface IconInputProps extends BasicInputProps {
