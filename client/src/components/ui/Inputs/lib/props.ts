@@ -14,3 +14,7 @@ export interface NumericInputProps extends BasicInputProps {
   max?: number;
   maxDigits?: number;
 }
+
+export interface TitledInputProps extends BasicInputProps {
+  title: string;
+}
