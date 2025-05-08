@@ -3,6 +3,7 @@ import {Nunito} from "next/font/google";
 import type { Metadata } from "next";
 import '@/styles/index.scss';
 import {ReduxProvider} from "@/store/ReduxProvider";
+import {Toaster} from "react-hot-toast";
 
 const nunitoFont = Nunito({subsets: ["cyrillic"]})
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={nunitoFont.className}>
         <ReduxProvider>
           {children}
+          <Toaster/>
           {modal}
         </ReduxProvider>
       </body>

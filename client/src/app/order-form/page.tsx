@@ -1,34 +1,50 @@
 'use client';
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {OrderHeader} from "@/components/layout";
 import styles from './styles.module.scss';
 import {FormOrderPriceBlock, FormOrderCartBlock, FormOrderPersonalInfoBlock} from "@/components/features/OrderFrom";
 import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
 import {fetchCart, selectCart, submitOrder, useOrderForm} from "@/store/model/Cart";
 import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
 
 const Page = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const {totalAmount, goodsCartLines, pizzaCartLines} = useAppSelector(selectCart);
   const {formData: orderForm, errors, setFieldValue, validateForm} = useOrderForm();
-  const router = useRouter();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const displayCartItems = [
+  const displayCartItems = useMemo(() => [
     ...goodsCartLines,
     ...pizzaCartLines
-  ];
+  ], [goodsCartLines, pizzaCartLines]);
 
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  const onOrderClick = () => {
+  useEffect(() => {
+    if (!isSubmitted && displayCartItems.length === 0) {
+      router.push('/');
+      toast("Добавьте сперва, что-нибудь в корзину!", {icon: "⚠️",});
+    }
+  }, [displayCartItems, isSubmitted, router]);
+
+  const onOrderClick = async () => {
     const isValid = validateForm();
 
     if (isValid) {
-      dispatch(submitOrder(orderForm));
-      router.push("/");
+      try{
+        setIsSubmitted(true);
+        await dispatch(submitOrder(orderForm)).unwrap();
+        router.push("/");
+        toast.success("Заказ оформлен!");
+      }
+      catch {
+        toast.error("Упс... что-то пошло не так :(");
+      }
     }
   }
 
