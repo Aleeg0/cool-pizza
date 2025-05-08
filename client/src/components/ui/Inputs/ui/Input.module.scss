@@ -74,3 +74,55 @@
     width: 10px;
   }
 }
+
+.TitledInput {
+  &_caption {
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: var(--font-size-paragraph-l);
+    line-height: 19px;
+  }
+
+  &_input {
+    &__container {
+      position: relative;
+    }
+
+    &__content {
+      margin-bottom: 8px;
+      padding: 13px 18px;
+      border: 1px solid #EFEFEF;
+      border-radius: 10px;
+      background: transparent;
+      transition: all .2s ease-in;
+
+      input {
+        font-size: var(--font-size-paragraph);
+        line-height: 22px;
+
+        &::placeholder {
+          color: var(--color-text-secondary);
+        }
+      }
+    }
+
+    &Warning {
+      .TitledInput_input {
+        &__content {
+          border-color: #FE0000;
+        }
+
+        &__warning {
+          opacity: 1;
+        }
+      }
+    }
+
+    &__warning {
+      height: 19px;
+      font-size: var(--font-size-paragraph-s);
+      color: #FE0000;
+      opacity: 0;
+    }
+  }
+}
