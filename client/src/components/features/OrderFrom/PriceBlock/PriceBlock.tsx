@@ -1,19 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './styles.module.scss';
 import {UiButton} from "@/components/ui";
 import PriceWidget from "@/components/features/OrderFrom/PriceWidget/PriceWidget";
 import {BoxIcon} from "@/components/icons";
-import {useAppDispatch} from "@/store/lib/hooks";
-import {validateOrderForm} from "@/store/model/OrderForm";
 
-const PriceBlock = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  totalAmount: number;
+  currency: string;
+  onOrderClick: () => void;
+}
 
-  const onOrderClick = () => {
-    dispatch(validateOrderForm());
-  }
+const PriceBlock: FC<Props> = ({
+  totalAmount,
+  currency,
+  onOrderClick
+}) => {
 
   return (
     <div className={styles.container}>
@@ -21,21 +24,21 @@ const PriceBlock = () => {
         <div className={styles.header}>
           <div className={styles.header_title}>
             <h2>Итого: </h2>
-            <b>2365 руб.</b>
+            <b>{totalAmount} {currency}</b>
           </div>
         </div>
         <div className={styles.main}>
           <div className={styles.main_priceWidget}>
             <PriceWidget
               caption="Стоимость товаров:"
-              price={2005}
+              price={totalAmount}
               icon={<BoxIcon/>}
             />
           </div>
           <div className={styles.main_priceWidget}>
             <PriceWidget
               caption="Доставка:"
-              price={2005}
+              price={0}
               icon={<BoxIcon/>}
             />
           </div>
