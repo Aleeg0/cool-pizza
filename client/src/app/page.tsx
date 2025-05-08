@@ -8,22 +8,10 @@ import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
 import {useEffect} from "react";
 import {fetchProductsGrouped} from "@/store/model/Products/thunk";
 import {fetchIngredients} from "@/store/model/Ingredients/thunk";
-import {useRouter, useSearchParams} from "next/navigation";
 
 export default function HomePage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const {data: groupedProducts, sortBy, filters} = useAppSelector(state => state.products);
-
-  useEffect(() => {
-    const urlSortBy = searchParams.get('sortBy');
-    if (urlSortBy) {
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete('sortBy');
-      router.push(`?${newParams.toString()}`);
-    }
-  }, []);
 
   useEffect(() => {
     dispatch(fetchIngredients());

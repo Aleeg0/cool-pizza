@@ -1,5 +1,5 @@
 'use client';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Portal} from "@/components/layout";
 import {cn} from "@/utils";
 import {SortIcon} from "@/components/icons";
@@ -39,6 +39,15 @@ const Sorter = () => {
     router.push(`?${newParams.toString()}`);
     dispatch(setSortBy(value));
   };
+
+  useEffect(() => {
+    const urlSortBy = searchParams.get('sortBy');
+    if (urlSortBy) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('sortBy');
+      router.push(`?${newParams.toString()}`);
+    }
+  }, []);
 
   const sortByName = sortOptions.find(sortOption => sortOption.value === sortBy)?.name ?? "";
 

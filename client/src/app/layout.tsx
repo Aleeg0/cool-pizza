@@ -22,9 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunitoFont.className}>
         <ReduxProvider>
-          <Suspense>
-            {children}
-          </Suspense>
+          {children}
           {modal}
         </ReduxProvider>
       </body>
