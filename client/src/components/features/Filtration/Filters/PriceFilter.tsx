@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import styles from '../Filtration.module.scss';
-import {NumericInput} from "@/components/ui/Input";
+import {NumericInput} from "@/components/ui/Inputs";
 import {PriceIcon} from "@/components/icons";
 import {PriceRange} from "@/store/types/shared";
 
@@ -26,13 +26,13 @@ const PriceFilter: FC<Props> = ({
   return (
     <div className={styles.PriceFilter_content}>
       <NumericInput
-        value={currentPrice.min ?? ""}
+        value={currentPrice.min?.toString() ?? ""}
         onChange={handleMinChange}
         icon={<PriceIcon/>}
         placeholder="0"
       />
       <NumericInput
-        value={currentPrice.max ?? ""}
+        value={currentPrice.max?.toString() ?? ""}
         onChange={handleMaxChange}
         icon={<PriceIcon/>}
         placeholder="0"
