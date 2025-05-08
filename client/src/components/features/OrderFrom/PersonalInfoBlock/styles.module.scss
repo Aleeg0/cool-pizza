@@ -1,0 +1,13 @@
+.content {
+  margin-block: 30px;
+}
+
+.widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 26px;
+}
+
+.widget {
+  width: calc(50% - 13px);
+}
