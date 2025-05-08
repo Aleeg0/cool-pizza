@@ -1,9 +1,37 @@
-import React from 'react';
+'use client';
+
+import React, {useEffect} from 'react';
 import {OrderHeader} from "@/components/layout";
 import styles from './styles.module.scss';
 import {FormOrderPriceBlock, FormOrderCartBlock, FormOrderPersonalInfoBlock} from "@/components/features/OrderFrom";
+import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
+import {fetchCart, selectCart, submitOrder, useOrderForm} from "@/store/model/Cart";
+import {useRouter} from "next/navigation";
 
 const Page = () => {
+  const dispatch = useAppDispatch();
+  const {totalAmount, goodsCartLines, pizzaCartLines} = useAppSelector(selectCart);
+  const {formData: orderForm, errors, setFieldValue, validateForm} = useOrderForm();
+  const router = useRouter();
+
+  const displayCartItems = [
+    ...goodsCartLines,
+    ...pizzaCartLines
+  ];
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  const onOrderClick = () => {
+    const isValid = validateForm();
+
+    if (isValid) {
+      dispatch(submitOrder(orderForm));
+      router.push("/");
+    }
+  }
+
   return (
     <div className={styles.root}>
       <OrderHeader/>
@@ -15,13 +43,25 @@ const Page = () => {
             </div>
             <div className={styles.orderContent}>
               <div className={styles.orderContent_leftPart}>
-                <div className={styles.orderContent_leftPart__orderCart}>
-                  <FormOrderCartBlock/>
+                <div className={styles.orderContent_leftPart__block}>
+                  <FormOrderCartBlock
+                    cartItems={displayCartItems}
+                  />
                 </div>
-                <FormOrderPersonalInfoBlock/>
+                <div className={styles.orderContent_leftPart__block}>
+                  <FormOrderPersonalInfoBlock
+                    {...orderForm}
+                    errors={errors}
+                    onSetField={setFieldValue}
+                  />
+                </div>
               </div>
               <div className={styles.orderContent_rightPart}>
-                <FormOrderPriceBlock/>
+                <FormOrderPriceBlock
+                  totalAmount={totalAmount}
+                  currency={'руб.'}
+                  onOrderClick={onOrderClick}
+                />
               </div>
             </div>
           </div>
