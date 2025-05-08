@@ -7,6 +7,9 @@ import {
   updateCartPizza
 } from "@/store/model/Cart/thunk";
 import {UUID} from "@/store/types/shared";
+import {useState} from "react";
+import {OrderFormData, OrderFormErrors, OrderFormField} from "./types";
+import {errorMessages} from "./const";
 
 
 export const useCartActions = () => {
@@ -31,3 +34,58 @@ export const useCartActions = () => {
 
   return { updatePizzaQuantity, updateGoodsQuantity, updateTotalAmount };
 };
+
+export const useOrderForm = () => {
+  const [formData, setFormData] = useState<OrderFormData>({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: ''
+  });
+
+  const [errors, setErrors] = useState<OrderFormErrors>({});
+
+  const setFieldValue = (field: OrderFormField, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+
+    // Очищаем ошибку при изменении поля
+    if (errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: OrderFormErrors = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = errorMessages.firstName;
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = errorMessages.lastName;
+    }
+
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = errorMessages.email;
+    }
+
+    if (!formData.phone.trim() ||
+        !/^[\d\+][\d\s\-\(\)]{7,}$/.test(formData.phone)) {
+      newErrors.phone = errorMessages.phone;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  return {
+    formData,
+    errors,
+    setFieldValue,
+    validateForm,
+  }
+}
