@@ -1,14 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './styles.module.scss'
-import PersonalInfoWidget from "@/components/features/OrderFrom/PersonalInfoWidget/PersonalInfoWidget";
-import {OrderFormSelectors} from "@/store/model/OrderForm/selectors";
-import {useAppSelector} from "@/store/lib/hooks";
 import BlockContainer from "@/components/features/OrderFrom/BlockContainer/BlockContainer";
+import {OrderFormErrors, OrderFormData, OrderFormField} from "@/store/model/Cart/types";
+import {TitledInput} from "@/components/ui";
+import {FIELDS_CONFIG} from "./const";
 
-const PersonalInfoBlock = () => {
-  const {firstName, lastName, phoneNumber, email, errors} = useAppSelector(OrderFormSelectors);
+type Props = OrderFormData & {
+  errors: OrderFormErrors,
+  onSetField: (field: OrderFormField, value: string) => void,
+}
+
+const PersonalInfoBlock: FC<Props> = ({
+  errors,
+  onSetField,
+  ...formData
+}) => {
 
   return (
     <BlockContainer
@@ -16,46 +24,21 @@ const PersonalInfoBlock = () => {
     >
       <div className={styles.content}>
         <div className={styles.widgets}>
-          <div className={styles.widget}>
-            <PersonalInfoWidget
-              field="firstName"
-              value={firstName}
-              error={errors.firstName}
-              title="Имя"
-              type="text"
-              placeholder={"Иван"}
-            />
-          </div>
-          <div className={styles.widget}>
-            <PersonalInfoWidget
-              field="lastName"
-              value={lastName}
-              error={errors.lastName}
-              title="Фамилия"
-              type="text"
-              placeholder={"Иванов"}
-            />
-          </div>
-          <div className={styles.widget}>
-            <PersonalInfoWidget
-              field="email"
-              value={email}
-              error={errors.email}
-              title="E-mail"
-              type="email"
-              placeholder={"ivan@gmail.com"}
-            />
-          </div>
-          <div className={styles.widget}>
-            <PersonalInfoWidget
-              field="phoneNumber"
-              value={phoneNumber}
-              error={errors.phoneNumber}
-              title="Телефон"
-              type="text"
-              placeholder={"+375 29 111 2233"}
-            />
-          </div>
+          {FIELDS_CONFIG.map(({field, title, type, placeholder}, i) =>
+            <div
+              className={styles.widget}
+              key={i}
+            >
+              <TitledInput
+                value={formData[field]}
+                onChange={(e) => onSetField(field, e.target.value)}
+                error={errors[field]}
+                title={title}
+                type={type}
+                placeholder={placeholder}
+              />
+            </div>
+          )}
         </div>
       </div>
     </BlockContainer>
