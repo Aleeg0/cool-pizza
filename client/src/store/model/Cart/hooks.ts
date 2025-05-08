@@ -5,7 +5,7 @@ import {
   removeCartPizza,
   updateCartGoods,
   updateCartPizza
-} from "@/store/model/Cart/thunk";
+} from "./thunk";
 import {UUID} from "@/store/types/shared";
 import {useState} from "react";
 import {OrderFormData, OrderFormErrors, OrderFormField} from "./types";
