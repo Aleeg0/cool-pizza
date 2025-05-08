@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React from "react";
 import {Nunito} from "next/font/google";
 import type { Metadata } from "next";
 import '@/styles/index.scss';
