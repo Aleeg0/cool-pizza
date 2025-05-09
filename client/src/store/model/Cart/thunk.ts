@@ -160,14 +160,15 @@ export const submitOrder = createAsyncThunk<
   }
 >(
   "orderFrom/updatePersonalInfo",
-  async ({firstName, lastName, email, phone}, {rejectWithValue}) => {
+  async ({firstName, lastName, email, phone, address, comment}, {rejectWithValue}) => {
 
     try {
       await cartApi.updatePersonalInfo(
         `${firstName} ${lastName}`,
         email,
         phone,
-        ""
+        address,
+        comment,
       );
     }
     catch (error) {

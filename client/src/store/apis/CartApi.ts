@@ -81,6 +81,7 @@ class CartApi {
     name: string,
     email: string,
     phone: string,
+    address: string,
     comment: string
   ): Promise<Cart> {
     const cartToken = Cookies.get("X-Cart-Token");
@@ -91,6 +92,7 @@ class CartApi {
         name,
         email,
         phone,
+        address,
         comment
       }
     );
