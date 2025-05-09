@@ -4,13 +4,12 @@ import {HeaderTitle} from "@/components/ui";
 
 const OrderHeader = () => {
   return (
-    <header className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.leftPart}>
-          <HeaderTitle/>
-        </div>
-        <div className={styles.rightPart}>
-
+    <header className={styles.root}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.leftPart}>
+            <HeaderTitle/>
+          </div>
         </div>
       </div>
     </header>
