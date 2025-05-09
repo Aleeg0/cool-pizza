@@ -3,7 +3,12 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {OrderHeader} from "@/components/layout";
 import styles from './styles.module.scss';
-import {FormOrderPriceBlock, FormOrderCartBlock, FormOrderPersonalInfoBlock} from "@/components/features/OrderFrom";
+import {
+  FormOrderPriceBlock,
+  FormOrderCartBlock,
+  FormOrderPersonalInfoBlock,
+  FormOrderExtraInfoBlock
+} from "@/components/features/OrderFrom";
 import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
 import {fetchCart, selectCart, submitOrder, useOrderForm} from "@/store/model/Cart";
 import {useRouter} from "next/navigation";
@@ -68,6 +73,14 @@ const Page = () => {
                   <FormOrderPersonalInfoBlock
                     {...orderForm}
                     errors={errors}
+                    onSetField={setFieldValue}
+                  />
+                </div>
+                <div className={styles.orderContent_leftPart__block}>
+                  <FormOrderExtraInfoBlock
+                    address={orderForm.address}
+                    comment={orderForm.comment}
+                    error={errors.address}
                     onSetField={setFieldValue}
                   />
                 </div>
