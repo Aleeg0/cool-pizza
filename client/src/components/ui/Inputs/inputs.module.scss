@@ -1,0 +1,128 @@
+.UiInput {
+  &_container {
+    position: relative;
+    height: 100%;
+    border: 1px solid #efefef;
+    border-radius: var(--border-radius-input);
+    background: transparent;
+  }
+
+  &_content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: all .2s ease-in;
+  }
+
+  &_iconCover {
+    position: relative;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    opacity: 0;
+    transition:
+            transform .2s ease-in-out,
+            opacity .2s ease;
+
+    transform: translateX(100%);
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &Visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  &_input {
+    width: 100%;
+    height: 100%;
+    padding-inline: 18px;
+
+    font-size: var(--font-size-paragraph);
+    color: var(--color-text-primary);
+    letter-spacing: 0;
+
+    &::placeholder {
+      color: var(--color-text-secondary);
+    }
+  }
+}
+
+.TitledInput {
+  &_container {
+    height: 100%;
+  }
+
+  &_title {
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: var(--font-size-paragraph-l);
+    line-height: 19px;
+  }
+
+  &_input {
+    height: calc(100% - 24px);
+  }
+}
+
+.TitledInputWithError {
+  &_container {
+    position: relative;
+    height: 100%;
+  }
+
+  &_input {
+    height: calc(100% - 19px);
+    margin-bottom: 7px;
+  }
+
+  &_error {
+    height: 19px;
+    font-size: var(--font-size-paragraph-s);
+    color: #FE0000;
+    opacity: 0;
+
+    &__active {
+      opacity: 1;
+    }
+  }
+}
+
+.TitledDropdownInput {
+  &_container {
+    position: relative;
+    height: 100%;
+  }
+
+  &_suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding-block: 12px;
+    background: var(--color-background);
+    border-radius: var(--border-radius-input);
+    box-shadow: 1px -8px 18px 0px rgba(0, 0, 0, 0.05);
+    transition: opacity .1s ease;
+    z-index: 100;
+  }
+
+  &_suggestion {
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: var(--font-size-paragraph);
+    line-height: 22px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+  }
+}
