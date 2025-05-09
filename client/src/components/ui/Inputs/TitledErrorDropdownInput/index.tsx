@@ -1,13 +1,13 @@
 'use client';
 
 import React, {FC, useRef, useState} from 'react';
-import TitledInput from "../TitledInput";
-import {TitledDropdownInputProps} from "../props";
+import {TitledErrorDropdownInputProps} from "../props";
 import styles from '../inputs.module.scss';
 import {useClickOutside} from "@/hooks";
+import {TitledErrorInput} from "@/components/ui";
 
 
-const TitledDropdownInput: FC<TitledDropdownInputProps> = ({
+const TitledErrorDropdownInput: FC<TitledErrorDropdownInputProps> = ({
   suggestions,
   onSelectSuggestionAction,
   ...props
@@ -20,21 +20,22 @@ const TitledDropdownInput: FC<TitledDropdownInputProps> = ({
     onSelectSuggestionAction(value);
     setIsOpen(false);
   }
+  console.log(props.error)
 
   return (
-    <div className={styles.TitledDropdownInput_container}>
-      <TitledInput
+    <div className={styles.TitledErrorDropdownInput_container}>
+      <TitledErrorInput
         onFocus={() => setIsOpen(!isOpen)}
         {...props}
       />
       {isOpen && suggestions.length > 0 &&
         <ul
           ref={listRef}
-          className={styles.TitledDropdownInput_suggestions}
+          className={styles.TitledErrorDropdownInput_suggestions}
         >
           {suggestions.map((item, i) =>
             <li
-              className={styles.TitledDropdownInput_suggestion}
+              className={styles.TitledErrorDropdownInput_suggestion}
               onClick={() => onSelect(item)}
               key={i}
             >
@@ -47,4 +48,4 @@ const TitledDropdownInput: FC<TitledDropdownInputProps> = ({
   );
 };
 
-export default TitledDropdownInput;
+export default TitledErrorDropdownInput;

@@ -93,7 +93,7 @@
   }
 }
 
-.TitledDropdownInput {
+.TitledErrorDropdownInput {
   &_container {
     position: relative;
     height: 100%;
@@ -101,7 +101,7 @@
 
   &_suggestions {
     position: absolute;
-    top: 100%;
+    top: calc(100% - 19px);
     left: 0;
     width: 100%;
     padding-block: 12px;

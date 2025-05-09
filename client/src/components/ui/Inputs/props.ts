@@ -17,7 +17,7 @@ export interface TitledErrorInputProps extends TitledInputProps {
   error?: string;
 }
 
-export interface TitledDropdownInputProps extends TitledInputProps {
+export interface TitledErrorDropdownInputProps extends TitledErrorInputProps {
   suggestions: string[];
   onSelectSuggestionAction: (value: string) => void;
 }
