@@ -1,4 +1,4 @@
-import React, {InputHTMLAttributes} from "react";
+import React, {InputHTMLAttributes, TextareaHTMLAttributes} from "react";
 
 export interface BasicInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
   value: string;
@@ -20,4 +20,13 @@ export interface TitledErrorInputProps extends TitledInputProps {
 export interface TitledDropdownInputProps extends TitledInputProps {
   suggestions: string[];
   onSelectSuggestionAction: (value: string) => void;
+}
+
+export interface MultiInputProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'value' | 'onChange'> {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface TitledMultiInputProps extends MultiInputProps {
+  title: string;
 }
