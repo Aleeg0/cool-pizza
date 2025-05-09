@@ -32,4 +32,4 @@ const CartBlock: FC<Props> = ({cartItems}) => {
   );
 };
 
-export default CartBlock;
+export default React.memo(CartBlock);
