@@ -72,7 +72,10 @@ const Page = () => {
                 </div>
                 <div className={styles.orderContent_leftPart__block}>
                   <FormOrderPersonalInfoBlock
-                    {...orderForm}
+                    firstName={orderForm.firstName}
+                    lastName={orderForm.lastName}
+                    email={orderForm.email}
+                    phone={orderForm.phone}
                     errors={errors}
                     onSetField={setFieldValue}
                   />
