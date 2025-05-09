@@ -7,7 +7,7 @@ import {
   updateCartPizza
 } from "./thunk";
 import {UUID} from "@/store/types/shared";
-import {useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {OrderFormData, OrderFormErrors, OrderFormField} from "./types";
 import {errorMessages} from "./const";
 
@@ -47,20 +47,12 @@ export const useOrderForm = () => {
 
   const [errors, setErrors] = useState<OrderFormErrors>({});
 
-  const setFieldValue = (field: OrderFormField, value: string) => {
+  const setFieldValue = useCallback((field: OrderFormField, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    setErrors(prev => ({ ...prev, [field]: undefined }));
+  }, []);
 
-    // Очищаем ошибку при изменении поля
-    if (errors[field]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  const validateForm = (): boolean => {
+  const validateForm = useCallback(() => {
     const newErrors: OrderFormErrors = {};
 
     if (!formData.firstName.trim()) {
@@ -76,17 +68,35 @@ export const useOrderForm = () => {
     }
 
     if (!formData.phone.trim() ||
-        !/^[\d\+][\d\s\-\(\)]{7,}$/.test(formData.phone)) {
+      !/^[\d\+][\d\s\-\(\)]{7,}$/.test(formData.phone)) {
       newErrors.phone = errorMessages.phone;
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [formData])
+
+  const memoizedErrors = useMemo(() => errors, [
+    errors.firstName,
+    errors.lastName,
+    errors.phone,
+    errors.email,
+    errors.address,
+    errors.comment
+  ]);
+
+  const memoizedData = useMemo(() => formData, [
+    formData.firstName,
+    formData.lastName,
+    formData.phone,
+    formData.email,
+    formData.address,
+    formData.comment
+  ]);
 
   return {
-    formData,
-    errors,
+    formData: memoizedData,
+    errors: memoizedErrors,
     setFieldValue,
     validateForm,
   }
