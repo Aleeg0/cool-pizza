@@ -13,7 +13,7 @@ export const FIELDS_CONFIG = [
   },
   {
     field: 'email',
-    title: 'E-mail',
+    title: 'E-mail*',
     type: 'email',
     placeholder: 'ivan@gmail.com'
   },
