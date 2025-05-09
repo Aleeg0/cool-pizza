@@ -8,4 +8,13 @@ public interface IOrdersRepository
     Task<Order?> GetFullCartByIdAsync(Guid id);
     Task<Order?> FindByIdAsync(Guid id);
     Task<decimal> UpdateTotalAmount(Guid id);
+
+    Task<Order?> UpdateAsync(
+        Guid id,
+        string name,
+        string email,
+        string phone,
+        string address,
+        string? comment
+    );
 }

@@ -1,0 +1,20 @@
+.container {
+  background: var(--color-background);
+  border-radius: var(--border-radius-order-widgets);
+}
+
+.header {
+  padding: 30px 35px 20px;
+  border-bottom: 1px solid var(--color-border-header);
+
+  &_title {
+    font-weight: 700;
+    font-size: var(--font-size-title2);
+    line-height: 33px;
+  }
+}
+
+.content {
+  display: flex;
+  padding-inline: 35px;
+}

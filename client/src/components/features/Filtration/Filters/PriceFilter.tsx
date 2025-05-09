@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import styles from '../Filtration.module.scss';
-import {NumericInput} from "@/components/ui/Input";
 import {PriceIcon} from "@/components/icons";
 import {PriceRange} from "@/store/types/shared";
+import {IconInput} from "@/components/ui";
 
 interface Props {
   currentPrice: PriceRange;
@@ -25,17 +25,19 @@ const PriceFilter: FC<Props> = ({
 
   return (
     <div className={styles.PriceFilter_content}>
-      <NumericInput
-        value={currentPrice.min ?? ""}
+      <IconInput
+        icon={<PriceIcon/>}
+        value={currentPrice.min?.toString() ?? ""}
         onChange={handleMinChange}
-        icon={<PriceIcon/>}
         placeholder="0"
+        type="number"
       />
-      <NumericInput
-        value={currentPrice.max ?? ""}
-        onChange={handleMaxChange}
+      <IconInput
         icon={<PriceIcon/>}
+        value={currentPrice.max?.toString() ?? ""}
+        onChange={handleMaxChange}
         placeholder="0"
+        type="number"
       />
     </div>
   );

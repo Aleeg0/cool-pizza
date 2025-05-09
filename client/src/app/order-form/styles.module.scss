@@ -1,0 +1,45 @@
+.root {
+  min-height: 100vh;
+  background: #F4F1EE;
+}
+
+#main {
+  height: 100%;
+}
+
+.container {
+  max-width: 1440px;
+  padding-inline: 20px;
+  margin: 0 auto;
+}
+
+.content {
+  margin-top: 48px;
+}
+
+.title {
+  font-weight: 800;
+  font-size: var(--font-size-title1);
+  line-height: 49px;
+  margin-bottom: 40px;
+}
+
+.orderContent {
+  display: flex;
+  align-items: flex-start;
+
+  &_leftPart {
+    display: flex;
+    flex-direction: column;
+
+    &__block {
+      margin-bottom: 46px;
+    }
+  }
+
+  &_rightPart {
+    margin-left: 45px;
+    width: 450px;
+  }
+}
+

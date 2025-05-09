@@ -76,6 +76,35 @@ class CartApi {
 
     return response.data;
   }
+
+  async updatePersonalInfo(
+    name: string,
+    email: string,
+    phone: string,
+    address: string,
+    comment: string
+  ): Promise<Cart> {
+    const cartToken = Cookies.get("X-Cart-Token");
+
+    const response = await this._api.put(
+      `${this._baseEndpoint}/${cartToken}`,
+      {
+        name,
+        email,
+        phone,
+        address,
+        comment
+      }
+    );
+
+    if (response.status == 200) {
+      Cookies.remove("X-Cart-Token", {
+        path: "/"
+      });
+    }
+
+    return response.data;
+  }
 }
 const cartApi = new CartApi(api);
 export default cartApi;

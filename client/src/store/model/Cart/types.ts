@@ -32,3 +32,23 @@ export interface UpdateCartItem {
   id: UUID;
   quantity: number;
 }
+
+export interface OrderFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  comment: string;
+}
+
+export interface OrderFormErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  comment?: string;
+}
+
+export type OrderFormField = keyof OrderFormData;

@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   products: ProductReducer,
   currentProduct: CurrentProductReducer,
-  cart: CartReducer
+  cart: CartReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

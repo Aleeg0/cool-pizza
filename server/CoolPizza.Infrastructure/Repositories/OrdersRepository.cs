@@ -1,5 +1,6 @@
 ﻿using CoolPizza.Core.Abstractions;
 using CoolPizza.Core.Entities.Orders;
+using CoolPizza.Core.Enums;
 using CoolPizza.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,35 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
                 .SetProperty(o => o.TotalAmount, calculatedTotalAmount));
         
         return calculatedTotalAmount;
+    }
+
+    public async Task<Order?> UpdateAsync(
+        Guid id,
+        string name,
+        string email,
+        string phone,
+        string address,
+        string? comment
+    ) {
+        Order? order = await FindByIdAsync(id);
+
+        if (order == null)
+            return null;
+        
+        order.AddPersonalInfo(
+            name,
+            email,
+            phone,
+            address,
+            comment
+        );
+
+        order.Status = OrderStatus.Ready;
+        
+        context.Orders.Update(order);
+        await context.SaveChangesAsync();
+        
+        return order;
     }
 
     private async Task<decimal> UpdatePizzasTotalAmount(Guid cartId) =>

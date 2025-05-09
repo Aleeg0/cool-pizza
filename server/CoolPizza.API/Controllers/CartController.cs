@@ -22,6 +22,17 @@ public class CartController(IMediator mediator) : ControllerBase
         var cartInfo = await mediator.Send(query);
         return Ok(cartInfo);
     }
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult> UpdateCartById(
+        [FromRoute(Name = "id")] Guid id,
+        [FromBody] UpdateOrderCommand command
+    )
+    {
+        command.Id = id;
+        var cart = await mediator.Send(command);
+        return Ok(cart);
+    }
     
     [HttpGet("total-amount")]
     public async Task<ActionResult<GetTotalAmountDto>> GetTotalAmount(
