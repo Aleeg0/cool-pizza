@@ -1,6 +1,7 @@
 ﻿using CoolPizza.Core.Abstractions;
 using CoolPizza.Infrastructure.Data;
 using CoolPizza.Infrastructure.Repositories;
+using CoolPizza.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,7 @@ public static class DependenciesInjection
         services.AddScoped<IOrderedGoodsRepository, OrderedGoodsRepository>();
         services.AddScoped<IOrderedPizzasRepository, OrderedPizzasRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+        services.AddScoped<IAddressesService, AddressesService>();
         
         return services;
     }
