@@ -10,14 +10,15 @@ import {
   FormOrderExtraInfoBlock
 } from "@/components/features/OrderFrom";
 import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
-import {fetchCart, selectCart, submitOrder, useOrderForm} from "@/store/model/Cart";
+import {fetchCart, submitOrder, useOrderForm} from "@/store/model/Cart";
 import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
+import {LoadingStatus} from "@/store/types/shared";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const {totalAmount, goodsCartLines, pizzaCartLines} = useAppSelector(selectCart);
+  const {data: {totalAmount, goodsCartLines, pizzaCartLines}, status} = useAppSelector((state) => state.cart);
   const {formData: orderForm, errors, setFieldValue, validateForm} = useOrderForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -31,7 +32,7 @@ const Page = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!isSubmitted && displayCartItems.length === 0) {
+    if (status === LoadingStatus.SUCCEEDED && !isSubmitted && displayCartItems.length === 0) {
       router.push('/');
       toast("Добавьте сперва, что-нибудь в корзину!", {icon: "⚠️",});
     }
