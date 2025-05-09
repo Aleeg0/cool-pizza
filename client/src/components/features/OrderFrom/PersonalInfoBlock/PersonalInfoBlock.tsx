@@ -3,11 +3,15 @@
 import React, {FC} from 'react';
 import styles from './styles.module.scss'
 import BlockContainer from "@/components/features/OrderFrom/BlockContainer/BlockContainer";
-import {OrderFormErrors, OrderFormData, OrderFormField} from "@/store/model/Cart/types";
-import {TitledInput} from "@/components/ui";
+import {OrderFormErrors, OrderFormField} from "@/store/model/Cart/types";
 import {FIELDS_CONFIG} from "./const";
+import {TitledErrorInput} from "@/components/ui/Inputs";
 
-type Props = OrderFormData & {
+interface Props {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
   errors: OrderFormErrors,
   onSetField: (field: OrderFormField, value: string) => void,
 }
@@ -29,9 +33,9 @@ const PersonalInfoBlock: FC<Props> = ({
               className={styles.widget}
               key={i}
             >
-              <TitledInput
+              <TitledErrorInput
                 value={formData[field]}
-                onChange={(e) => onSetField(field, e.target.value)}
+                onChange={(value) => onSetField(field, value)}
                 error={errors[field]}
                 title={title}
                 type={type}
@@ -45,4 +49,4 @@ const PersonalInfoBlock: FC<Props> = ({
   );
 };
 
-export default PersonalInfoBlock;
+export default React.memo(PersonalInfoBlock);
