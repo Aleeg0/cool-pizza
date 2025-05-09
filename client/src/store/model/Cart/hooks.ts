@@ -72,6 +72,10 @@ export const useOrderForm = () => {
       newErrors.phone = errorMessages.phone;
     }
 
+    if (!formData.address.trim()) {
+      newErrors.address = errorMessages.address;
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData])
