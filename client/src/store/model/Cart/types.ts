@@ -38,6 +38,8 @@ export interface OrderFormData {
   lastName: string;
   email: string;
   phone: string;
+  address: string;
+  comment: string;
 }
 
 export interface OrderFormErrors {
@@ -45,6 +47,8 @@ export interface OrderFormErrors {
   lastName?: string;
   email?: string;
   phone?: string;
+  address?: string;
+  comment?: string;
 }
 
 export type OrderFormField = keyof OrderFormData;

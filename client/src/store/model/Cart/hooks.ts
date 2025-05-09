@@ -40,7 +40,9 @@ export const useOrderForm = () => {
     firstName: '',
     lastName: '',
     phone: '',
-    email: ''
+    email: '',
+    address: '',
+    comment: ''
   });
 
   const [errors, setErrors] = useState<OrderFormErrors>({});
