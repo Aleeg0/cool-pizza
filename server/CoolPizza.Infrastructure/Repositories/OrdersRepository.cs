@@ -22,6 +22,7 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
             .Include(o => o.PizzasLine).ThenInclude(op => op.Pizza)
             .Include(o => o.PizzasLine).ThenInclude(op => op.Ingredients)
             .Include(o => o.GoodsLine).ThenInclude(og => og.Goods)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
 
     public async Task<Order?> FindByIdAsync(Guid id) => 
@@ -48,7 +49,8 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
         string email,
         string phone,
         string address,
-        string? comment
+        string? comment,
+        Guid? userId
     ) {
         Order? order = await FindByIdAsync(id);
 
@@ -62,6 +64,9 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
             address,
             comment
         );
+        
+        if (userId.HasValue)
+            order.AddUserId(userId.Value);
 
         order.Status = OrderStatus.Ready;
         

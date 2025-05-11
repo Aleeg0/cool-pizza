@@ -29,6 +29,7 @@ public class CartController(IMediator mediator) : ControllerBase
         [FromBody] UpdateOrderCommand command
     )
     {
+        command.UserId = (Guid?)HttpContext.Items["UserId"];
         command.Id = id;
         var cart = await mediator.Send(command);
         return Ok(cart);
