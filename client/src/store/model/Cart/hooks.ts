@@ -10,6 +10,7 @@ import {UUID} from "@/store/types/shared";
 import {useCallback, useMemo, useState} from "react";
 import {OrderFormData, OrderFormErrors, OrderFormField} from "./types";
 import {errorMessages} from "./const";
+import {User} from "@/store/model/User";
 
 
 export const useCartActions = () => {
@@ -35,14 +36,19 @@ export const useCartActions = () => {
   return { updatePizzaQuantity, updateGoodsQuantity, updateTotalAmount };
 };
 
-export const useOrderForm = () => {
+const initOrderFormData: OrderFormData = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  address: '',
+  comment: ''
+}
+
+export const useOrderForm = (user: User | null) => {
   const [formData, setFormData] = useState<OrderFormData>({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    address: '',
-    comment: ''
+    ...initOrderFormData,
+    ...user
   });
 
   const [errors, setErrors] = useState<OrderFormErrors>({});
