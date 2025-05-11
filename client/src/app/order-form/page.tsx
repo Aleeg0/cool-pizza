@@ -14,12 +14,14 @@ import {fetchCart, submitOrder, useOrderForm} from "@/store/model/Cart";
 import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import {LoadingStatus} from "@/store/types/shared";
+import {selectUser} from "@/store/model/User";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {data: {totalAmount, goodsCartLines, pizzaCartLines}, status} = useAppSelector((state) => state.cart);
-  const {formData: orderForm, errors, setFieldValue, validateForm} = useOrderForm();
+  const {data: user} = useAppSelector(selectUser);
+  const {formData: orderForm, errors, setFieldValue, validateForm} = useOrderForm(user);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const displayCartItems = useMemo(() => [
