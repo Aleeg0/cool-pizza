@@ -22,6 +22,7 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
             .Include(o => o.PizzasLine).ThenInclude(op => op.Pizza)
             .Include(o => o.PizzasLine).ThenInclude(op => op.Ingredients)
             .Include(o => o.GoodsLine).ThenInclude(og => og.Goods)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
 
     public async Task<Order?> FindByIdAsync(Guid id) => 
