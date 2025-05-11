@@ -11,3 +11,4 @@ export {LeftArrowIcon} from './LeftArrowIcon';
 export {MinusIcon} from './MinusIcon';
 export {CartIcon} from './CartIcon';
 export {BoxIcon} from './BoxIcon';
+export {default as PhoneIcon} from './PhoneIcon';
