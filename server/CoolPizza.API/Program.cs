@@ -32,7 +32,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>()
+    .UseMiddleware<JwtAuthMiddleware>();
 
 app.UseHttpsRedirection();
 
