@@ -1,22 +1,25 @@
-import React, {useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {UiButton} from "@/components/ui";
 import ProfilePopup from "./ProfilePopup";
 import {Portal} from "@/components/layout";
 import {ProfileIcon} from "@/components/icons";
 
-const ProfileButton = () => {
+interface Props {
+  onSettings: () => void;
+  onOrders: () => void;
+  onLogout: () => void;
+}
+
+const ProfileButton : FC<Props> = ({
+  onSettings,
+  onOrders,
+  onLogout
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const onSettings = () => {
-    setIsOpen(false);
-  }
-
-  const onOrders = () => {
-    setIsOpen(false);
-  }
-
-  const onLogout = () => {
+  const onPopupClick = (callback: () => void) => {
+    callback();
     setIsOpen(false);
   }
 
@@ -35,9 +38,9 @@ const ProfileButton = () => {
             onClose={() => setIsOpen(false)}
         >
           <ProfilePopup
-              onSettings={onSettings}
-              onOrders={onOrders}
-              onLogout={onLogout}
+              onSettings={() => onPopupClick(onSettings)}
+              onOrders={() => onPopupClick(onOrders)}
+              onLogout={() => onPopupClick(onLogout)}
           />
         </Portal>
       }

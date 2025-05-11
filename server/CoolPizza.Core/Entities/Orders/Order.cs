@@ -44,4 +44,9 @@ public class Order: Entity
         if (comment is not null)
             Comment = comment;
     }
+
+    public void AddUserId(Guid userId)
+    {
+        UserId = userId;
+    }
 }

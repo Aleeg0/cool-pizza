@@ -32,7 +32,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>()
+    .UseMiddleware<JwtAuthMiddleware>();
 
 app.UseHttpsRedirection();
 
@@ -40,9 +44,11 @@ app.MapControllers();
 
 app.UseCors(cors =>
 {
-    cors.WithHeaders().AllowAnyHeader();
-    cors.WithOrigins("http://localhost:3000").WithExposedHeaders("X-Cart-Token");
-    cors.WithMethods().AllowAnyMethod();
+    cors.WithOrigins(Env.GetString("CLIENT_DOMAIN"))
+        .WithExposedHeaders("X-Cart-Token")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
 });
 
 app.Run();
