@@ -1,9 +1,4 @@
 export {
-  isPendingAction,
-  isRejectedAction
-} from './matchers';
-
-export {
   handlePending,
   handleFulfilled,
   handleRejected,

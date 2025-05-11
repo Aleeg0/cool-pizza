@@ -1,9 +1,9 @@
 import {ProductsState} from "./types";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {SortByValues} from "@/store/consts/SortByValues";
 import {Filters, LoadingStatus, UUID} from "@/store/types/shared";
 import {fetchProductsGrouped} from "@/store/model/Products/thunk";
-import {handlePending, handleRejected, isPendingAction, isRejectedAction} from "@/store/model/Shared";
+import {handlePending, handleRejected} from "@/store/model/Shared";
 
 const initSortBy = SortByValues.NEWEST;
 
@@ -44,8 +44,8 @@ const productsSlice = createSlice({
           state.currentCategoryId = action.payload.at(0)?.category.id;
         }
       })
-      .addMatcher(isPendingAction, handlePending)
-      .addMatcher(isRejectedAction, handleRejected);
+      .addMatcher(isPending(fetchProductsGrouped), handlePending)
+      .addMatcher(isRejected(fetchProductsGrouped), handleRejected);
   }
 });
 

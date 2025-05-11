@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import {FC, memo} from 'react';
 import {IconProps} from "@/components/icons/lib/IconProps";
 
-export const CrossIcon: FC<IconProps> = ({size = 20}) => {
+const CrossIcon: FC<IconProps> = ({size = 20}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,3 +19,5 @@ export const CrossIcon: FC<IconProps> = ({size = 20}) => {
     </svg>
   );
 };
+
+export default memo(CrossIcon);

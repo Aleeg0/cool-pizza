@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, isPending, isRejected} from "@reduxjs/toolkit";
 import {Cart, CartItem, CartState} from "./types";
 import {LoadingStatus} from "@/store/types/shared";
 import {
@@ -9,7 +9,7 @@ import {
   updateCartGoods,
   updateCartPizza
 } from "@/store/model/Cart/thunk";
-import {handleFulfilled, handlePending, handleRejected, isPendingAction, isRejectedAction} from "@/store/model/Shared";
+import {handleFulfilled, handlePending, handleRejected} from "@/store/model/Shared";
 import {deleteItem, updateQuantity, upsertItem} from "@/store/model/Cart/handlers";
 
 const cartInitState: Cart = {
@@ -79,8 +79,15 @@ const cartSlice = createSlice({
         })
         }
       )
-      .addMatcher(isPendingAction, handlePending)
-      .addMatcher(isRejectedAction, handleRejected);
+      .addMatcher(isPending(
+          fetchCart, getCartTotalAmount, submitOrder, addPizzaToCart, updateCartPizza, removeCartPizza,
+          addGoodsToCart, updateCartGoods, removeCartGoods
+        ), handlePending
+      )
+      .addMatcher(isRejected(
+        fetchCart, getCartTotalAmount, submitOrder, addPizzaToCart, updateCartPizza, removeCartPizza,
+        addGoodsToCart, updateCartGoods, removeCartGoods
+      ), handleRejected);
   }
 });
 

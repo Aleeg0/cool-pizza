@@ -1,2 +1,2 @@
-export {UiButton} from './ui/UiButton';
-export {InlineButton} from './ui/InlineButton';
+export {default as UiButton} from './ui/UiButton';
+export {default as InlineButton} from './ui/InlineButton';
