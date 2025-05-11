@@ -8,6 +8,7 @@ import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
 import {useEffect} from "react";
 import {fetchProductsGrouped} from "@/store/model/Products/thunk";
 import {fetchIngredients} from "@/store/model/Ingredients/thunk";
+import {checkAuth} from "@/store/model/User";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -20,6 +21,10 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(fetchProductsGrouped());
   }, [dispatch, sortBy, filters]);
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  },[dispatch]);
 
   return (
     <div className={styles.HomePage_root}>
