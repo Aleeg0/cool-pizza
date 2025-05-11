@@ -1,9 +1,8 @@
 import {IngredientsState} from "./types";
-import {createSlice} from "@reduxjs/toolkit";
-import {Ingredient} from "@/store/types/Ingredient";
+import {createSlice, isPending, isRejected} from "@reduxjs/toolkit";
 import {LoadingStatus} from "@/store/types/shared";
 import {fetchIngredients} from "@/store/model/Ingredients/thunk";
-import {handlePending, handleRejected, isPendingAction, isRejectedAction} from "@/store/model/Shared";
+import {handlePending, handleRejected} from "@/store/model/Shared";
 
 const initialState: IngredientsState = {
   data: [],
@@ -23,8 +22,8 @@ const ingredientsSlice = createSlice({
           state.data = action.payload;
         }
       })
-      .addMatcher(isPendingAction, handlePending)
-      .addMatcher(isRejectedAction, handleRejected);
+      .addMatcher(isPending(fetchIngredients), handlePending)
+      .addMatcher(isRejected(fetchIngredients), handleRejected);
   }
 });
 
