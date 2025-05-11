@@ -1,5 +1,6 @@
 ﻿using CoolPizza.Core.Abstractions;
 using CoolPizza.Infrastructure.Data;
+using CoolPizza.Infrastructure.Extensions;
 using CoolPizza.Infrastructure.Repositories;
 using CoolPizza.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,15 @@ public static class DependenciesInjection
         services.AddScoped<IOrderedGoodsRepository, OrderedGoodsRepository>();
         services.AddScoped<IOrderedPizzasRepository, OrderedPizzasRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        // services
         services.AddScoped<IAddressesService, AddressesService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPasswordService, PasswordService>();
+        
+        // JWT
+        services.AddJwtAuthentication();
         
         return services;
     }
