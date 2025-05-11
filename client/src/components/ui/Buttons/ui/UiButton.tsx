@@ -1,9 +1,9 @@
-import React, {forwardRef} from 'react';
+import {memo, forwardRef} from 'react';
 import {cn} from "@/utils";
 import styles from './Buttons.module.scss'
 import {UiButtonProps} from "../lib/props";
 
-export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
+const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
   {
     caption,
     icon,
@@ -57,3 +57,4 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>((
 });
 
 UiButton.displayName = 'UiButton';
+export default memo(UiButton);
