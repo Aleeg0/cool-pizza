@@ -15,6 +15,7 @@ public interface IOrdersRepository
         string email,
         string phone,
         string address,
-        string? comment
+        string? comment,
+        Guid? userId
     );
 }
