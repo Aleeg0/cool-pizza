@@ -13,19 +13,23 @@ public class UserConfig: IEntityTypeConfiguration<User>
         builder.HasKey(o => o.Id);
         
         builder
-            .Property(o => o.Name)
-            .HasColumnName("name")
+            .Property(o => o.FirstName)
+            .HasColumnName("first_name")
+            .HasMaxLength(User.NameMaxLength);
+        
+        builder
+            .Property(o => o.LastName)
+            .HasColumnName("last_name")
             .HasMaxLength(User.NameMaxLength);
         
         builder
             .Property(o => o.Email)
             .HasColumnName("email")
             .HasMaxLength(User.EmailMaxLength);
-        
+
         builder
             .Property(o => o.Password)
-            .HasColumnName("password")
-            .HasMaxLength(User.PasswordMaxLength);
+            .HasColumnName("password");
         
         builder
             .Property(o => o.Phone)
