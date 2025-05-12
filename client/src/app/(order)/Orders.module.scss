@@ -43,3 +43,11 @@
   }
 }
 
+.orders {
+  display: flex;
+  flex-direction: column;
+}
+
+.order {
+  margin-bottom: 25px;
+}
