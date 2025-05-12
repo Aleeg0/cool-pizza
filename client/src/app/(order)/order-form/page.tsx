@@ -1,8 +1,7 @@
 'use client';
 
 import React, {useEffect, useMemo, useState} from 'react';
-import {OrderHeader} from "@/components/layout";
-import styles from './styles.module.scss';
+import styles from '../Orders.module.scss';
 import {
   FormOrderPriceBlock,
   FormOrderCartBlock,
@@ -57,51 +56,46 @@ const Page = () => {
   }
 
   return (
-    <div className={styles.root}>
-      <OrderHeader/>
-      <main id="main">
-        <div className={styles.container}>
-          <div className={styles.content}>
-            <div className={styles.title}>
-              <h1>Оформление заказа</h1>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.title}>
+          <h1>Оформление заказа</h1>
+        </div>
+        <div className={styles.orderContent}>
+          <div className={styles.orderContent_leftPart}>
+            <div className={styles.orderContent_leftPart__block}>
+              <FormOrderCartBlock
+                cartItems={displayCartItems}
+              />
             </div>
-            <div className={styles.orderContent}>
-              <div className={styles.orderContent_leftPart}>
-                <div className={styles.orderContent_leftPart__block}>
-                  <FormOrderCartBlock
-                    cartItems={displayCartItems}
-                  />
-                </div>
-                <div className={styles.orderContent_leftPart__block}>
-                  <FormOrderPersonalInfoBlock
-                    firstName={orderForm.firstName}
-                    lastName={orderForm.lastName}
-                    email={orderForm.email}
-                    phone={orderForm.phone}
-                    errors={errors}
-                    onSetField={setFieldValue}
-                  />
-                </div>
-                <div className={styles.orderContent_leftPart__block}>
-                  <FormOrderExtraInfoBlock
-                    address={orderForm.address}
-                    comment={orderForm.comment}
-                    error={errors.address}
-                    onSetField={setFieldValue}
-                  />
-                </div>
-              </div>
-              <div className={styles.orderContent_rightPart}>
-                <FormOrderPriceBlock
-                  totalAmount={totalAmount}
-                  currency={'руб.'}
-                  onOrderClick={onOrderClick}
-                />
-              </div>
+            <div className={styles.orderContent_leftPart__block}>
+              <FormOrderPersonalInfoBlock
+                firstName={orderForm.firstName}
+                lastName={orderForm.lastName}
+                email={orderForm.email}
+                phone={orderForm.phone}
+                errors={errors}
+                onSetField={setFieldValue}
+              />
+            </div>
+            <div className={styles.orderContent_leftPart__block}>
+              <FormOrderExtraInfoBlock
+                address={orderForm.address}
+                comment={orderForm.comment}
+                error={errors.address}
+                onSetField={setFieldValue}
+              />
             </div>
           </div>
+          <div className={styles.orderContent_rightPart}>
+            <FormOrderPriceBlock
+              totalAmount={totalAmount}
+              currency={'руб.'}
+              onOrderClick={onOrderClick}
+            />
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
