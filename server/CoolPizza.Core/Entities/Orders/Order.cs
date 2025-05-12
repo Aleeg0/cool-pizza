@@ -16,6 +16,7 @@ public class Order: Entity
     public decimal TotalAmount { get; private set; } = 0;
     public OrderStatus Status { get; set; } = OrderStatus.New;
     public DeliveryType DeliveryType { get; private set; } = DeliveryType.Pickup;
+    public DateTime? OrderedAt { get; private set; }
     public DateTime? PaidAt { get; private set; } = null;
     public Guid? UserId { get; private set; } = null;
 
