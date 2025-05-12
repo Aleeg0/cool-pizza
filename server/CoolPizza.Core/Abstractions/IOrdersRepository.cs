@@ -6,6 +6,7 @@ public interface IOrdersRepository
 {
     Task<Order> CreateAsync();
     Task<Order?> GetFullCartByIdAsync(Guid id);
+    Task<List<Order>> GetFullOrdersByUserIdAsync(Guid userId);
     Task<Order?> FindByIdAsync(Guid id);
     Task<decimal> UpdateTotalAmount(Guid id);
 

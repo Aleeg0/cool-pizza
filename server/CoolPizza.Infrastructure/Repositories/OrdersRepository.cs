@@ -25,6 +25,16 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
             .AsSplitQuery()
             .FirstOrDefaultAsync();
 
+    public async Task<List<Order>> GetFullOrdersByUserIdAsync(Guid userId) =>
+        await context.Orders
+            .Where(o => o.UserId == userId && o.Status != OrderStatus.New)
+            .Include(o => o.PizzasLine).ThenInclude(op => op.Pizza)
+            .Include(o => o.PizzasLine).ThenInclude(op => op.Ingredients)
+            .Include(o => o.GoodsLine).ThenInclude(og => og.Goods)
+            .AsSplitQuery()
+            .OrderBy(o => o.CreatedAt)
+            .ToListAsync();
+
     public async Task<Order?> FindByIdAsync(Guid id) => 
         await context.Orders.FindAsync(id);
 
@@ -68,7 +78,7 @@ public class OrdersRepository(ApplicationDbContext context) : IOrdersRepository
         if (userId.HasValue)
             order.AddUserId(userId.Value);
 
-        order.Status = OrderStatus.Ready;
+        order.SubmitOrder();
         
         context.Orders.Update(order);
         await context.SaveChangesAsync();
