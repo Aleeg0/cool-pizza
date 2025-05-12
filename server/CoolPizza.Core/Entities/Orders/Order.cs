@@ -50,4 +50,11 @@ public class Order: Entity
     {
         UserId = userId;
     }
+
+    public void SubmitOrder()
+    {
+        OrderedAt = DateTime.UtcNow;
+        Status = OrderStatus.Start;
+    }
+
 }
