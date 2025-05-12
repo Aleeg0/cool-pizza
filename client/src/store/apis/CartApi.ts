@@ -7,6 +7,7 @@ import {
   UpdateCartItem
 } from "@/store/model/Cart/types";
 import Cookies from "js-cookie";
+import {OrderResponse} from "@/store/model/Orders/types";
 
 class CartApi {
   private _api: AxiosInstance;
@@ -25,6 +26,14 @@ class CartApi {
     const response = await this._api.get(
       `${this._baseEndpoint}/${cartToken}`
     );
+    return response.data;
+  }
+
+  async getOrders(): Promise<OrderResponse> {
+    const response = await this._api.get(
+      `${this._baseEndpoint}`
+    );
+
     return response.data;
   }
 
