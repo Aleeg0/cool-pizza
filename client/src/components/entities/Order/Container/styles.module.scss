@@ -1,0 +1,17 @@
+.content {
+  margin-block: 15px;
+  width: 100%;
+}
+
+.orderItems {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderItem {
+  padding-block: 20px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #F7F7F7;
+  }
+}
