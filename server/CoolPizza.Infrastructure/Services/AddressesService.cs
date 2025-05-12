@@ -42,12 +42,4 @@ public class AddressesService(HttpClient httpClient) : IAddressesService
     {
         public string Value { get; set; }
     }
-    
-    private class AddressData
-    {
-        [JsonPropertyName("country_iso_code")]
-        public string CountryIsoCode { get; init; }
-    
-        // Добавьте другие нужные вам поля
-    }
 }

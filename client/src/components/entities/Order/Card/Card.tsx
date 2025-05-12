@@ -39,6 +39,11 @@ const Card: FC<Props> = ({
             <div className={styles.productInfo_description__details}>
               {details}
             </div>
+            {addedIngredientsLine &&
+              <div className={styles.productInfo_description__details}>
+                + {addedIngredientsLine}
+              </div>
+            }
           </div>
         </div>
         <div className={styles.orderInfo}>

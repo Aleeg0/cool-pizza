@@ -18,7 +18,7 @@ export const AuthButton = () => {
   }
 
   const onOrderClick = () => {
-    router.push("/order");
+    router.push("/orders");
   }
 
   const onSettingsClick = () => {

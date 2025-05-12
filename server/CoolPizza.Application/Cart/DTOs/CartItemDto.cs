@@ -8,5 +8,5 @@ public record CartItemDto
     string ImgUrl,
     decimal Price,
     int Quantity,
-    string? AddedIngredients = null
+    string? AddedIngredientsLine = null
 );

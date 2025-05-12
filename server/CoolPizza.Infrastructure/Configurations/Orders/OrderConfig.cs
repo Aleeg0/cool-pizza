@@ -46,6 +46,10 @@ public class OrderConfig: IEntityTypeConfiguration<Order>
         builder
             .Property(o => o.DeliveryType)
             .HasColumnName("delivery_type");
+        
+        builder
+            .Property(o => o.OrderedAt)
+            .HasColumnName("ordered_at");
 
         builder
             .Property(o => o.PaidAt)

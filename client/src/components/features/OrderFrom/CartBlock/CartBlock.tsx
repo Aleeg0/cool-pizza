@@ -1,8 +1,7 @@
-import React, {FC} from 'react';
-import BlockContainer from "@/components/features/OrderFrom/BlockContainer/BlockContainer";
-import {OrderCard} from '@/components/entities/Order'
-import styles from "./styles.module.scss";
+import {FC, memo} from 'react';
+import BlockContainer from "../BlockContainer/BlockContainer";
 import {CartItem} from "@/store/model/Cart";
+import {OrderContainer} from "@/components/entities/Order";
 
 interface Props {
   cartItems: CartItem[];
@@ -10,26 +9,10 @@ interface Props {
 
 const CartBlock: FC<Props> = ({cartItems}) => {
   return (
-    <BlockContainer
-      title="1. Корзина"
-    >
-      <div className={styles.content}>
-        <ul className={styles.orderItems}>
-          {cartItems.map((item) =>
-            <li
-              className={styles.orderItem}
-              key={item.id}
-            >
-              <OrderCard
-                currency={'руб.'}
-                {...item}
-              />
-            </li>
-          )}
-        </ul>
-      </div>
+    <BlockContainer title="1. Корзина">
+      <OrderContainer cartItems={cartItems}/>
     </BlockContainer>
   );
 };
 
-export default React.memo(CartBlock);
+export default memo(CartBlock);
