@@ -1,44 +1,20 @@
 'use client';
 
-import {useCallback, useMemo, useState} from 'react';
 import styles from '../Auth.module.scss';
 import {InlineButton, TitledInput, UiButton} from "@/components/ui";
 import {PhoneIcon} from "@/components/icons";
-import {useRouter} from "next/navigation";
-import {useAppDispatch, useAppSelector} from "@/store/lib/hooks";
-import {login, selectUser} from "@/store/model/User";
 import {LoadingStatus} from "@/store/types/shared";
-
-type formData = {
-  email: string;
-  password: string;
-}
+import {useLoginForm} from "@/components/features/Auth/LoginModal/useLoginForm";
 
 const LoginModal = () => {
-  const dispatch = useAppDispatch();
-  const {error, status} = useAppSelector(selectUser);
-  const router = useRouter();
-  const [form, setForm] = useState<formData>({
-    email: "",
-    password: "",
-  })
-
-  const onRedirectToRegister = useCallback(() => {
-    router.replace("/register");
-  }, [router]);
-
-  const formChangeHandlers = useMemo(() => ({
-    email: (value: string) => setForm(prev => ({...prev, email: value })),
-    password: (value: string) => setForm(prev => ({...prev, password: value })),
-  }), []);
-
-  const onLogin = useCallback(() => {
-    dispatch(login(form)).then((result) => {
-      if (login.fulfilled.match(result)) {
-        router.back();
-      }
-    });
-  },[dispatch, form, router])
+  const {
+    status,
+    form,
+    formChangeHandlers,
+    validationError,
+    onLogin,
+    onRedirect,
+  } = useLoginForm();
 
   return (
     <div className={styles.AuthModal_container}>
@@ -72,9 +48,9 @@ const LoginModal = () => {
               type="password"
             />
           </div>
-          {error &&
+          {validationError &&
             <div className={styles.AuthModal_error}>
-              <p>Неверный данные!</p>
+              <p>{validationError}</p>
             </div>
           }
         </div>
@@ -88,7 +64,7 @@ const LoginModal = () => {
         </div>
         <div className={styles.AuthModal_linkButton}>
           <InlineButton
-            onClick={onRedirectToRegister}
+            onClick={onRedirect}
             caption={"Нет аккаунта? Зарегестрирйтесь!"}
             withAnimation
           />

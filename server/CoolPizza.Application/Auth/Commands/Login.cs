@@ -24,12 +24,12 @@ public class LoginCommandHandler(
         var user = await userRepository.FindByEmailAsync(request.Email);
         if (user is null)
         {
-            throw new BadRequestException($"User with email {request.Email} not found");
+            throw new BadRequestException($"Пользователь {request.Email} не найден");
         }
 
         if (!passwordService.VerifyPassword(user.Password, request.Password))
         {
-            throw new BadRequestException($"Incorrect password");
+            throw new BadRequestException("Неверный пароль");
         }
         
         // генерируем токены

@@ -32,7 +32,7 @@ public class RegisterCommandHandler(
             var candidate = await userRepository.FindByEmailAsync(request.Email);
             if (candidate is not null)
             {
-                throw new BadRequestException($"Email {request.Email} already exists");
+                throw new BadRequestException($"Пользователь {request.Email} уже существует");
             }
 
             // подготовка данных 
