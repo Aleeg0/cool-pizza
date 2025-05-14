@@ -1,5 +1,5 @@
 import axios, {AxiosInstance} from "axios";
-import api from "@/store/apis/api";
+import api, {BASE_URL} from "@/store/apis/api";
 import {UUID} from "@/store/types/shared";
 import {
   Cart,
@@ -24,7 +24,7 @@ class CartApi {
     }
 
     const response = await axios.get(
-      `${this._baseEndpoint}/${cartToken}`
+      `${BASE_URL}/${this._baseEndpoint}/${cartToken}`
     );
     return response.data;
   }
