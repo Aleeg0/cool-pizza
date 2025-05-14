@@ -21,8 +21,10 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest extends LoginRequest {
+export interface UpdateUserRequest {
   firstName?: string;
   lastName?: string;
   phone?: string;
 }
+
+export type RegisterRequest = LoginRequest & UpdateUserRequest

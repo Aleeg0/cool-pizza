@@ -1,5 +1,6 @@
 ﻿using CoolPizza.Application.Auth.DTOs;
 using CoolPizza.Application.Exceptions;
+using CoolPizza.Application.User.DTOs;
 using CoolPizza.Core.Abstractions;
 using MediatR;
 

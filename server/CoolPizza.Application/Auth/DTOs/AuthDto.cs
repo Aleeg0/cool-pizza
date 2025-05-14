@@ -1,3 +1,4 @@
+using CoolPizza.Application.User.DTOs;
 
 namespace CoolPizza.Application.Auth.DTOs;
 

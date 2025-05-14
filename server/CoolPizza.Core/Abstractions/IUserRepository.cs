@@ -14,4 +14,5 @@ public interface IUserRepository
     );
 
     Task<User?> FindByIdAsync(Guid id);
+    Task<bool> UpdateUserAsync(Guid id, string? phone, string? firstName, string? lastName);
 }

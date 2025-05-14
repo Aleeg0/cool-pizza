@@ -1,6 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import authApi from "@/store/apis/AuthApi";
 import {LoginRequest, RegisterRequest, User} from "@/store/model/User";
+import userApi from "@/store/apis/UserApi";
+import {UpdateUserRequest} from "@/store/model/User/types";
 
 
 export const register = createAsyncThunk<
@@ -81,3 +83,38 @@ export const logout = createAsyncThunk<
     }
   }
 );
+
+export const getUser = createAsyncThunk<
+  User,
+  void,
+  { rejectValue: string }
+>(
+  "/user/getUser",
+  async (_, {rejectWithValue}) => {
+    try {
+      return await userApi.getUser();
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+    }
+  }
+)
+
+
+export const updateUser = createAsyncThunk<
+  User,
+  UpdateUserRequest,
+  { rejectValue: string }
+  >(
+    "/user/updateUser",
+  async ({phone, firstName, lastName}, {rejectWithValue}) => {
+    try {
+      return await userApi.updateUser(
+        phone,
+        firstName,
+        lastName,
+      );
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+    }
+  }
+)

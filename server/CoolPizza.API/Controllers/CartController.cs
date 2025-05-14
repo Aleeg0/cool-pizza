@@ -11,7 +11,7 @@ namespace PizzaService.API.Controllers;
 public class CartController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<GetOrdersDto>> GetCartById()
+    public async Task<ActionResult<GetOrdersDto>> GetOrdersByUserId()
     {
         var query = new GetOrdersByUserIdQuery()
         {

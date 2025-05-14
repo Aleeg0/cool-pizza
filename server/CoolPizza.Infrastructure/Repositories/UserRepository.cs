@@ -30,4 +30,13 @@ public class UserRepository(ApplicationDbContext context) : IUserRepository
     public async Task<User?> FindByIdAsync(Guid id) =>
         await context.Users.FindAsync(id);
 
+    public async Task<bool> UpdateUserAsync(Guid id, string? phone, string? firstName, string? lastName)
+    {
+        var user = await FindByIdAsync(id);
+        
+        user!.Update(phone, firstName, lastName);
+        await context.SaveChangesAsync();
+        
+        return true;
+    }
 }
