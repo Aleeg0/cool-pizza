@@ -39,9 +39,7 @@ api.interceptors.response.use((response) => {
   return response;
 }, async (error) => {
   const originalRequest = error.config;
-  console.log("52")
   if (error.response.status === 401 && error.config && !error.config.isRetry) {
-    console.log("53")
     originalRequest.isRetry = true;
     try {
       const response = await axios.post<AuthResponse>(
@@ -52,7 +50,7 @@ api.interceptors.response.use((response) => {
       return api.request(originalRequest);
     }
     catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 })
