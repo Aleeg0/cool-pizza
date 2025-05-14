@@ -10,7 +10,9 @@ export {
   checkAuth,
   register,
   login,
-  logout
+  logout,
+  getUser,
+  updateUser
 } from './thunk';
 
 export type {

@@ -1,8 +1,8 @@
-import {UserState} from "./types";
+import {User, UserState} from "./types";
 import {LoadingStatus} from "@/store/types/shared";
-import {createSlice, isAnyOf} from "@reduxjs/toolkit";
+import {createSlice, isAnyOf, PayloadAction} from "@reduxjs/toolkit";
 import {handleFulfilled, handlePending, handleRejected} from "@/store/model/Shared";
-import {checkAuth, login, logout, register} from "./thunk";
+import {checkAuth, getUser, login, logout, register, updateUser} from "./thunk";
 import {isPending, isRejected} from "@reduxjs/toolkit";
 
 
@@ -29,15 +29,17 @@ const UserSlice = createSlice({
         state.status = LoadingStatus.IDLE;
       })
       .addMatcher(
-        isAnyOf(login.fulfilled, register.fulfilled, checkAuth.fulfilled),
+        isAnyOf(login.fulfilled, register.fulfilled, checkAuth.fulfilled,
+          getUser.fulfilled, updateUser.fulfilled),
         (state, action) => {
           handleFulfilled(state, () => {
             state.data = action.payload;
           });
         }
       )
-      .addMatcher(isPending(register, login, logout, checkAuth), handlePending)
-      .addMatcher(isRejected(register, login, logout), handleRejected);
+      .addMatcher(isPending(register, login, logout, checkAuth,
+        getUser, updateUser), handlePending)
+      .addMatcher(isRejected(register, login, logout, getUser, updateUser), handleRejected);
   }
 });
 
