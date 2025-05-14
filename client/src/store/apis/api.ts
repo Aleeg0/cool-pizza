@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import {AuthResponse} from "@/store/model/User";
+import {errorHandler} from "@/store/lib/errorHandler";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5080/api/';
 
@@ -50,9 +51,10 @@ api.interceptors.response.use((response) => {
       return api.request(originalRequest);
     }
     catch (error) {
-      throw error;
+      return errorHandler(error as Error);
     }
   }
+  return errorHandler(error);
 })
 
 export default api;
