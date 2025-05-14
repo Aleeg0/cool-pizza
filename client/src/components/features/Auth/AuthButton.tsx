@@ -22,7 +22,7 @@ export const AuthButton = () => {
   }
 
   const onSettingsClick = () => {
-    router.push("/user");
+    router.push("/settings");
   }
 
   const onLogoutClick = () => {
