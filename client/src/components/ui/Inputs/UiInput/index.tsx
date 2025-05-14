@@ -19,15 +19,17 @@ const UiInput: FC<BasicInputProps> = ({
           {...props}
           onChange={(e) => onChange(e.target.value)}
         />
-        <div
-          className={cn(
-            styles.UiInput_iconCover,
-            value !== "" && styles.UiInput_iconCoverVisible
-          )}
-          onClick={() => onChange("")}
-        >
-          <CrossIcon/>
-        </div>
+        {!props.readOnly &&
+            <div
+              className={cn(
+                styles.UiInput_iconCover,
+                value !== "" && styles.UiInput_iconCoverVisible
+              )}
+              onClick={() => onChange("")}
+            >
+              <CrossIcon/>
+            </div>
+        }
       </div>
     </div>
   );

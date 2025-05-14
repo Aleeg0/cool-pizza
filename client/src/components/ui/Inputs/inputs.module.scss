@@ -50,6 +50,11 @@
     &::placeholder {
       color: var(--color-text-secondary);
     }
+
+    &:read-only {
+      color: var(--color-text-secondary);
+      cursor: not-allowed;
+    }
   }
 }
 
