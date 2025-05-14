@@ -1,4 +1,4 @@
-namespace CoolPizza.Application.Auth.DTOs;
+namespace CoolPizza.Application.User.DTOs;
 
 public record UserDto
 (
