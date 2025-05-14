@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {AuthResponse} from "@/store/model/User";
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:5116/api/';
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5080/api/';
 
 const api = axios.create({
   baseURL: BASE_URL,
