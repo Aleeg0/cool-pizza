@@ -41,4 +41,31 @@ public class User: Entity
 
         return new User(email, hashPassword, firstName, lastName, phone);
     }
+
+    public void Update(string? phone, string? firstName, string? lastName)
+    {
+        if (phone is not null)
+        {
+            if (phone.Length > PhoneMaxLength)
+                throw new ArgumentException($"The phone number must be less then ${PhoneMaxLength}");
+            
+            Phone = phone;
+        }
+
+        if (firstName is not null)
+        {
+            if (firstName.Length > NameMaxLength)
+                throw new ArgumentException($"The first name must be less then ${NameMaxLength}");
+            
+            FirstName = firstName;
+        }
+
+        if (lastName is not null)
+        {
+            if (lastName.Length > NameMaxLength)
+                throw new ArgumentException($"The last name must be less then ${NameMaxLength}");
+            
+            LastName = lastName;
+        }
+    }
 }
