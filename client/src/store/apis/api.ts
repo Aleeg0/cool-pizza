@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {AuthResponse} from "@/store/model/User";
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:5116/api/';
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5080/api/';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -39,9 +39,7 @@ api.interceptors.response.use((response) => {
   return response;
 }, async (error) => {
   const originalRequest = error.config;
-  console.log("52")
   if (error.response.status === 401 && error.config && !error.config.isRetry) {
-    console.log("53")
     originalRequest.isRetry = true;
     try {
       const response = await axios.post<AuthResponse>(
@@ -52,7 +50,7 @@ api.interceptors.response.use((response) => {
       return api.request(originalRequest);
     }
     catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 })
