@@ -1,0 +1,51 @@
+.Header {
+  &_root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-background);
+    z-index: 10;
+  }
+
+  &_container{
+    padding: 30px 66px;
+    transition: all .2s ease-in;
+    border-bottom: var(--color-border-header) solid 1px;
+  }
+
+  &_flying {
+    box-shadow: 0 8px 20px rgba(117, 115, 111, 0.2);
+  }
+
+  &_content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_leftPart {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-right: 21px;
+
+    &__Title {
+      margin-right: 40px;
+      flex-shrink: 0;
+    }
+
+    &__filters {
+      display: flex;
+      justify-content: space-between;
+      height: 55px;
+      min-width: 200px;
+      flex-grow: 1;
+    }
+  }
+
+  &_rightPart {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}

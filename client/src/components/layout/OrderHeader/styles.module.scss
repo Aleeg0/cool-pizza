@@ -1,0 +1,15 @@
+.root {
+  padding-inline: 102px;
+}
+
+.container {
+  position: relative;
+  border-bottom: 2px solid #DEDEDE;
+  padding-block: 45px 30px;
+}
+
+.content {
+  display: flex;
+  height: 52px;
+  justify-content: space-between;
+}

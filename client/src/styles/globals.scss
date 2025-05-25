@@ -1,0 +1,7 @@
+@use './variables' as *;
+
+body.modalOpen {
+  overflow: hidden;
+  position: static;
+  padding-right: var(--size-main-scroll-bar);
+}

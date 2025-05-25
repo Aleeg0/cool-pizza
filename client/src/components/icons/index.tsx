@@ -1,0 +1,15 @@
+export {AppIcon} from './AppIcon';
+export {SearchIcon} from './SearchIcon';
+export {ProfileIcon} from './ProfileIcon';
+export {SortIcon} from './SortIcon';
+export {PriceIcon} from './PriceIcon';
+export {PlusIcon} from './PlusIcon';
+export {CircleIcon} from './CircleIcon';
+export {default as CrossIcon} from './CrossIcon';
+export {HugeCrossIcon} from './HugeCrossIcon';
+export {LeftArrowIcon} from './LeftArrowIcon';
+export {MinusIcon} from './MinusIcon';
+export {CartIcon} from './CartIcon';
+export {BoxIcon} from './BoxIcon';
+export {default as PhoneIcon} from './PhoneIcon';
+export {ShortArrow} from './ShortArrow';

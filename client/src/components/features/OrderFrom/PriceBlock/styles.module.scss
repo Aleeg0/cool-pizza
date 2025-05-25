@@ -1,0 +1,38 @@
+.container {
+  background: var(--color-background);
+  border-radius: var(--border-radius-order-widgets);
+}
+
+.content {
+  padding-block: 30px;
+}
+
+.header {
+  padding: 0 45px 20px;
+
+  &_title {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-title2);
+    line-height: 30px;
+
+    b {
+      font-weight: 800;
+    }
+  }
+}
+
+.main {
+  padding: 30px 45px;
+  border-block: 1px solid var(--color-border-header);
+
+  &_priceWidget {
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.footer {
+  padding: 30px 45px 0;
+}

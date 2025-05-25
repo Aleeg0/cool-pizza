@@ -1,0 +1,42 @@
+.HomePage {
+  &_root {
+    margin-top: 154px;
+  }
+
+  &_container {
+
+  }
+
+  &_contentWrapper{
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+
+  &_title {
+    font-size: var(--font-size-title1);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  &_categoriesSort {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+
+  &_content {
+    width: 100%;
+    display: flex;
+  }
+
+  &_filtration {
+    width: 245px;
+  }
+
+  &_productCatalog {
+    flex: 1;
+    padding-left: 48px;
+  }
+}

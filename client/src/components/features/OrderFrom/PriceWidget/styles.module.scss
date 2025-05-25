@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 12px;
+}
+
+.description {
+  font-size: var(--font-size-paragraph-l);
+  line-height: 25px;
+  flex: 1;
+  display: flex;
+}
+
+.splitter {
+  margin-inline: 8px;
+  position: relative;
+  flex: 1;
+
+  &::before {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    content: '';
+    border-bottom: 1px dashed var(--color-price-splitter);
+  }
+}
+
+.price {
+  font-weight: 700;
+  line-height: 22px;
+}

@@ -1,0 +1,106 @@
+.ProfilePopup {
+  &_options {
+    min-width: 130px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &_option {
+    display: flex;
+    padding: 14px 20px;
+    width: 100%;
+    font: inherit;
+    transition-property: color, background;
+
+    &:hover:not(:last-child) {
+      color: var(--color-primary);
+      background: var(--color-primary-super-light);
+    }
+
+    &:last-child {
+      border-top: 2px solid var(--color-border-exit-button);
+
+      &:hover {
+        color: var(--color-primary-super-light);
+        background: var(--color-primary);
+      }
+    }
+  }
+}
+
+.AuthModal {
+  &_container {
+    width: 450px;
+    position: relative;
+    padding: 40px;
+  }
+
+  &_title {
+    margin-bottom: 4px;
+
+    h2{
+      font-weight: 600;
+      font-size: var(--font-size-title2);
+      line-height: 41px;
+    }
+  }
+
+  &_description {
+    p {
+      font-size: var(--font-size-paragraph);
+      line-height: 22px;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_input {
+    height: 72px;
+    margin-bottom: 24px;
+  }
+
+  &_error {
+    margin-bottom: 20px;
+
+    p {
+      font-weight: 600;
+      font-size: var(--font-size-paragraph);
+      line-height: 22px;
+      color: #FE0000;
+    }
+  }
+}
+
+.LoginModal {
+  &_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &_text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_icon {
+    margin-left: 30px;
+  }
+
+  &_button {
+    margin-bottom: 20px;
+  }
+}
+
+.RegisterModal {
+  &_header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,76 @@
+.root {
+  position: fixed;
+  z-index: 10000;
+}
+
+.wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.show {
+  & > .fade {
+    opacity: 0.6;
+  }
+
+  & > .container {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0);
+  opacity: 0;
+  transition: opacity .1s;
+}
+
+.container {
+  position: relative;
+  flex-flow: column;
+  display: flex;
+  padding: 24px;
+  min-height: 100%;
+  opacity: 0;
+  transform: scale(0.96);
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
+
+  &:before, &:after {
+    content: " ";
+    flex: 1 1 auto;
+    display: block;
+    width: 100%;
+  }
+}
+
+.content {
+  position: relative;
+  flex: 0 0 auto;
+  background-color: var(--color-background);
+  border-radius: 30px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: -56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  border-radius: 22px;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

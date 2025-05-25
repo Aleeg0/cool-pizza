@@ -1,0 +1,112 @@
+@use '@/styles/mixins' as mix;
+
+.UiButton {
+  &_root {
+    position: relative;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: var(--font-size-paragraph);
+
+    transition: all .2s ease-in-out;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 0 5px var(--color-button-shadow);
+
+      & .UiButton_iconRight.UiButton_iconAnimated {
+        transform: translateX(1em);
+      }
+
+      & .UiButton_iconLeft.UiButton_iconAnimated {
+        transform: translateX(-1em);
+      }
+    }
+
+    &:disabled {
+      border: 1px solid var(--color-button-disabled);
+      background-color: var(--color-button-disabled);
+    }
+  }
+
+  &_icon {
+    &Left {
+      margin-right: 0.5em;
+    }
+    &Right {
+      margin-left: 0.5em;
+    }
+
+    &Animated {
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+  }
+
+  &_primary {
+    color: var(--color-secondary);
+    background-color: var(--color-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-lighten);
+    }
+  }
+
+  &_secondary {
+    color: var(--color-primary);
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+    }
+  }
+
+  &_primaryLight {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+
+    &:hover:not(:disabled) {
+      color: var(--color-secondary);
+      background-color: var(--color-primary);
+    }
+  }
+
+  &_fullWidth {
+    width: 100%;
+  }
+
+  &-s {
+    height: 42px;
+  }
+
+  &-m {
+    height: 45px;
+  }
+
+  &-l {
+    height: 50px;
+  }
+
+  &-xl {
+    height: 55px;
+  }
+}
+
+.InlineButton {
+  &_root {
+    color: var(--color-primary);
+    font-size: var(--font-size-paragraph);
+    font-weight: 700;
+  }
+
+  &_animated {
+    @include mix.underline-text-animation(
+            $color: var(--color-primary),
+            $bottom_offset: 4px,
+            $easing: ease-in-out
+    )
+  }
+}

@@ -1,0 +1,27 @@
+@mixin underline-text-animation (
+  $color: currentColor,
+  $height: 2px,
+  $duration: .3s,
+  $bottom_offset: 0,
+  $easing: ease-in-out,
+) {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -$bottom_offset;
+    width: 100%;
+    height: $height;
+    background: $color;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform $duration $easing;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
